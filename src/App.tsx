@@ -178,7 +178,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen bg-[#F7F6F3] text-[#111111] flex flex-col font-inter selection:bg-[#A3181A] selection:text-white">
+      <div className="min-h-screen bg-gb-black text-slate-100 flex flex-col font-poppins selection:bg-gb-red selection:text-white">
         <Header />
         <main className="flex-1">
           <AnimatedRoutes />

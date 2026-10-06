@@ -36,7 +36,7 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const baseClasses =
-    'group relative inline-flex items-center justify-center rounded-md tracking-wider uppercase transition-colors duration-200 select-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-xs border';
+    'group relative inline-flex items-center justify-center rounded-full tracking-wider uppercase transition-all duration-300 select-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
   let variantClasses = '';
   let finalHref = href || to;
@@ -44,23 +44,23 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (variant === 'primary') {
     variantClasses =
-      'bg-gb-red text-white border-gb-red hover:bg-gb-red-dark hover:border-gb-red-dark active:translate-y-0';
+      'bg-gb-red text-white hover:bg-gb-red-dark hover:-translate-y-0.5 glow-red active:translate-y-0';
   } else if (variant === 'secondary') {
     variantClasses =
-      'border-white/20 text-white bg-transparent hover:bg-white hover:text-gb-black active:translate-y-0';
+      'border-2 border-white/80 text-white bg-transparent hover:bg-white hover:text-gb-black active:translate-y-0 backdrop-blur-sm';
   } else if (variant === 'secondary-blue') {
     variantClasses =
-      'border-gb-blue text-gb-blue hover:bg-gb-blue hover:text-white active:translate-y-0';
+      'border-2 border-gb-blue text-gb-blue hover:bg-gb-blue hover:text-white active:translate-y-0';
   } else if (variant === 'whatsapp') {
     variantClasses =
-      'bg-gb-red text-white border-gb-red hover:bg-gb-red-dark hover:border-gb-red-dark active:translate-y-0';
+      'bg-gb-red text-white hover:bg-gb-red-dark hover:-translate-y-0.5 glow-red active:translate-y-0';
     const message =
       whatsappMessage || 'Olá! Gostaria de agendar uma aula experimental gratuita na Gracie Barra Centro JF.';
     finalHref = getWhatsAppLink(message, GYM_INFO.phones.whatsappGB);
     isExternal = true;
   } else if (variant === 'whatsapp-tr') {
     variantClasses =
-      'bg-gb-blue text-white border-gb-blue hover:bg-gb-blue-dark hover:border-gb-blue-dark active:translate-y-0';
+      'bg-gb-blue text-white hover:bg-gb-blue-dark hover:-translate-y-0.5 glow-blue active:translate-y-0';
     const message =
       whatsappMessage || 'Olá Team Recruta! Gostaria de informações sobre as aulas de Muay Thai na GB Centro JF.';
     finalHref = getWhatsAppLink(message, GYM_INFO.phones.whatsappTeamRecruta);

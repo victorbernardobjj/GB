@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PageHero } from '../components/PageHero';
 import { CTAFinal } from '../components/CTAFinal';
 import { Button } from '../components/Button';
-import { ShieldCheck, Info, Check, ArrowUpRight } from 'lucide-react';
-import { UNIFORM_DATA, UniformHotspot } from '../data/uniforms';
-import { getWhatsAppLink, GYM_INFO } from '../data/info';
+import {
+  AlertTriangle,
+  ShieldCheck,
+  CheckCircle2,
+  ShoppingBag,
+  Sparkles,
+  Info,
+} from 'lucide-react';
+import { UNIFORM_DATA, UniformCategoryRule, UniformHotspot, UniformItem } from '../data/uniforms';
+import { getWhatsAppLink } from '../data/info';
 
 export const UniformePage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<
@@ -19,79 +27,78 @@ export const UniformePage: React.FC = () => {
   const currentBlock = activeTab === 'gi' ? currentCategoryData.gi : currentCategoryData.noGi;
 
   return (
-    <div className="bg-[#F7F6F3] text-[#111111] font-inter">
-      {/* Hero Editorial */}
+    <div className="bg-gb-black text-slate-100 min-h-screen">
+      {/* Hero */}
       <PageHero
-        image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
-        imageAlt="Alunos uniformizados com quimono oficial no tatame"
-        badge="Normas Técnicas"
-        title="Regras de Uniforme"
-        subtitle="Padronização oficial de vestimenta para sessões com quimono (Gi) e sem quimono (No-Gi), preservando a tradição e a higiene no tatame."
+        image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80"
+        imageAlt="Alunos uniformizados com o kimono e rash guard oficial Gracie Barra"
+        badge="IDENTIDADE & PADRÃO GB"
+        title="REGRAS DE UNIFORME GRACIE BARRA"
+        highlightWord="UNIFORME"
+        subtitle="A armadura do guerreiro Gracie Barra. Entenda os padrões de vestimenta oficial para treinos Gi e No-Gi."
         actions={
           <Button
             variant="whatsapp"
-            size="md"
-            whatsappMessage="Olá. Gostaria de tirar dúvidas sobre a compra do uniforme oficial Gracie Barra."
+            size="lg"
+            whatsappMessage="Olá! Gostaria de tirar dúvidas sobre a compra do uniforme oficial Gracie Barra."
           >
-            Consultar tamanhos disponíveis
+            Dúvidas sobre o uniforme
           </Button>
         }
       />
 
-      {/* Aviso institucional sóbrio */}
-      <div className="border-b border-[#D9D6CF] bg-[#EDEBE6] py-4 px-5 sm:px-8 text-xs text-[#111111]">
-        <div className="max-w-[1240px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-[#A3181A]">[Norma de conduta]</span>
-            <span>O uso do quimono oficial Gracie Barra é mandatório para alunos matriculados após o período experimental.</span>
+      {/* Mandatory Uniform Notice Banner */}
+      <div className="py-5 px-4 bg-gradient-to-r from-red-950 via-gb-red to-red-950 text-white border-y border-red-400/40 shadow-xl">
+        <div className="max-w-4xl mx-auto flex items-center justify-center gap-3 text-center sm:text-left">
+          <div className="relative flex-shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <AlertTriangle className="w-6 h-6 text-yellow-300 relative" />
           </div>
-          <span className="text-[#5A5A57] text-[11px]">Primeira aula: vestimenta esportiva livre</span>
+          <p className="font-anton text-base sm:text-xl tracking-wider uppercase">
+            Atenção: Todos os alunos matriculados devem obrigatoriamente usar o uniforme oficial Gracie Barra no tatame!
+          </p>
         </div>
       </div>
 
-      {/* Conteúdo Principal */}
-      <section className="py-16 sm:py-24 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
-        {/* Seletor de Categoria e Modalidade */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-10 border-b border-[#D9D6CF]">
-          {/* Categorias (Masculino, Feminino, Kids) */}
-          <div className="flex flex-wrap items-center gap-2">
-            {UNIFORM_DATA.map((cat) => {
-              const isSelected = selectedCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedCategory(cat.id);
-                    setActiveHotspot(null);
-                  }}
-                  className={`px-4 py-2 text-xs font-medium rounded-[2px] border transition-colors cursor-pointer ${
-                    isSelected
-                      ? 'border-[#111111] bg-[#111111] text-white'
-                      : 'border-[#D9D6CF] bg-white text-[#5A5A57] hover:text-[#111111] hover:bg-[#EDEBE6]'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
-          </div>
+      {/* Main Uniform Interactive Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Category Tabs (Masculino, Feminino, Kids Masc, Kids Fem) */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
+          {UNIFORM_DATA.map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => {
+                setSelectedCategory(cat.id);
+                setActiveHotspot(null);
+              }}
+              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-anton tracking-wider uppercase transition-all duration-300 cursor-pointer ${
+                selectedCategory === cat.id
+                  ? 'bg-gb-red text-white shadow-xl glow-red scale-105 border border-red-400/40'
+                  : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border border-white/10'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Alternância Gi / No-Gi */}
-          <div className="inline-flex items-center p-1 border border-[#D9D6CF] bg-[#EDEBE6] rounded-[2px] self-start md:self-auto">
+        {/* Gi vs No-Gi Switch */}
+        <div className="flex justify-center mb-12">
+          <div className="p-1.5 rounded-full bg-neutral-900 border border-white/10 flex items-center gap-1 shadow-lg">
             <button
               type="button"
               onClick={() => {
                 setActiveTab('gi');
                 setActiveHotspot(null);
               }}
-              className={`px-4 py-1.5 text-xs font-medium rounded-[2px] transition-colors cursor-pointer ${
+              className={`px-6 py-2.5 rounded-full text-xs sm:text-sm font-anton tracking-wider uppercase transition-all cursor-pointer ${
                 activeTab === 'gi'
-                  ? 'bg-white text-[#111111] shadow-xs'
-                  : 'text-[#5A5A57] hover:text-[#111111]'
+                  ? 'bg-gb-red text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
-              Com Quimono (Gi)
+              Gi (Com Kimono)
             </button>
             <button
               type="button"
@@ -99,206 +106,229 @@ export const UniformePage: React.FC = () => {
                 setActiveTab('nogi');
                 setActiveHotspot(null);
               }}
-              className={`px-4 py-1.5 text-xs font-medium rounded-[2px] transition-colors cursor-pointer ${
+              className={`px-6 py-2.5 rounded-full text-xs sm:text-sm font-anton tracking-wider uppercase transition-all cursor-pointer ${
                 activeTab === 'nogi'
-                  ? 'bg-white text-[#111111] shadow-xs'
-                  : 'text-[#5A5A57] hover:text-[#111111]'
+                  ? 'bg-gb-red text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
-              Sem Quimono (No-Gi)
+              No-Gi (Sem Kimono)
             </button>
           </div>
         </div>
 
-        {/* Quadro Interativo e Especificações */}
-        <div className="pt-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Diagrama Visual Editorial com Hotspots Numerados */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="border border-[#D9D6CF] rounded-[2px] bg-[#EDEBE6] p-8 relative flex flex-col items-center justify-center min-h-[460px]">
-              <span className="text-[11px] font-mono text-[#5A5A57] uppercase tracking-wider absolute top-4 left-4">
-                Visualização esquemática
-              </span>
+        {/* Interactive Uniform Viewer & Piece Breakdown */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${selectedCategory}-${activeTab}`}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+          >
+            {/* Interactive Mannequin / Visual Mockup with Hotspots */}
+            <div className="lg:col-span-6 relative">
+              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-b from-neutral-900 to-gb-blue-dark/50 border border-white/15 p-6 sm:p-10 shadow-2xl flex flex-col items-center justify-center min-h-[440px]">
+                {/* Stylized Uniform Silhouette Vector */}
+                <div className="relative w-64 h-96 flex items-center justify-center">
+                  <svg
+                    viewBox="0 0 200 320"
+                    className="w-full h-full drop-shadow-2xl"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    {/* Head / Collar */}
+                    <circle cx="100" cy="30" r="22" fill="#334155" opacity="0.4" />
+                    {/* Kimono / Torso */}
+                    {activeTab === 'gi' ? (
+                      <>
+                        <path
+                          d="M50 70 L25 150 L55 155 L75 110 L75 200 L125 200 L125 110 L145 155 L175 150 L150 70 L100 80 Z"
+                          fill="#FFFFFF"
+                          stroke="#E10600"
+                          strokeWidth="3"
+                        />
+                        <path d="M75 100 L100 160 L125 100" stroke="#E10600" strokeWidth="4" />
+                        {/* Red GB Belt */}
+                        <rect
+                          x="70"
+                          y="180"
+                          width="60"
+                          height="14"
+                          rx="3"
+                          fill="#E10600"
+                          stroke="#FFFFFF"
+                          strokeWidth="1.5"
+                        />
+                        <rect x="110" y="180" width="16" height="14" fill="#0A0A0A" />
+                        {/* Pants */}
+                        <path
+                          d="M75 200 L70 300 L95 300 L100 230 L105 300 L130 300 L125 200 Z"
+                          fill="#FFFFFF"
+                          stroke="#E10600"
+                          strokeWidth="3"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        {/* No-Gi Compression Rashguard & Shorts */}
+                        <path
+                          d="M55 75 L30 140 L58 145 L75 110 L75 185 L125 185 L125 110 L142 145 L170 140 L145 75 Z"
+                          fill="#E10600"
+                          stroke="#FFFFFF"
+                          strokeWidth="2"
+                        />
+                        {/* Rashguard GB Triangle Motif */}
+                        <polygon points="100,105 115,130 85,130" fill="#FFFFFF" />
+                        {/* Shorts / Legging */}
+                        <path
+                          d="M72 185 L65 250 L95 250 L100 215 L105 250 L135 250 L128 185 Z"
+                          fill="#0A0A0A"
+                          stroke="#0B3D91"
+                          strokeWidth="2.5"
+                        />
+                      </>
+                    )}
+                  </svg>
 
-              {/* Silhueta esquemática */}
-              <div className="relative w-56 h-88 flex items-center justify-center my-4">
-                <svg
-                  viewBox="0 0 200 320"
-                  className="w-full h-full"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* Cabeça / Pescoço */}
-                  <circle cx="100" cy="32" r="20" fill="#D9D6CF" />
-                  
-                  {activeTab === 'gi' ? (
-                    <>
-                      {/* Quimono / Casaco */}
-                      <path
-                        d="M50 72 L25 150 L55 155 L75 110 L75 200 L125 200 L125 110 L145 155 L175 150 L150 72 L100 82 Z"
-                        fill="#FFFFFF"
-                        stroke="#111111"
-                        strokeWidth="2"
-                      />
-                      {/* Lapelas cruzadas */}
-                      <path d="M75 102 L100 162 L125 102" stroke="#A3181A" strokeWidth="2.5" />
-                      {/* Faixa com ponteira vermelha */}
-                      <rect
-                        x="70"
-                        y="180"
-                        width="60"
-                        height="14"
-                        fill="#111111"
-                        stroke="#111111"
-                        strokeWidth="1"
-                      />
-                      <rect x="110" y="180" width="16" height="14" fill="#A3181A" />
-                      {/* Calça */}
-                      <path
-                        d="M75 200 L70 300 L95 300 L100 230 L105 300 L130 300 L125 200 Z"
-                        fill="#FFFFFF"
-                        stroke="#111111"
-                        strokeWidth="2"
-                      />
-                    </>
-                  ) : (
-                    <>
-                      {/* Rashguard No-Gi */}
-                      <path
-                        d="M55 75 L30 140 L58 145 L75 110 L75 185 L125 185 L125 110 L142 145 L170 140 L145 75 Z"
-                        fill="#14284B"
-                        stroke="#111111"
-                        strokeWidth="1.5"
-                      />
-                      <polygon points="100,105 114,128 86,128" fill="#A3181A" />
-                      {/* Bermuda compressão */}
-                      <path
-                        d="M72 185 L65 250 L95 250 L100 215 L105 250 L135 250 L128 185 Z"
-                        fill="#111111"
-                        stroke="#111111"
-                        strokeWidth="1.5"
-                      />
-                    </>
-                  )}
-                </svg>
+                  {/* Pulsing Hotspots over the uniform */}
+                  {currentBlock.hotspots.map((h) => {
+                    const isActive = activeHotspot?.id === h.id;
 
-                {/* Hotspots numerados elegantes */}
-                {currentBlock.hotspots.map((h, idx) => {
-                  const isActive = activeHotspot?.id === h.id;
-                  const num = idx + 1 < 10 ? `0${idx + 1}` : `${idx + 1}`;
-
-                  return (
-                    <button
-                      key={h.id}
-                      type="button"
-                      onClick={() => setActiveHotspot(isActive ? null : h)}
-                      style={{
-                        left: `${h.xPercent}%`,
-                        top: `${h.yPercent}%`,
-                      }}
-                      className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20 focus:outline-none"
-                      aria-label={h.title}
-                    >
-                      <span
-                        className={`w-6 h-6 rounded-full border text-[10px] font-mono flex items-center justify-center transition-colors shadow-xs ${
-                          isActive
-                            ? 'bg-[#A3181A] border-[#A3181A] text-white font-semibold'
-                            : 'bg-white border-[#111111] text-[#111111] hover:bg-[#EDEBE6]'
-                        }`}
+                    return (
+                      <button
+                        key={h.id}
+                        type="button"
+                        onClick={() => setActiveHotspot(isActive ? null : h)}
+                        style={{
+                          left: `${h.xPercent}%`,
+                          top: `${h.yPercent}%`,
+                        }}
+                        className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer z-20 focus:outline-none"
+                        aria-label={h.title}
                       >
-                        {num}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+                        <span className="relative flex h-8 w-8 items-center justify-center">
+                          <span
+                            className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                              isActive ? 'bg-yellow-400' : 'bg-gb-red'
+                            }`}
+                          ></span>
+                          <span
+                            className={`relative inline-flex rounded-full h-5 w-5 border-2 border-white items-center justify-center shadow-lg transition-transform ${
+                              isActive ? 'bg-yellow-400 scale-125' : 'bg-gb-red group-hover:scale-110'
+                            }`}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+                          </span>
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
 
-              <p className="text-[11px] text-[#5A5A57] text-center pt-2">
-                Clique nos pontos numerados para visualizar a especificação técnica da peça.
-              </p>
-            </div>
-
-            {/* Chamada para o ponto ativo */}
-            {activeHotspot && (
-              <div className="p-4 border border-[#111111] bg-white rounded-[2px] space-y-1">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#A3181A] block">
-                  Ponto de inspeção
-                </span>
-                <h4 className="font-title text-lg uppercase text-[#111111] tracking-wide">
-                  {activeHotspot.title}
-                </h4>
-                <p className="text-xs text-[#5A5A57] leading-relaxed">
-                  {activeHotspot.description}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Relação Editorial de Peças */}
-          <div className="lg:col-span-7 space-y-8">
-            <div>
-              <span className="text-xs uppercase tracking-[0.12em] font-medium text-[#5A5A57] block mb-1">
-                Especificação
-              </span>
-              <h3 className="font-title text-3xl sm:text-4xl text-[#111111] uppercase tracking-wide">
-                {currentBlock.title}
-              </h3>
-              <p className="text-sm text-[#5A5A57] mt-2 leading-relaxed">
-                {currentBlock.description}
-              </p>
-            </div>
-
-            {/* Lista detalhada com divisórias finas */}
-            <div className="border-t border-[#D9D6CF] divide-y divide-[#D9D6CF]">
-              {currentBlock.items.map((item) => (
-                <div key={item.id} className="py-5 space-y-2">
-                  <div className="flex items-center justify-between gap-4">
-                    <h4 className="font-title text-xl text-[#111111] uppercase tracking-wide flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-[#A3181A] flex-shrink-0" strokeWidth={1.5} />
-                      <span>{item.name}</span>
-                    </h4>
-                    <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 border border-[#D9D6CF] bg-[#EDEBE6] text-[#5A5A57] rounded-[1px]">
-                      {item.requiredFor}
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm text-[#5A5A57] leading-relaxed max-w-[64ch]">
-                    {item.description}
+                {/* Hotspot Floating Tooltip */}
+                <div className="mt-4 text-center">
+                  <p className="text-xs text-slate-400 flex items-center justify-center gap-1.5">
+                    <Info className="w-3.5 h-3.5 text-gb-red" />
+                    <span>Toque nos pontos pulsantes vermelhos para ver os detalhes da peça</span>
                   </p>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Seção Informativa: Aquisição e Atendimento */}
-        <div className="mt-20 pt-12 border-t border-[#D9D6CF] grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          <div className="md:col-span-8 space-y-3">
-            <span className="text-xs text-[#5A5A57] uppercase tracking-[0.12em] font-medium block">
-              Atendimento e Aquisição
-            </span>
-            <h3 className="font-title text-2xl sm:text-3xl text-[#111111] uppercase tracking-wide">
-              Como adquirir seu uniforme oficial
+            {/* List of Pieces in this Category */}
+            <div className="lg:col-span-6 space-y-6">
+              <div>
+                <span className="text-xs font-bold text-gb-red uppercase tracking-widest block mb-1">
+                  Requisitos de Tatame
+                </span>
+                <h3 className="font-anton text-3xl sm:text-4xl text-white uppercase tracking-tight">
+                  {currentBlock.title}
+                </h3>
+                <p className="text-sm text-slate-300 font-light mt-1">
+                  {currentBlock.description}
+                </p>
+              </div>
+
+              {/* Items Cards */}
+              <div className="space-y-3.5">
+                {currentBlock.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="p-5 rounded-2xl bg-neutral-900 border border-white/10 hover:border-gb-red/50 transition-all space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="font-anton text-lg text-white uppercase tracking-wider flex items-center gap-2">
+                        <ShieldCheck className="w-4 h-4 text-gb-red flex-shrink-0" />
+                        <span>{item.name}</span>
+                      </h4>
+                      <span className="text-[10px] font-bold text-slate-400 bg-white/5 px-2.5 py-1 rounded-full uppercase">
+                        {item.requiredFor}
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Active Hotspot Callout if clicked */}
+              <AnimatePresence>
+                {activeHotspot && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="p-4 rounded-2xl bg-gradient-to-r from-red-950/60 to-neutral-900 border border-gb-red/50 text-white"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-bold text-yellow-300 uppercase tracking-wider">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Detalhe da Peça: {activeHotspot.title}</span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-200 mt-1 font-light">
+                      {activeHotspot.description}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Section: "ONDE COMPRAR" */}
+        <div className="mt-20 p-8 sm:p-12 rounded-3xl bg-neutral-900 border border-white/10 text-center relative overflow-hidden">
+          <div className="max-w-2xl mx-auto space-y-4">
+            <div className="w-14 h-14 rounded-2xl bg-gb-red/20 text-gb-red flex items-center justify-center mx-auto glow-red">
+              <ShoppingBag className="w-7 h-7" />
+            </div>
+
+            <h3 className="font-anton text-3xl sm:text-4xl text-white uppercase tracking-wider">
+              ONDE COMPRAR SEU UNIFORME OFICIAL?
             </h3>
-            <p className="text-sm text-[#5A5A57] leading-relaxed max-w-[62ch]">
-              A recepção da Gracie Barra Centro Juiz de Fora dispõe de mostruário para prova de tamanhos infantis, femininos (F1 a F4) e masculinos (A0 a A5). Os modelos seguem o padrão regulamentar da Federação Internacional de Jiu-Jitsu (IBJJF).
-            </p>
-          </div>
 
-          <div className="md:col-span-4 flex items-center md:justify-end pt-2">
-            <Button
-              variant="whatsapp"
-              size="md"
-              whatsappMessage="Olá. Gostaria de saber os valores e a disponibilidade de quimonos e uniformes na recepção da GB Centro JF."
-            >
-              Consultar recepção
-            </Button>
+            <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
+              Dúvidas sobre tamanhos, modelos (A0 a A5, F1 a F4, infantil) e onde adquirir o seu kimono ou rash guard oficial Gracie Barra? Nossa recepção tem todas as peças para você experimentar!
+            </p>
+
+            <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                variant="whatsapp"
+                size="lg"
+                whatsappMessage="Olá! Gostaria de consultar tamanhos e valores do uniforme oficial Gracie Barra."
+              >
+                Consultar na Secretaria via WhatsApp
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Final */}
       <CTAFinal
-        customTitle="A primeira aula não requer quimono."
-        customText="Para o treino experimental, compareça com vestimenta esportiva confortável (bermuda e camiseta sem zíperes). A escola disponibiliza a estrutura necessária."
+        customTitle="VENHA COM ROUPA CONFORTÁVEL NA 1ª AULA"
+        customText="Para a aula experimental você não precisa comprar kimono antecipado. Vista sua roupa esportiva e venha experimentar!"
         modalityName="Aula Experimental"
       />
     </div>

@@ -94,19 +94,19 @@ export const Home: React.FC = () => {
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           {/* Top Badge */}
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.5 }}
             className="mb-5"
           >
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded text-xs font-semibold tracking-wider uppercase bg-neutral-900 border border-white/15 text-slate-200">
-              <img src="/logo-gb.png" alt="Gracie Barra" className="w-4 h-4 object-contain" />
+            <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs sm:text-sm font-anton tracking-widest uppercase bg-white/10 text-white border border-white/20 backdrop-blur-md shadow-lg">
+              <img src="/logo-gb.png" alt="Gracie Barra" className="w-5 h-5 rounded-full object-contain" />
               <span>GRACIE BARRA • JUIZ DE FORA</span>
             </span>
           </motion.div>
 
           {/* H1 Main Title */}
-          <h1 className="font-anton text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.92] mb-6">
+          <h1 className="font-anton text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.92] mb-6 hero-title-skew">
             <span className="text-white block sm:inline mr-2">JIU-JITSU PARA</span>{' '}
             <span className="text-gb-red font-anton uppercase">TODOS</span>
           </h1>
@@ -141,23 +141,23 @@ export const Home: React.FC = () => {
             </Button>
           </motion.div>
 
-          {/* 3 Informational Badges */}
+          {/* 3 Glass Badges */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            className="mt-12 flex flex-wrap justify-center items-center gap-2.5"
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-12 flex flex-wrap justify-center items-center gap-3"
           >
-            <div className="px-3.5 py-1.5 rounded text-xs font-medium text-slate-200 bg-neutral-900 border border-white/10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-gb-red" />
+            <div className="glass-panel px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-slate-100 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gb-red" />
               <span>Aula experimental gratuita</span>
             </div>
-            <div className="px-3.5 py-1.5 rounded text-xs font-medium text-slate-200 bg-neutral-900 border border-white/10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+            <div className="glass-panel px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-slate-100 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-white" />
               <span>Dos 3 anos ao adulto</span>
             </div>
-            <div className="px-3.5 py-1.5 rounded text-xs font-medium text-slate-200 bg-neutral-900 border border-white/10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-gb-blue" />
+            <div className="glass-panel px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-slate-100 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gb-blue" />
               <span>6 modalidades oficiais</span>
             </div>
           </motion.div>
@@ -191,24 +191,24 @@ export const Home: React.FC = () => {
           {MODALITIES.map((mod, index) => (
             <motion.div
               key={mod.slug}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group rounded-lg overflow-hidden bg-neutral-900 border border-white/10 hover:border-white/20 shadow-xs flex flex-col justify-between transition-colors"
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, delay: index * 0.07 }}
+              className="group rounded-3xl overflow-hidden bg-neutral-900 border border-white/10 hover:border-gb-red/50 shadow-xl flex flex-col justify-between hover:-translate-y-2 transition-all duration-300"
             >
-              {/* Card Photo with Subtle Hover Zoom */}
+              {/* Card Photo with Hover Zoom */}
               <div className="relative h-56 overflow-hidden">
                 <img
                   src={mod.cardImage}
                   alt={mod.heroAlt}
-                  className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-neutral-950/40" />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent" />
 
                 {mod.badge && (
-                  <span className="absolute top-3 left-3 bg-gb-red text-white text-[10px] font-semibold px-2.5 py-0.5 rounded uppercase tracking-wider">
+                  <span className="absolute top-4 left-4 bg-gb-red text-white text-[11px] font-anton px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
                     {mod.badge}
                   </span>
                 )}
@@ -237,7 +237,7 @@ export const Home: React.FC = () => {
                   <div className="flex items-center justify-between gap-2 pt-1">
                     <Link
                       to={mod.slug}
-                      className="text-xs font-semibold uppercase tracking-wider text-slate-300 group-hover:text-white flex items-center gap-1.5 hover:underline"
+                      className="text-xs font-bold uppercase tracking-wider text-slate-200 group-hover:text-white flex items-center gap-1.5 hover:underline"
                     >
                       <span>Saiba mais</span>
                       <ArrowRight className="w-3.5 h-3.5 text-gb-red transition-transform group-hover:translate-x-1" />
@@ -247,7 +247,7 @@ export const Home: React.FC = () => {
                       variant="whatsapp"
                       size="sm"
                       whatsappMessage={`Olá! Quero agendar uma aula experimental de ${mod.name} na GB Centro JF.`}
-                      className="text-[11px] py-2 px-3"
+                      className="text-[11px] py-2 px-3.5"
                     >
                       Aula Grátis
                     </Button>
@@ -312,82 +312,90 @@ export const Home: React.FC = () => {
 
           {/* 4 Pillars Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <div className="p-6 rounded-lg bg-neutral-900 border border-white/10 space-y-2">
-              <ShieldCheck className="w-6 h-6 text-slate-300 stroke-[1.5] mb-3" />
-              <h3 className="font-anton text-lg text-white uppercase tracking-wider">
+            <div className="p-7 rounded-3xl bg-white/5 border border-white/10 hover:border-gb-red/50 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-gb-red/20 text-gb-red flex items-center justify-center mb-5 glow-red">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="font-anton text-xl text-white uppercase tracking-wider mb-2">
                 Ambiente Seguro e Acolhedor
               </h3>
               <p className="text-sm text-slate-300 font-light leading-relaxed">
-                Todos são bem-vindos, do iniciante ao avançado. Respeito pelo parceiro e tatame limpo.
+                Todos são bem-vindos, do iniciante ao avançado. Zero ego, total respeito pelo parceiro.
               </p>
             </div>
 
-            <div className="p-6 rounded-lg bg-neutral-900 border border-white/10 space-y-2">
-              <Award className="w-6 h-6 text-slate-300 stroke-[1.5] mb-3" />
-              <h3 className="font-anton text-lg text-white uppercase tracking-wider">
+            <div className="p-7 rounded-3xl bg-white/5 border border-white/10 hover:border-gb-red/50 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-gb-blue/30 text-sky-400 flex items-center justify-center mb-5">
+                <Award className="w-6 h-6" />
+              </div>
+              <h3 className="font-anton text-xl text-white uppercase tracking-wider mb-2">
                 Metodologia Comprovada
               </h3>
               <p className="text-sm text-slate-300 font-light leading-relaxed">
-                Estrutura de ensino internacional dividida em módulos pedagógicos claros e progressivos.
+                Uma estrutura de ensino reconhecida no mundo todo, dividida em módulos pedagógicos claros.
               </p>
             </div>
 
-            <div className="p-6 rounded-lg bg-neutral-900 border border-white/10 space-y-2">
-              <Users className="w-6 h-6 text-slate-300 stroke-[1.5] mb-3" />
-              <h3 className="font-anton text-lg text-white uppercase tracking-wider">
+            <div className="p-7 rounded-3xl bg-white/5 border border-white/10 hover:border-gb-red/50 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-5">
+                <Users className="w-6 h-6" />
+              </div>
+              <h3 className="font-anton text-xl text-white uppercase tracking-wider mb-2">
                 Para Todas as Idades
               </h3>
               <p className="text-sm text-slate-300 font-light leading-relaxed">
-                Turmas separadas por faixa etária e nível técnico: dos 3 anos aos adultos com total atenção.
+                Turmas separadas por faixa etária e nível técnico: dos 3 anos à melhor idade com total segurança.
               </p>
             </div>
 
-            <div className="p-6 rounded-lg bg-neutral-900 border border-white/10 space-y-2">
-              <HeartHandshake className="w-6 h-6 text-slate-300 stroke-[1.5] mb-3" />
-              <h3 className="font-anton text-lg text-white uppercase tracking-wider">
+            <div className="p-7 rounded-3xl bg-white/5 border border-white/10 hover:border-gb-red/50 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5">
+                <HeartHandshake className="w-6 h-6" />
+              </div>
+              <h3 className="font-anton text-xl text-white uppercase tracking-wider mb-2">
                 Comunidade e Irmandade
               </h3>
               <p className="text-sm text-slate-300 font-light leading-relaxed">
-                Parceria de treino e respeito mútuo. Acompanhamento próximo do primeiro dia em diante.
+                Mais que treino: amizades e evolução mútua. Você nunca treina sozinho na Gracie Barra.
               </p>
             </div>
           </div>
 
           {/* Numbers Bar */}
-          <div className="p-6 sm:p-8 rounded-lg bg-neutral-900 border border-white/10 text-white shadow-xs">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
-              <div className="pt-3 md:pt-0">
-                <div className="font-anton text-4xl sm:text-5xl text-gb-red tracking-tight">
+          <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-gb-red via-red-700 to-gb-red-dark text-white shadow-2xl relative overflow-hidden">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/20">
+              <div className="pt-4 md:pt-0">
+                <div className="font-anton text-4xl sm:text-5xl lg:text-6xl tracking-tight">
                   {GYM_INFO.stats.studentsCount}
                 </div>
-                <div className="text-xs font-semibold uppercase tracking-wider mt-1 text-slate-300">
+                <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider mt-1 opacity-90">
                   Alunos Ativos
                 </div>
               </div>
 
-              <div className="pt-3 md:pt-0">
-                <div className="font-anton text-4xl sm:text-5xl text-gb-red tracking-tight">
+              <div className="pt-4 md:pt-0">
+                <div className="font-anton text-4xl sm:text-5xl lg:text-6xl tracking-tight">
                   {GYM_INFO.stats.yearsOperating}
                 </div>
-                <div className="text-xs font-semibold uppercase tracking-wider mt-1 text-slate-300">
+                <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider mt-1 opacity-90">
                   Anos em Juiz de Fora
                 </div>
               </div>
 
-              <div className="pt-3 md:pt-0">
-                <div className="font-anton text-4xl sm:text-5xl text-gb-red tracking-tight">
+              <div className="pt-4 md:pt-0">
+                <div className="font-anton text-4xl sm:text-5xl lg:text-6xl tracking-tight">
                   {GYM_INFO.stats.modalitiesCount}
                 </div>
-                <div className="text-xs font-semibold uppercase tracking-wider mt-1 text-slate-300">
+                <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider mt-1 opacity-90">
                   Modalidades Oficiais
                 </div>
               </div>
 
-              <div className="pt-3 md:pt-0">
-                <div className="font-anton text-4xl sm:text-5xl text-gb-red tracking-tight">
+              <div className="pt-4 md:pt-0">
+                <div className="font-anton text-4xl sm:text-5xl lg:text-6xl tracking-tight">
                   {GYM_INFO.stats.freeTrialPercent}
                 </div>
-                <div className="text-xs font-semibold uppercase tracking-wider mt-1 text-slate-300">
+                <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider mt-1 opacity-90">
                   Aulas Gratuitas
                 </div>
               </div>
@@ -454,7 +462,7 @@ export const Home: React.FC = () => {
             href={GYM_INFO.social.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-neutral-900 border border-white/10 hover:bg-neutral-800 text-white font-semibold text-xs uppercase tracking-wider transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:opacity-90 transition-opacity"
           >
             <Instagram className="w-4 h-4" />
             <span>Seguir no Instagram</span>
@@ -469,16 +477,16 @@ export const Home: React.FC = () => {
               href={GYM_INFO.social.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative h-48 sm:h-60 rounded-lg overflow-hidden bg-neutral-900 border border-white/10 block shadow-xs"
+              className="group relative h-48 sm:h-60 rounded-2xl overflow-hidden bg-neutral-900 border border-white/10 block"
             >
               <img
                 src={item.url}
                 alt={item.alt}
-                className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gb-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-4">
-                <Instagram className="w-5 h-5 text-white mb-1.5" />
+              <div className="absolute inset-0 bg-gb-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                <Instagram className="w-6 h-6 text-white mb-2" />
                 <p className="text-xs text-white font-medium line-clamp-2">{item.caption}</p>
               </div>
             </a>

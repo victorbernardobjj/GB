@@ -35,16 +35,38 @@ export const PageHero: React.FC<PageHeroProps> = ({
 
   return (
     <section className="relative min-h-[68vh] md:min-h-[78vh] flex items-center justify-center overflow-hidden pt-28 pb-20 text-white">
-      {/* Background Image */}
+      {/* Background Image with parallax feeling */}
       <div className="absolute inset-0 z-0">
-        <img
+        <motion.img
           src={image}
           alt={imageAlt}
+          initial={{ scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
           className="w-full h-full object-cover object-center filter brightness-90"
         />
 
-        {/* Clean solid dark overlay (45-55% opacity) */}
-        <div className="absolute inset-0 bg-neutral-950/60" />
+        {/* Gradient Overlay */}
+        <div
+          className={`absolute inset-0 ${
+            overlayType === 'hero'
+              ? 'hero-gradient'
+              : overlayType === 'darker'
+              ? 'bg-gradient-to-t from-gb-black via-gb-black/85 to-gb-black/60'
+              : 'hero-overlay-dark'
+          }`}
+        />
+
+        {/* Diagonal accents in the background */}
+        <div className="absolute inset-0 opacity-15 pointer-events-none" aria-hidden="true">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 20% 40%, rgba(225, 6, 0, 0.4) 0%, transparent 60%)',
+            }}
+          />
+        </div>
       </div>
 
       {/* Main Hero Content */}
@@ -52,20 +74,30 @@ export const PageHero: React.FC<PageHeroProps> = ({
         {/* Top Badge */}
         {badge && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="mb-4"
           >
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded text-xs font-semibold tracking-wider uppercase bg-neutral-900 border border-white/15 text-slate-200">
-              <span className="w-2 h-2 rounded-full bg-gb-red" />
+            <span
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold tracking-wider uppercase backdrop-blur-md border ${
+                accentPink
+                  ? 'bg-gb-pink/20 text-pink-300 border-gb-pink/40'
+                  : 'bg-white/10 text-white border-white/20'
+              }`}
+            >
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  accentPink ? 'bg-gb-pink animate-ping' : 'bg-gb-red'
+                }`}
+              />
               {badge}
             </span>
           </motion.div>
         )}
 
         {/* H1 Title with word-by-word stagger */}
-        <h1 className="font-anton text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.95] mb-6">
+        <h1 className="font-anton text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.95] mb-6 hero-title-skew">
           {words.map((word, idx) => {
             const isHighlight =
               highlightWord && word.toLowerCase().includes(highlightWord.toLowerCase());
@@ -73,15 +105,19 @@ export const PageHero: React.FC<PageHeroProps> = ({
             return (
               <motion.span
                 key={`${word}-${idx}`}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  duration: 0.4,
-                  delay: 0.1 + idx * 0.05,
-                  ease: 'easeOut',
+                  duration: 0.55,
+                  delay: 0.15 + idx * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
                 className={`inline-block mr-3 sm:mr-4 ${
-                  isHighlight ? 'text-gb-red font-anton uppercase' : 'text-white'
+                  isHighlight
+                    ? accentPink
+                      ? 'text-gb-pink font-anton uppercase'
+                      : 'text-gb-red font-anton uppercase'
+                    : 'text-white'
                 }`}
               >
                 {word}
@@ -92,9 +128,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
 
         {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="text-base sm:text-lg md:text-xl text-slate-200 max-w-2xl font-light leading-relaxed mb-8"
         >
           {subtitle}
@@ -103,27 +139,27 @@ export const PageHero: React.FC<PageHeroProps> = ({
         {/* CTA Buttons */}
         {actions && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
           >
             {actions}
           </motion.div>
         )}
 
-        {/* Informational Badges */}
+        {/* Optional Glass Badges */}
         {floatingBadges.length > 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5, ease: 'easeOut' }}
-            className="mt-10 flex flex-wrap justify-center items-center gap-2.5"
+            transition={{ duration: 0.6, delay: 0.75 }}
+            className="mt-10 flex flex-wrap justify-center items-center gap-3"
           >
             {floatingBadges.map((fBadge, i) => (
               <div
                 key={i}
-                className="px-3.5 py-1.5 rounded text-xs font-medium text-slate-200 bg-neutral-900 border border-white/10 flex items-center gap-2"
+                className="glass-panel px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-slate-100 flex items-center gap-2 shadow-sm"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-gb-red" />
                 <span>{fBadge}</span>

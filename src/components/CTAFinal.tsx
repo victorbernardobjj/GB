@@ -14,8 +14,8 @@ interface CTAFinalProps {
 }
 
 export const CTAFinal: React.FC<CTAFinalProps> = ({
-  customTitle = 'AGENDE SUA AULA EXPERIMENTAL GRATUITA',
-  customText = 'Sua primeira aula é gratuita. Venha conhecer a Gracie Barra Centro Juiz de Fora e comece a treinar.',
+  customTitle = 'PRONTO PARA MUDAR SUA VIDA?',
+  customText = 'Sua primeira aula é por nossa conta. Venha conhecer a Gracie Barra Centro Juiz de Fora e sinta a energia do nosso tatame.',
   whatsappMessage,
   modalityName,
 }) => {
@@ -26,12 +26,25 @@ export const CTAFinal: React.FC<CTAFinalProps> = ({
       : 'Olá! Gostaria de agendar minha aula experimental gratuita na Gracie Barra Centro JF.');
 
   return (
-    <section className="relative overflow-hidden bg-gb-red text-white py-24 px-4 sm:px-6 lg:px-8 border-t border-red-800/40">
+    <section className="relative overflow-hidden bg-gb-red text-white py-20 px-4 sm:px-6 lg:px-8">
+      {/* Background with Blue diagonal stripes */}
+      <DiagonalStripes variant="blue-only" className="opacity-25" angle="-12deg" />
+
+      {/* Radial soft lighting */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-40"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 75% 30%, rgba(11, 61, 145, 0.7) 0%, transparent 60%)',
+        }}
+      />
+
       <div className="relative z-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Text & CTA */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-black/35 text-xs font-semibold tracking-wider uppercase border border-white/15">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/25 backdrop-blur-sm text-xs font-bold tracking-widest uppercase border border-white/20">
+              <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
               <span>Sem custos • Sem compromisso</span>
             </div>
 
@@ -39,7 +52,7 @@ export const CTAFinal: React.FC<CTAFinalProps> = ({
               {customTitle}
             </h2>
 
-            <p className="text-base sm:text-lg text-white/90 max-w-xl font-light leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-xl font-light leading-relaxed">
               {customText}
             </p>
 
@@ -63,23 +76,27 @@ export const CTAFinal: React.FC<CTAFinalProps> = ({
               </div>
             </div>
 
-            {/* Direct button without pulse */}
+            {/* Pulsing button */}
             <div className="pt-4 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-              <Button
-                variant="primary"
-                size="lg"
-                whatsappMessage={finalMessage}
-                href={`https://wa.me/${GYM_INFO.phones.whatsappGB.replace(
-                  /\D/g,
-                  ''
-                )}?text=${encodeURIComponent(finalMessage)}`}
-                className="bg-gb-black hover:bg-neutral-900 text-white border-neutral-900 font-anton tracking-wider text-base sm:text-lg py-3.5 px-7"
-              >
-                Agendar aula experimental gratuita
-              </Button>
+              <div className="relative group">
+                {/* Glow ring */}
+                <div className="absolute -inset-1 rounded-full bg-white opacity-40 blur-md group-hover:opacity-75 transition duration-300 animate-pulse" />
+                <Button
+                  variant="primary"
+                  size="lg"
+                  whatsappMessage={finalMessage}
+                  href={`https://wa.me/${GYM_INFO.phones.whatsappGB.replace(
+                    /\D/g,
+                    ''
+                  )}?text=${encodeURIComponent(finalMessage)}`}
+                  className="bg-gb-black hover:bg-neutral-900 text-white shadow-2xl relative z-10 font-anton tracking-wider text-base sm:text-xl py-4 sm:py-5 px-8 sm:px-10"
+                >
+                  Agendar minha aula grátis
+                </Button>
+              </div>
 
               <span className="text-xs text-white/80 max-w-xs text-center lg:text-left">
-                Vagas organizadas por turma para garantir atendimento próximo.
+                Vagas limitadas por turma para garantir atendimento personalizado.
               </span>
             </div>
           </div>

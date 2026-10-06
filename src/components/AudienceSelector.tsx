@@ -57,9 +57,9 @@ export const AudienceSelector: React.FC = () => {
               key={opt.id}
               type="button"
               onClick={() => setSelectedAudience(opt.id)}
-              className={`px-4 py-2.5 rounded-md text-xs sm:text-sm font-semibold tracking-wider uppercase transition-colors duration-200 cursor-pointer flex items-center gap-2 ${
+              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer flex items-center gap-2.5 ${
                 isSelected
-                  ? 'bg-gb-red text-white border border-gb-red'
+                  ? 'bg-gb-red text-white shadow-xl glow-red scale-105 border border-red-400/40'
                   : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border border-white/10'
               }`}
             >
@@ -76,23 +76,23 @@ export const AudienceSelector: React.FC = () => {
             <motion.div
               key={mod.slug}
               layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="rounded-lg overflow-hidden bg-neutral-900 border border-white/10 hover:border-white/20 flex flex-col justify-between group transition-colors shadow-xs"
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.94 }}
+              transition={{ duration: 0.35 }}
+              className="rounded-3xl overflow-hidden bg-neutral-900 border border-white/10 hover:border-gb-red/50 shadow-xl flex flex-col justify-between group transition-all"
             >
               {/* Image banner */}
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={mod.cardImage}
                   alt={mod.heroAlt}
-                  className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-neutral-950/40" />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent" />
 
                 {mod.badge && (
-                  <span className="absolute top-3 left-3 bg-gb-red text-white text-[10px] font-semibold px-2.5 py-0.5 rounded uppercase tracking-wider">
+                  <span className="absolute top-3 left-3 bg-gb-red text-white text-[10px] font-anton px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md">
                     {mod.badge}
                   </span>
                 )}
@@ -121,7 +121,7 @@ export const AudienceSelector: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <Link
                       to={mod.slug}
-                      className="flex-1 py-2 px-3 rounded-md bg-white/10 hover:bg-white/20 text-white text-xs font-semibold uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-1.5 border border-white/10"
+                      className="flex-1 py-2.5 px-4 rounded-full bg-white/10 hover:bg-gb-red text-white text-xs font-bold uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-1.5"
                     >
                       <span>Saiba mais</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -131,7 +131,7 @@ export const AudienceSelector: React.FC = () => {
                       variant="whatsapp"
                       size="sm"
                       whatsappMessage={`Olá! Gostaria de agendar uma aula experimental de ${mod.name} na GB Centro JF.`}
-                      className="py-2 px-3"
+                      className="py-2.5 px-4"
                     >
                       Aula Grátis
                     </Button>

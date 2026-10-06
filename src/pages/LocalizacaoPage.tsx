@@ -3,190 +3,160 @@ import { PageHero } from '../components/PageHero';
 import { MapEmbed } from '../components/MapEmbed';
 import { CTAFinal } from '../components/CTAFinal';
 import { Button } from '../components/Button';
-import { MapPin, ArrowUpRight } from 'lucide-react';
-import { GYM_INFO } from '../data/info';
+import { MapPin, Navigation, Clock, ShieldCheck, Phone, CheckCircle2 } from 'lucide-react';
+import { GYM_INFO, getWhatsAppLink } from '../data/info';
 
 const ESTRUTURA_ITEMS = [
   {
-    title: 'Tatame Oficial GB',
-    specification: 'Área principal',
-    description: 'Tatame de alta densidade revestido e higienizado diariamente para treinos seguros com amortecimento de quedas e espaço amplo para rolamentos.',
+    title: 'Tatame Olímpico Oficial GB',
+    description: 'Tatame de alta densidade revestido e higienizado diariamente para treinos seguros com amortecimento de quedas.',
     image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80',
   },
   {
     title: 'Vestiários Completos',
-    specification: 'Ala masculina e feminina',
-    description: 'Instalações com duchas aquecidas, sanitários, armários individuais e ventilação adequada para o conforto pós-treino.',
+    description: 'Estrutura masculina e feminina com duchas aquecidas, armários e ventilação adequada.',
     image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80',
   },
   {
-    title: 'Recepção e Convivência',
-    specification: 'Ambiente de acolhimento',
-    description: 'Espaço climatizado para atendimento aos alunos, mostruário de quimonos e acomodação de pais e familiares durante as sessões infantis.',
+    title: 'Área de Convivência & Recepção',
+    description: 'Ambiente climatizado para pais assistirem aos treinos dos filhos e confraternização entre alunos.',
     image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80',
   },
   {
-    title: 'Área de Striking',
-    specification: 'Muay Thai e Boxe',
-    description: 'Setor estruturado com aparadores de chute, manoplas anatômicas e sacos pesados para a prática técnica orientada pela Team Recruta.',
+    title: 'Equipamentos de Striking & Sacos',
+    description: 'Área dedicada com aparadores de chute, manoplas e sacos pesados para Muay Thai e Boxe.',
     image: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=800&q=80',
   },
 ];
 
 export const LocalizacaoPage: React.FC = () => {
   return (
-    <div className="bg-[#F7F6F3] text-[#111111] font-inter">
-      {/* Hero Editorial */}
+    <div className="bg-gb-black text-slate-100 min-h-screen">
+      {/* Hero */}
       <PageHero
-        image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
-        imageAlt="Estrutura da Gracie Barra Centro Juiz de Fora"
-        badge="Endereço e Instalações"
-        title="Nossa Unidade"
-        subtitle="Localizada na Av. Barão do Rio Branco, com tatame oficial, vestiários e estrutura completa para a prática segura de artes marciais."
+        image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80"
+        imageAlt="Fachada e estrutura da Gracie Barra Centro Juiz de Fora"
+        badge="LOCALIZAÇÃO PRIVILEGIADA"
+        title="NOSSA ACADEMIA NO CENTRO DE JUIZ DE FORA"
+        highlightWord="CENTRO"
+        subtitle="Av. Barão do Rio Branco, 267 – Manuel Honório. Conheça nossa estrutura e venha fazer uma visita!"
         actions={
-          <div className="flex flex-wrap items-center gap-4">
-            <a
-              href={GYM_INFO.maps.directionsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-[2px] bg-[#A3181A] hover:bg-[#841315] text-white text-sm font-medium transition-colors"
-            >
-              <span>Abrir rota no Google Maps</span>
-              <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.5} />
-            </a>
-
-            <Button
-              variant="secondary"
-              size="md"
-              whatsappMessage="Olá. Gostaria de agendar uma visita para conhecer as instalações da GB Centro JF."
-            >
-              Agendar visita presencial
-            </Button>
-          </div>
+          <a
+            href={GYM_INFO.maps.directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-anton text-base uppercase tracking-wider shadow-xl glow-red transition-all cursor-pointer"
+          >
+            <Navigation className="w-5 h-5" />
+            <span>Abrir no GPS / Como chegar</span>
+          </a>
         }
       />
 
-      {/* Seção 01: Endereço & Mapa */}
-      <section className="py-20 sm:py-28 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Informações de Acesso (5 colunas) */}
+      {/* Main Address Card & Map */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
           <div className="lg:col-span-5 space-y-6">
-            <span className="text-xs uppercase tracking-[0.12em] font-medium text-[#5A5A57] block">
-              01 / Acesso e Referências
+            <span className="text-xs font-bold text-gb-red uppercase tracking-widest block">
+              Ponto Estratégico
             </span>
-
-            <h2 className="font-title text-3xl sm:text-4xl uppercase tracking-wide text-[#111111]">
-              Localização central
+            <h2 className="font-anton text-3xl sm:text-5xl text-white uppercase tracking-tight">
+              ONDE ESTAMOS LOCALIZADOS
             </h2>
 
-            <div className="p-6 border border-[#D9D6CF] bg-[#EDEBE6] rounded-[2px] space-y-4">
-              <div className="space-y-1">
-                <span className="text-[11px] font-mono text-[#5A5A57] uppercase tracking-wider block">
-                  Endereço oficial:
-                </span>
-                <p className="font-medium text-sm sm:text-base text-[#111111]">
-                  {GYM_INFO.address.street}, {GYM_INFO.address.number}
-                </p>
-                <p className="text-xs text-[#5A5A57]">
-                  Bairro {GYM_INFO.address.neighborhood} • {GYM_INFO.address.city} – {GYM_INFO.address.state}
-                </p>
+            <div className="p-6 rounded-3xl bg-neutral-900 border border-white/10 space-y-3">
+              <div className="flex items-start gap-3">
+                <MapPin className="w-6 h-6 text-gb-red flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-anton text-xl text-white uppercase tracking-wider">
+                    Gracie Barra Centro JF
+                  </h4>
+                  <p className="text-sm text-slate-300 font-light mt-1">
+                    {GYM_INFO.address.full}
+                  </p>
+                </div>
               </div>
 
-              <div className="pt-3 border-t border-[#D9D6CF] space-y-2 text-xs text-[#5A5A57]">
-                <div className="flex items-start gap-2">
-                  <span className="font-mono text-[#111111]">•</span>
-                  <span>Acesso facilitado por transporte público com linhas interbairros.</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-mono text-[#111111]">•</span>
-                  <span>Área com comércio consolidado e boa iluminação urbana.</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-mono text-[#111111]">•</span>
-                  <span>Vagas para embarque e desembarque rápido na via de acesso.</span>
-                </div>
+              <div className="pt-2 text-xs text-slate-400 space-y-1">
+                <p>• Próximo a paradas centrais de ônibus interbairros</p>
+                <p>• Estacionamento e facilidade de embarque/desembarque</p>
+                <p>• Bairro nobre e seguro com iluminação pública</p>
               </div>
             </div>
 
-            <div className="pt-2 text-xs text-[#5A5A57] space-y-1">
-              <p>
-                <span className="font-medium text-[#111111]">Atendimento:</span> Segunda a sexta, das 07:00 às 22:00; sábado das 09:00 às 12:00.
-              </p>
-              <p>
-                <span className="font-medium text-[#111111]">Telefone / WhatsApp:</span> {GYM_INFO.phones.whatsappGBFormatted}
-              </p>
-            </div>
-          </div>
-
-          {/* Mapa Incorporado (7 colunas) */}
-          <div className="lg:col-span-7">
-            <span className="text-xs uppercase tracking-[0.12em] font-medium text-[#5A5A57] block mb-4">
-              Mapa Interativo
-            </span>
-            <MapEmbed showDetails={true} />
-          </div>
-        </div>
-      </section>
-
-      {/* Seção 02: Instalações e Estrutura */}
-      <section className="py-20 sm:py-28 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
-        <div className="mb-14 space-y-3">
-          <span className="text-xs uppercase tracking-[0.12em] font-medium text-[#5A5A57] block">
-            02 / Instalações
-          </span>
-          <h2 className="font-title text-3xl sm:text-4xl uppercase tracking-wide text-[#111111]">
-            Estrutura da academia
-          </h2>
-          <p className="text-sm sm:text-base text-[#5A5A57] max-w-2xl leading-relaxed">
-            Ambiente concebido sob as diretrizes de qualidade do método Carlos Gracie Jr., priorizando higiene rigorosa, conforto e respeito aos alunos.
-          </p>
-        </div>
-
-        {/* Grade Editorial 4 colunas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {ESTRUTURA_ITEMS.map((item, idx) => {
-            const num = idx + 1 < 10 ? `0${idx + 1}` : `${idx + 1}`;
-
-            return (
-              <div
-                key={item.title}
-                className="border border-[#D9D6CF] rounded-[2px] bg-[#EDEBE6] overflow-hidden flex flex-col justify-between"
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href={GYM_INFO.maps.directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-3.5 px-6 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-bold text-xs uppercase tracking-wider text-center shadow-lg glow-red transition-all flex items-center justify-center gap-2"
               >
-                <div className="aspect-[4/3] bg-[#D9D6CF] overflow-hidden">
+                <Navigation className="w-4 h-4" />
+                <span>Como Chegar (Google Maps)</span>
+              </a>
+
+              <Button
+                variant="whatsapp"
+                size="md"
+                whatsappMessage="Olá! Estou indo visitar a academia Gracie Barra Centro JF agora."
+              >
+                Avisar Recepção
+              </Button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7">
+            <MapEmbed showDetails={false} />
+          </div>
+        </div>
+
+        {/* Galeria da Estrutura */}
+        <div className="pt-10 border-t border-white/10">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-xs font-bold text-gb-red uppercase tracking-widest block mb-2">
+              Conforto & Padrão GB
+            </span>
+            <h3 className="font-anton text-3xl sm:text-5xl text-white uppercase tracking-tight">
+              ESTRUTURA COMPLETA PARA VOCÊ E SUA FAMÍLIA
+            </h3>
+            <p className="text-slate-300 text-sm sm:text-base mt-2 font-light">
+              Espaço projetado pensando no bem-estar, higiene e segurança dos praticantes de artes marciais.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {ESTRUTURA_ITEMS.map((item, idx) => (
+              <div
+                key={idx}
+                className="rounded-3xl overflow-hidden bg-neutral-900 border border-white/10 hover:border-gb-red/50 transition-all flex flex-col justify-between group"
+              >
+                <div className="h-48 overflow-hidden relative">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover img-editorial"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent" />
                 </div>
-
-                <div className="p-5 space-y-2 flex-1 flex flex-col justify-between bg-white">
-                  <div>
-                    <div className="flex items-center justify-between text-xs text-[#5A5A57] font-mono mb-1">
-                      <span>{num}</span>
-                      <span>{item.specification}</span>
-                    </div>
-                    <h3 className="font-title text-xl uppercase tracking-wide text-[#111111]">
-                      {item.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-xs text-[#5A5A57] leading-relaxed pt-2 border-t border-[#D9D6CF]">
+                <div className="p-6 space-y-2 flex-1 flex flex-col justify-between">
+                  <h4 className="font-anton text-xl text-white uppercase tracking-wider">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
                     {item.description}
                   </p>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA Final */}
       <CTAFinal
-        customTitle="Venha conhecer o espaço pessoalmente."
-        customText="Nossa equipe está pronta para receber sua visita e apresentar o tatame antes de sua primeira aula experimental."
-        modalityName="Visita Presencial"
+        customTitle="FAÇA UMA VISITA E CONHEÇA DE PERTO"
+        customText="Nossa equipe está pronta para receber você e sua família na Av. Barão do Rio Branco, 267."
       />
     </div>
   );
