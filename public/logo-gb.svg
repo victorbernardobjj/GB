@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="100%" height="100%">
+  <!-- Gracie Barra Emblem & Wordmark -->
+  <g transform="translate(10, 10)">
+    <!-- Shield / Triangle background -->
+    <polygon points="40,2 78,78 2,78" fill="#E10600" stroke="#FFFFFF" stroke-width="2.5" />
+    <!-- Inner geometric triangle accents and GB motif -->
+    <polygon points="40,14 68,70 12,70" fill="#0A0A0A" />
+    <polygon points="40,24 60,64 20,64" fill="#E10600" />
+    <circle cx="40" cy="46" r="10" fill="#FFFFFF" />
+    <polygon points="40,38 46,50 34,50" fill="#E10600" />
+  </g>
+  <g fill="#FFFFFF" font-family="'Anton', 'Impact', sans-serif">
+    <text x="100" y="46" font-size="34" letter-spacing="1.5" font-weight="900">GRACIE BARRA</text>
+    <text x="102" y="74" font-size="15" fill="#E10600" letter-spacing="4" font-family="'Poppins', sans-serif" font-weight="700">CENTRO JUIZ DE FORA</text>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+{
+  "name": "Gracie Barra Centro Juiz de Fora",
+  "description": "Site oficial da academia Gracie Barra Centro Juiz de Fora. Jiu-Jitsu para todos, Muay Thai, Boxe, Krav Maga e Hapkido.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

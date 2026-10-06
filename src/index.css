@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --font-anton: 'Anton', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-poppins: 'Poppins', sans-serif;
+
+  --color-gb-red: #C4161C;
+  --color-gb-red-dark: #990E14;
+  --color-gb-blue: #123A7A;
+  --color-gb-blue-dark: #0B2044;
+  --color-gb-black: #0A0A0A;
+  --color-gb-white: #FFFFFF;
+  --color-gb-ice: #F3F4F6;
+  --color-gb-gray: #6B7280;
+  --color-gb-pink: #C4161C;
+}
+
+:root {
+  --gb-red: #C4161C;
+  --gb-red-dark: #990E14;
+  --gb-blue: #123A7A;
+  --gb-blue-dark: #0B2044;
+  --gb-black: #0A0A0A;
+  --gb-white: #FFFFFF;
+  --gb-ice: #F3F4F6;
+  --gb-gray: #6B7280;
+  --gb-pink: #C4161C;
+}
+
+/* Natural image saturation across the site */
+img {
+  filter: saturate(0.92);
+}
+
+/* Custom Overlays - Solid neutral black with 35% - 55% opacity, eliminating loud gradients */
+.hero-gradient {
+  background: rgba(10, 10, 10, 0.50);
+}
+
+.hero-overlay-dark {
+  background: rgba(10, 10, 10, 0.55);
+}
+
+.red-gradient {
+  background: #C4161C;
+}
+
+.blue-gradient {
+  background: #123A7A;
+}
+
+/* Glow removal - clean subtle separation */
+.glow-red,
+.glow-red-hover:hover,
+.glow-blue {
+  box-shadow: none !important;
+}
+
+/* Clean panels without heavy glassmorphism blur */
+.glass-panel {
+  background: rgba(20, 20, 20, 0.90);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-panel-dark {
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Title skew removed */
+.hero-title-skew {
+  transform: none !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #E10600;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A80000;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+/* Print styles for schedule */
+@media print {
+  header, footer, .no-print, .floating-whatsapp {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .print-area {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #000 !important;
+  }
+  .print-page-break {
+    page-break-after: always;
+  }
+}
