@@ -3,86 +3,75 @@ import { PageHero } from '../components/PageHero';
 import { ScheduleGrid } from '../components/ScheduleGrid';
 import { MapEmbed } from '../components/MapEmbed';
 import { Button } from '../components/Button';
-import { MessageCircle, Clock, Calendar, HelpCircle, CheckCircle2 } from 'lucide-react';
+import { CTAFinal } from '../components/CTAFinal';
 import { GYM_INFO, getWhatsAppLink } from '../data/info';
 
 export const HorariosPage: React.FC = () => {
   return (
-    <div className="bg-gb-black text-slate-100 min-h-screen">
-      {/* Hero */}
+    <div className="bg-[#F7F6F3] text-[#111111] font-inter">
       <PageHero
-        image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80"
-        imageAlt="Foto do tatame da Gracie Barra Centro Juiz de Fora durante treino"
-        badge="PLANEJAMENTO SEMANAL"
-        title="QUADRO DE HORÁRIOS"
-        highlightWord="HORÁRIOS"
-        subtitle="Gracie Barra Centro Juiz de Fora. Encontre a aula ideal para a sua rotina diária."
-        brushColor="black"
+        image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
+        imageAlt="Tatame durante treino de fundamentos"
+        badge="Planejamento Semanal"
+        title="Quadro de Horários"
+        subtitle="Aulas matutinas, no intervalo do almoço, tarde e noite. Encontre a turma compatível com sua rotina."
         actions={
           <Button
             variant="whatsapp"
-            size="lg"
-            whatsappMessage="Olá! Gostaria de agendar uma aula experimental de acordo com a grade de horários."
+            size="md"
+            whatsappMessage="Olá. Gostaria de agendar uma aula experimental de acordo com o quadro de horários."
           >
             Agendar aula experimental
           </Button>
         }
       />
 
-      {/* Main Schedule Container */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-16 sm:py-24 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
         <ScheduleGrid
           initialFilter="all"
           showFilters={true}
           showLegend={true}
           showPrintButton={true}
-          title="Grade Oficial Semanal"
+          title="Grade Regular de Aulas"
         />
 
-        {/* Section: "NÃO ACHOU SEU HORÁRIO?" */}
-        <div className="mt-16 p-8 sm:p-12 rounded-3xl bg-neutral-900 border border-white/10 text-center relative overflow-hidden">
-          <div className="max-w-2xl mx-auto space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-gb-red/20 text-gb-red flex items-center justify-center mx-auto glow-red">
-              <HelpCircle className="w-6 h-6" />
-            </div>
-
-            <h3 className="font-anton text-3xl sm:text-4xl text-white uppercase tracking-wider">
-              NÃO ACHOU O SEU HORÁRIO?
+        {/* Section: Horários particulares / dúvidas */}
+        <div className="mt-16 pt-12 border-t border-[#D9D6CF] grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+          <div className="md:col-span-8 space-y-2">
+            <h3 className="font-title text-2xl uppercase tracking-wide text-[#111111]">
+              Aulas particulares e horários específicos
             </h3>
-
-            <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
-              Temos turmas em formação contínua e horários especiais para aulas particulares (personal) e pequenos grupos. Fale diretamente com nossa coordenação!
+            <p className="text-sm text-[#5A5A57] leading-relaxed max-w-[62ch]">
+              Caso necessite de horários individualizados ou acompanhamento particular com os professores, consulte a disponibilidade de agenda diretamente com a coordenação técnica.
             </p>
-
-            <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button
-                variant="whatsapp"
-                size="md"
-                whatsappMessage="Olá! Consultei a grade de horários da GB Centro JF e gostaria de tirar dúvidas sobre turmas e disponibilidades."
-              >
-                Fale com a gente no WhatsApp
-              </Button>
-
-              <span className="text-xs text-slate-400">
-                Atendimento rápido de segunda a sábado.
-              </span>
-            </div>
           </div>
-        </div>
 
-        {/* MapEmbed + Endereço */}
-        <div className="mt-16">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <span className="text-xs font-bold text-gb-red uppercase tracking-widest block mb-1">
-              Como Chegar
-            </span>
-            <h3 className="font-anton text-2xl sm:text-3xl text-white uppercase tracking-wider">
-              NOSSO ENDEREÇO EM JUIZ DE FORA
-            </h3>
+          <div className="md:col-span-4 flex items-center md:justify-end">
+            <Button
+              variant="secondary"
+              size="sm"
+              whatsappMessage="Olá. Gostaria de consultar a disponibilidade de aulas particulares na GB Centro JF."
+            >
+              Consultar coordenação
+            </Button>
           </div>
-          <MapEmbed showDetails={true} />
         </div>
       </section>
+
+      {/* Map */}
+      <section className="py-16 sm:py-24 px-5 sm:px-8 max-w-[1240px] mx-auto">
+        <div className="mb-8">
+          <span className="text-xs uppercase tracking-[0.12em] font-medium text-[#5A5A57] block mb-1">
+            Local da academia
+          </span>
+          <h3 className="font-title text-2xl sm:text-3xl uppercase tracking-wide text-[#111111]">
+            {GYM_INFO.address.street}, {GYM_INFO.address.number}
+          </h3>
+        </div>
+        <MapEmbed showDetails={true} />
+      </section>
+
+      <CTAFinal />
     </div>
   );
 };

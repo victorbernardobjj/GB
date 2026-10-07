@@ -30,13 +30,13 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
 }) => {
   const sizeClasses = {
-    sm: 'text-xs py-2 px-5 font-semibold',
-    md: 'text-sm sm:text-base py-3.5 px-7 font-semibold',
-    lg: 'text-base sm:text-lg py-4 px-9 font-bold',
+    sm: 'text-xs py-2 px-3.5 sm:px-5 font-semibold whitespace-nowrap',
+    md: 'text-xs sm:text-base py-2.5 sm:py-3.5 px-4 sm:px-7 font-semibold whitespace-nowrap',
+    lg: 'text-xs xs:text-sm sm:text-base md:text-lg py-3 sm:py-4 px-4 sm:px-8 font-bold whitespace-nowrap',
   };
 
   const baseClasses =
-    'group relative inline-flex items-center justify-center rounded-full tracking-wider uppercase transition-all duration-300 select-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
+    'group relative inline-flex items-center justify-center rounded-full tracking-wider uppercase whitespace-nowrap transition-all duration-300 select-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0';
 
   let variantClasses = '';
   let finalHref = href || to;
@@ -70,15 +70,15 @@ export const Button: React.FC<ButtonProps> = ({
   const content = (
     <>
       {variant === 'whatsapp' || variant === 'whatsapp-tr' ? (
-        <MessageCircle className="w-5 h-5 mr-2.5 transition-transform group-hover:scale-110" />
+        <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-2.5 shrink-0 transition-transform group-hover:scale-110" />
       ) : icon ? (
-        <span className="mr-2">{icon}</span>
+        <span className="mr-2 shrink-0">{icon}</span>
       ) : null}
 
-      <span>{children}</span>
+      <span className="whitespace-nowrap">{children}</span>
 
       {variant === 'primary' && !icon && (
-        <ArrowRight className="w-4 h-4 ml-2.5 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-2 sm:ml-2.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
       )}
     </>
   );

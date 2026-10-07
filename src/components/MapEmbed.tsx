@@ -10,11 +10,8 @@ interface MapEmbedProps {
 export const MapEmbed: React.FC<MapEmbedProps> = ({ className = '', showDetails = true }) => {
   return (
     <div className={`relative ${className}`}>
-      {/* Red offset graphic accent behind frame (as in the original site) */}
-      <div className="absolute -inset-2 sm:-inset-3 bg-gb-red/80 rounded-3xl transform rotate-1 sm:rotate-2 -z-10 shadow-2xl glow-red pointer-events-none" />
-
       {/* Main Container Card */}
-      <div className="relative rounded-3xl overflow-hidden border-2 border-white/20 bg-neutral-950 shadow-2xl">
+      <div className="relative rounded-lg overflow-hidden border border-white/10 bg-neutral-900 shadow-sm">
         {/* Map iframe */}
         <div className="relative h-72 sm:h-96 w-full">
           <iframe
@@ -25,7 +22,7 @@ export const MapEmbed: React.FC<MapEmbedProps> = ({ className = '', showDetails 
             style={{ border: 0 }}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-full filter contrast-105"
+            className="w-full h-full filter grayscale-[0.6] contrast-100"
           />
         </div>
 
@@ -33,9 +30,7 @@ export const MapEmbed: React.FC<MapEmbedProps> = ({ className = '', showDetails 
         {showDetails && (
           <div className="p-4 sm:p-6 bg-gb-blue-dark text-white border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3">
-              <div className="p-2.5 rounded-2xl bg-gb-red text-white flex-shrink-0 glow-red">
-                <MapPin className="w-5 h-5" />
-              </div>
+              <MapPin className="w-5 h-5 text-gb-red flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-anton text-lg tracking-wide uppercase">
                   {GYM_INFO.name}
@@ -44,7 +39,7 @@ export const MapEmbed: React.FC<MapEmbedProps> = ({ className = '', showDetails 
                   {GYM_INFO.address.full}
                 </p>
                 <p className="text-[11px] text-slate-400 mt-0.5">
-                  Fácil acesso no coração de Juiz de Fora • Estacionamento nas proximidades
+                  Fácil acesso no centro de Juiz de Fora • Estacionamento nas proximidades
                 </p>
               </div>
             </div>
@@ -53,7 +48,7 @@ export const MapEmbed: React.FC<MapEmbedProps> = ({ className = '', showDetails 
               href={GYM_INFO.maps.directionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-bold text-xs uppercase tracking-wider shadow-lg glow-red transition-all cursor-pointer flex-shrink-0"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gb-red hover:bg-gb-red-dark text-white font-semibold text-xs uppercase tracking-wider transition-colors cursor-pointer flex-shrink-0 border border-gb-red"
             >
               <Navigation className="w-4 h-4" />
               <span>Como chegar (GPS)</span>

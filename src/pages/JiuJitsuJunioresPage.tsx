@@ -5,146 +5,102 @@ import { AgeRecommender } from '../components/AgeRecommender';
 import { CTAFinal } from '../components/CTAFinal';
 import { FAQ } from '../components/FAQ';
 import { Button } from '../components/Button';
-import { Target, Zap, Users, Trophy } from 'lucide-react';
 
 const JUNIORES_FAQS = [
   {
     id: 'jfaq-1',
-    question: 'Meu filho(a) de 12 anos nunca lutou. Essa turma é avançada demais?',
-    answer: 'Não! Nossos professores dividem a turma por níveis técnicos. Os iniciantes aprendem os conceitos básicos com atenção total enquanto os mais experientes aprimoram suas técnicas.',
+    question: 'A turma de juniores aceita iniciantes sem experiência prévia?',
+    answer: 'Sim. Os treinos são adaptados ao nível de cada praticante. Alunos que ingressam sem bagagem anterior recebem instrução fundamental dos professores.',
   },
   {
     id: 'jfaq-2',
-    question: 'Existe oportunidade para quem quer competir em campeonatos?',
-    answer: 'Sim! Para os jovens que demonstram interesse na vertente esportiva, oferecemos preparação técnica e suporte nos principais campeonatos oficiais de Jiu-Jitsu do país.',
+    question: 'Há preparação para torneios e campeonatos?',
+    answer: 'Para jovens que demonstram interesse na vertente esportiva, a escola oferece treinamento direcionado e suporte nos calendários competitivos oficiais.',
   },
   {
     id: 'jfaq-3',
-    question: 'O que levar no primeiro dia de aula experimental?',
-    answer: 'Roupa leve de treino (bermuda sem zíper e camiseta), garrafinha de água e toalha. A aula é gratuita!',
+    question: 'Qual a vestimenta recomendada para a aula experimental?',
+    answer: 'Roupa leve de treino (bermuda esportiva sem bolsos e camiseta). Recomenda-se trazer garrafa de água individual.',
   },
 ];
 
 export const JiuJitsuJunioresPage: React.FC = () => {
   return (
-    <div className="bg-gb-black text-slate-100 min-h-screen">
-      {/* Hero */}
+    <div className="bg-[#F7F6F3] text-[#111111] font-inter">
       <PageHero
-        image="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1920&q=80"
-        imageAlt="Jovens adolescentes praticando jiu-jitsu com foco e dedicação"
-        badge="PROGRAMA TEEN • 11 A 15 ANOS"
-        title="JIU-JITSU JUNIORES"
-        highlightWord="JUNIORES"
-        subtitle="Para jovens de 11 a 15 anos: jiu-jitsu como ferramenta de foco, respeito e superação. Aqui começa a jornada dos futuros campeões!"
+        image="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1200&q=80"
+        imageAlt="Jovens treinando Jiu-Jitsu"
+        badge="Programa Juvenil • 11 a 15 anos"
+        title="Jiu-Jitsu Juniores"
+        subtitle="Foco, disciplina técnica e superação física para adolescentes em fase de desenvolvimento."
         actions={
           <Button
             variant="whatsapp"
-            size="lg"
-            whatsappMessage="Olá! Quero agendar uma aula experimental de Jiu-Jitsu Juniores (11 a 15 anos) na GB Centro JF."
+            size="md"
+            whatsappMessage="Olá. Gostaria de agendar uma aula experimental de Jiu-Jitsu Juniores (11 a 15 anos) na GB Centro JF."
           >
             Agendar aula experimental
           </Button>
         }
       />
 
-      {/* Schedule Banner */}
-      <div className="py-4 px-4 bg-gb-red text-white text-center font-anton tracking-wider uppercase text-sm">
-        Segunda, Quarta e Sexta às 16:00
-      </div>
-
-      {/* "O QUE O JOVEM DESENVOLVE" */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-bold text-gb-red uppercase tracking-widest block mb-2">
-            Formação da Personalidade
-          </span>
-          <h2 className="font-anton text-3xl sm:text-5xl text-white uppercase tracking-tight">
-            O QUE O JOVEM DESENVOLVE?
-          </h2>
-          <p className="text-slate-300 text-sm sm:text-base mt-2 font-light">
-            Uma fase de transição crucial em que a prática marcial traz equilíbrio mental, amigos positivos e saúde.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-7 rounded-3xl bg-neutral-900 border border-white/10 hover:border-gb-red/50 transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-gb-red/20 text-gb-red flex items-center justify-center glow-red">
-              <Target className="w-6 h-6" />
-            </div>
-            <h3 className="font-anton text-xl text-white uppercase tracking-wider">
-              Foco & Liderança
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
-              Autonomia, senso de dever e capacidade de se concentrar em objetivos desafiadores.
+      {/* Seção 01: Formação Juvenil */}
+      <section className="py-20 sm:py-28 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-5 space-y-4">
+            <span className="text-xs uppercase tracking-[0.12em] font-medium text-[#5A5A57] block">
+              01 / Transição
+            </span>
+            <h2 className="font-title text-3xl sm:text-4xl uppercase tracking-wide text-[#111111]">
+              Valores para a juventude
+            </h2>
+            <p className="text-sm sm:text-base text-[#5A5A57] leading-relaxed">
+              Fase formativa decisiva em que a prática marcial oferece referências sólidas de autocontrole, postura e convivência em um grupo com hábitos saudáveis.
             </p>
           </div>
 
-          <div className="p-7 rounded-3xl bg-neutral-900 border border-white/10 hover:border-gb-red/50 transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center">
-              <Zap className="w-6 h-6" />
+          <div className="lg:col-span-7 border-t border-[#D9D6CF] divide-y divide-[#D9D6CF]">
+            <div className="py-5 grid grid-cols-1 md:grid-cols-12 gap-3">
+              <span className="md:col-span-4 text-xs font-mono text-[#5A5A57]">01. Liderança</span>
+              <p className="md:col-span-8 text-xs sm:text-sm text-[#5A5A57] leading-relaxed">
+                Desenvolvimento de autonomia pessoal, pontualidade e responsabilidade individual.
+              </p>
             </div>
-            <h3 className="font-anton text-xl text-white uppercase tracking-wider">
-              Condicionamento & Postura
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
-              Crescimento saudável, prevenção de desvios posturais e gasto de energia acumulada.
-            </p>
-          </div>
-
-          <div className="p-7 rounded-3xl bg-neutral-900 border border-white/10 hover:border-gb-red/50 transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-              <Users className="w-6 h-6" />
+            <div className="py-5 grid grid-cols-1 md:grid-cols-12 gap-3">
+              <span className="md:col-span-4 text-xs font-mono text-[#5A5A57]">02. Condicionamento</span>
+              <p className="md:col-span-8 text-xs sm:text-sm text-[#5A5A57] leading-relaxed">
+                Fortalecimento muscular progressivo e prevenção de vícios posturais da adolescência.
+              </p>
             </div>
-            <h3 className="font-anton text-xl text-white uppercase tracking-wider">
-              Comunidade Positiva
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
-              Um grupo saudável longe de hábitos nocivos, focado na prática esportiva e na evolução.
-            </p>
-          </div>
-
-          <div className="p-7 rounded-3xl bg-neutral-900 border border-white/10 hover:border-gb-red/50 transition-all space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
-              <Trophy className="w-6 h-6" />
+            <div className="py-5 grid grid-cols-1 md:grid-cols-12 gap-3">
+              <span className="md:col-span-4 text-xs font-mono text-[#5A5A57]">03. Companheirismo</span>
+              <p className="md:col-span-8 text-xs sm:text-sm text-[#5A5A57] leading-relaxed">
+                Convivência em ambiente protegido, focado em esforço sadio e respeito recíproco.
+              </p>
             </div>
-            <h3 className="font-anton text-xl text-white uppercase tracking-wider">
-              Caminho Competitivo
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
-              Oportunidade de disputar torneios regionais e estaduais com suporte do time GB.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Age Recommender */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Seção 02: Guia de idades */}
+      <section className="py-20 sm:py-28 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
         <AgeRecommender currentModalitySlug="/jiu-jitsu-juniores" />
       </section>
 
-      {/* ScheduleGrid */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-neutral-950 border-t border-white/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <h3 className="font-anton text-3xl text-white uppercase tracking-wider">
-              HORÁRIOS DOS JUNIORES
-            </h3>
-            <p className="text-xs text-slate-400 mt-1">Segunda, Quarta e Sexta às 16:00</p>
-          </div>
-          <ScheduleGrid filterByModality="jiu-jitsu-juniores" showFilters={false} showLegend={false} />
-        </div>
+      {/* Seção 03: Horários */}
+      <section className="py-20 sm:py-28 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
+        <ScheduleGrid filterByModality="jiu-jitsu-juniores" showFilters={false} showLegend={false} title="Horários dos Juniores" />
       </section>
 
       {/* FAQ */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <FAQ items={JUNIORES_FAQS} title="DÚVIDAS SOBRE A TURMA DE JUNIORES" />
+      <section className="py-20 sm:py-28 px-5 sm:px-8 max-w-[1240px] mx-auto border-b border-[#D9D6CF]">
+        <FAQ items={JUNIORES_FAQS} title="Dúvidas frequentes" />
       </section>
 
-      {/* CTA Final */}
       <CTAFinal
-        customTitle="TRAGA SEU FILHO(A) PARA UMA AULA EXPERIMENTAL"
-        customText="Aulas dinâmicas, instrutores experientes e um tatame seguro no centro de Juiz de Fora."
-        modalityName="Jiu-Jitsu Juniores"
+        customTitle="Agende uma aula para seu filho(a)."
+        customText="Primeiro treino sem custo de matrícula. Venha conhecer as turmas de juniores."
+        modalityName="Jiu-Jitsu Juniores (11 a 15 anos)"
       />
     </div>
   );

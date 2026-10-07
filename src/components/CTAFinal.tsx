@@ -89,7 +89,7 @@ export const CTAFinal: React.FC<CTAFinalProps> = ({
                     /\D/g,
                     ''
                   )}?text=${encodeURIComponent(finalMessage)}`}
-                  className="bg-gb-black hover:bg-neutral-900 text-white shadow-2xl relative z-10 font-anton tracking-wider text-base sm:text-xl py-4 sm:py-5 px-8 sm:px-10"
+                  className="bg-gb-black hover:bg-neutral-900 text-white shadow-2xl relative z-10 font-anton tracking-wider text-sm sm:text-lg md:text-xl py-3.5 sm:py-5 px-5 sm:px-10 whitespace-nowrap"
                 >
                   Agendar minha aula grátis
                 </Button>

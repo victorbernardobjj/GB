@@ -92,11 +92,11 @@ export const BeltTimeline: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedBelt(idx)}
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl relative overflow-hidden transition-all duration-300 cursor-pointer shadow-xl flex items-center justify-end ${
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-lg relative overflow-hidden transition-all duration-200 cursor-pointer shadow-xs flex items-center justify-end ${
                     belt.bgClass
                   } ${
                     isSelected
-                      ? 'scale-115 ring-4 ring-gb-red ring-offset-4 ring-offset-neutral-950 shadow-2xl'
+                      ? 'scale-105 ring-2 ring-gb-red ring-offset-2 ring-offset-neutral-950'
                       : isReached
                       ? 'scale-100 opacity-95 hover:opacity-100'
                       : 'opacity-40 hover:opacity-80'
@@ -134,10 +134,10 @@ export const BeltTimeline: React.FC = () => {
       {/* Selected Belt Details Card */}
       <motion.div
         key={selectedBelt}
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="mt-8 p-6 sm:p-8 rounded-3xl bg-neutral-900 border border-white/10 shadow-2xl relative overflow-hidden"
+        transition={{ duration: 0.25 }}
+        className="mt-8 p-6 sm:p-8 rounded-lg bg-neutral-900 border border-white/10 shadow-xs relative overflow-hidden"
       >
         <div
           className="absolute top-0 left-0 right-0 h-1.5"

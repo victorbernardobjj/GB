@@ -63,7 +63,7 @@ export const UniformePage: React.FC = () => {
       {/* Main Uniform Interactive Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Category Tabs (Masculino, Feminino, Kids Masc, Kids Fem) */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
+        <div className="flex overflow-x-auto sm:flex-wrap items-center justify-start sm:justify-center gap-2 sm:gap-3 mb-10 pb-2 scrollbar-none">
           {UNIFORM_DATA.map((cat) => (
             <button
               key={cat.id}
@@ -72,27 +72,27 @@ export const UniformePage: React.FC = () => {
                 setSelectedCategory(cat.id);
                 setActiveHotspot(null);
               }}
-              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-anton tracking-wider uppercase transition-all duration-300 cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-anton tracking-wider uppercase whitespace-nowrap shrink-0 transition-all duration-300 cursor-pointer ${
                 selectedCategory === cat.id
                   ? 'bg-gb-red text-white shadow-xl glow-red scale-105 border border-red-400/40'
                   : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border border-white/10'
               }`}
             >
-              {cat.label}
+              <span className="whitespace-nowrap">{cat.label}</span>
             </button>
           ))}
         </div>
 
         {/* Gi vs No-Gi Switch */}
-        <div className="flex justify-center mb-12">
-          <div className="p-1.5 rounded-full bg-neutral-900 border border-white/10 flex items-center gap-1 shadow-lg">
+        <div className="flex justify-center mb-12 px-2">
+          <div className="p-1 sm:p-1.5 rounded-full bg-neutral-900 border border-white/10 flex items-center gap-1 shadow-lg max-w-full">
             <button
               type="button"
               onClick={() => {
                 setActiveTab('gi');
                 setActiveHotspot(null);
               }}
-              className={`px-6 py-2.5 rounded-full text-xs sm:text-sm font-anton tracking-wider uppercase transition-all cursor-pointer ${
+              className={`px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-anton tracking-wider uppercase whitespace-nowrap transition-all cursor-pointer ${
                 activeTab === 'gi'
                   ? 'bg-gb-red text-white shadow-md'
                   : 'text-slate-400 hover:text-white'
@@ -106,7 +106,7 @@ export const UniformePage: React.FC = () => {
                 setActiveTab('nogi');
                 setActiveHotspot(null);
               }}
-              className={`px-6 py-2.5 rounded-full text-xs sm:text-sm font-anton tracking-wider uppercase transition-all cursor-pointer ${
+              className={`px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-anton tracking-wider uppercase whitespace-nowrap transition-all cursor-pointer ${
                 activeTab === 'nogi'
                   ? 'bg-gb-red text-white shadow-md'
                   : 'text-slate-400 hover:text-white'

@@ -19,12 +19,8 @@ export const BadgeNovo: React.FC<BadgeNovoProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center justify-center font-bold font-anton text-white bg-gb-red shadow-md shadow-red-950/60 rounded-full uppercase transform -rotate-3 hover:rotate-0 transition-transform ${sizeClasses[size]} ${className}`}
+      className={`inline-flex items-center justify-center font-bold font-anton text-white bg-gb-red border border-red-700/60 rounded uppercase tracking-wider ${sizeClasses[size]} ${className}`}
     >
-      <span className="relative flex h-2 w-2 mr-1.5">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-      </span>
       {text}
     </span>
   );

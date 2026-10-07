@@ -94,7 +94,7 @@ export const JiuJitsuAdultoPage: React.FC = () => {
             size="lg"
             whatsappMessage="Olá! Quero agendar uma aula experimental de Jiu-Jitsu Adulto na GB Centro JF."
           >
-            Agendar aula experimental grátis
+            Agendar aula experimental
           </Button>
         }
       />

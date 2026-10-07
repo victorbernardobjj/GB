@@ -97,7 +97,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
         )}
 
         {/* H1 Title with word-by-word stagger */}
-        <h1 className="font-anton text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.95] mb-6 hero-title-skew">
+        <h1 className="font-anton text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight uppercase leading-[0.92] mb-6 hero-title-skew">
           {words.map((word, idx) => {
             const isHighlight =
               highlightWord && word.toLowerCase().includes(highlightWord.toLowerCase());
@@ -112,7 +112,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
                   delay: 0.15 + idx * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className={`inline-block mr-3 sm:mr-4 ${
+                className={`inline-block mr-2 sm:mr-4 ${
                   isHighlight
                     ? accentPink
                       ? 'text-gb-pink font-anton uppercase'
@@ -142,7 +142,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto max-w-sm sm:max-w-none mx-auto"
           >
             {actions}
           </motion.div>

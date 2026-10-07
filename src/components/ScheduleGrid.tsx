@@ -146,11 +146,11 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
           <button
             type="button"
             onClick={handlePrint}
-            className="no-print inline-flex items-center gap-2 self-start md:self-auto px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 hover:bg-white/20 text-white border border-white/15 transition-colors cursor-pointer"
+            className="no-print inline-flex items-center gap-2 self-start md:self-auto px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 hover:bg-white/20 text-white border border-white/15 transition-colors cursor-pointer whitespace-nowrap shrink-0"
             title="Imprimir quadro de horários"
           >
-            <Printer className="w-4 h-4 text-gb-red" />
-            <span>Baixar / Imprimir PDF</span>
+            <Printer className="w-4 h-4 text-gb-red shrink-0" />
+            <span className="whitespace-nowrap">Baixar / Imprimir PDF</span>
           </button>
         )}
       </div>

@@ -48,7 +48,7 @@ export const AudienceSelector: React.FC = () => {
   return (
     <div className="w-full">
       {/* 5 Chips Selector */}
-      <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-10">
+      <div className="flex overflow-x-auto sm:flex-wrap items-center justify-start sm:justify-center gap-2 sm:gap-3 mb-10 pb-2 scrollbar-none">
         {AUDIENCE_OPTIONS.map((opt) => {
           const isSelected = selectedAudience === opt.id;
 
@@ -57,13 +57,13 @@ export const AudienceSelector: React.FC = () => {
               key={opt.id}
               type="button"
               onClick={() => setSelectedAudience(opt.id)}
-              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer flex items-center gap-2.5 ${
+              className={`px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 whitespace-nowrap shrink-0 ${
                 isSelected
                   ? 'bg-gb-red text-white shadow-xl glow-red scale-105 border border-red-400/40'
                   : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border border-white/10'
               }`}
             >
-              <span>{opt.label}</span>
+              <span className="whitespace-nowrap">{opt.label}</span>
             </button>
           );
         })}

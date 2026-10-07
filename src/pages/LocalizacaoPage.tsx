@@ -45,10 +45,10 @@ export const LocalizacaoPage: React.FC = () => {
             href={GYM_INFO.maps.directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-anton text-base uppercase tracking-wider shadow-xl glow-red transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-anton text-sm sm:text-base uppercase tracking-wider shadow-xl glow-red transition-all cursor-pointer whitespace-nowrap"
           >
-            <Navigation className="w-5 h-5" />
-            <span>Abrir no GPS / Como chegar</span>
+            <Navigation className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+            <span className="whitespace-nowrap">Abrir no GPS / Como chegar</span>
           </a>
         }
       />
@@ -89,10 +89,10 @@ export const LocalizacaoPage: React.FC = () => {
                 href={GYM_INFO.maps.directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3.5 px-6 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-bold text-xs uppercase tracking-wider text-center shadow-lg glow-red transition-all flex items-center justify-center gap-2"
+                className="flex-1 py-3 px-4 sm:px-6 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-bold text-xs uppercase tracking-wider text-center shadow-lg glow-red transition-all flex items-center justify-center gap-2 whitespace-nowrap"
               >
-                <Navigation className="w-4 h-4" />
-                <span>Como Chegar (Google Maps)</span>
+                <Navigation className="w-4 h-4 shrink-0" />
+                <span className="whitespace-nowrap">Como Chegar (Google Maps)</span>
               </a>
 
               <Button

@@ -106,8 +106,8 @@ export const Home: React.FC = () => {
           </motion.div>
 
           {/* H1 Main Title */}
-          <h1 className="font-anton text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.92] mb-6 hero-title-skew">
-            <span className="text-white block sm:inline mr-2">JIU-JITSU PARA</span>{' '}
+          <h1 className="font-anton text-[2.75rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight uppercase leading-[0.9] sm:leading-[0.92] mb-6 hero-title-skew">
+            <span className="text-white block sm:inline mr-0 sm:mr-3">JIU-JITSU PARA</span>{' '}
             <span className="text-gb-red font-anton uppercase">TODOS</span>
           </h1>
 
@@ -126,17 +126,18 @@ export const Home: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto max-w-sm sm:max-w-none mx-auto"
           >
             <Button
               variant="whatsapp"
               size="lg"
+              className="w-full sm:w-auto"
               whatsappMessage="Olá! Gostaria de agendar minha aula experimental gratuita na Gracie Barra Centro Juiz de Fora."
             >
-              Agendar aula experimental grátis
+              Agendar aula experimental
             </Button>
 
-            <Button variant="secondary" size="lg" to="/horarios">
+            <Button variant="secondary" size="lg" className="w-full sm:w-auto" to="/horarios">
               Ver horários
             </Button>
           </motion.div>
@@ -421,8 +422,8 @@ export const Home: React.FC = () => {
         <ScheduleGrid isCompact={true} showLegend={true} showPrintButton={false} />
 
         <div className="mt-10 text-center">
-          <Button variant="secondary" size="lg" to="/horarios">
-            Ver quadro completo de horários →
+          <Button variant="secondary" size="md" to="/horarios">
+            Ver todos os horários →
           </Button>
         </div>
       </section>

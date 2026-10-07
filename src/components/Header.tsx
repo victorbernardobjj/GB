@@ -368,7 +368,7 @@ export const Header: React.FC = () => {
                 size="md"
                 whatsappMessage="Olá! Gostaria de agendar uma aula experimental gratuita na Gracie Barra Centro Juiz de Fora."
               >
-                Agendar aula experimental grátis
+                Agendar aula experimental
               </Button>
               <p className="text-center text-xs text-slate-400">
                 {GYM_INFO.address.full}

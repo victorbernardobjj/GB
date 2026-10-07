@@ -59,35 +59,28 @@ export const TestimonialCarousel: React.FC = () => {
       </div>
 
       {/* Main card */}
-      <div className="relative rounded-3xl bg-gradient-to-b from-neutral-900 to-gb-blue-dark/60 border border-white/15 p-6 sm:p-10 shadow-2xl backdrop-blur-md overflow-hidden min-h-[290px] flex flex-col justify-between">
+      <div className="relative rounded-lg bg-neutral-900 border border-white/10 p-6 sm:p-8 shadow-xs overflow-hidden min-h-[280px] flex flex-col justify-between">
         <Quote className="absolute top-6 right-6 w-16 h-16 text-white/5 pointer-events-none" />
 
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
-            initial={{ opacity: 0, x: 25 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -25 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-5"
           >
-            {/* Sequential Animated Stars */}
-            <div className="flex items-center gap-1.5">
+            {/* Stars */}
+            <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.08 * i, duration: 0.2 }}
-                >
-                  <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
-                </motion.div>
+                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
               ))}
               <span className="ml-2 text-xs text-slate-400">{current.timeAgo}</span>
             </div>
 
             {/* Testimonial Quote */}
-            <p className="text-base sm:text-xl text-slate-100 font-light leading-relaxed italic">
+            <p className="text-base sm:text-lg text-slate-100 font-light leading-relaxed">
               "{current.quote}"
             </p>
 
@@ -98,18 +91,18 @@ export const TestimonialCarousel: React.FC = () => {
                   <img
                     src={current.avatarUrl}
                     alt={current.author}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-gb-red"
+                    className="w-11 h-11 rounded-full object-cover border border-white/20"
                   />
                 )}
                 <div>
-                  <h4 className="font-anton text-lg text-white uppercase tracking-wider">
+                  <h4 className="font-anton text-base text-white uppercase tracking-wider">
                     {current.author}
                   </h4>
                   <p className="text-xs text-gb-red font-medium">{current.modality}</p>
                 </div>
               </div>
 
-              <span className="hidden sm:inline-block text-[11px] text-slate-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+              <span className="hidden sm:inline-block text-[11px] text-slate-400 bg-white/5 px-2.5 py-1 rounded border border-white/10">
                 {current.badge}
               </span>
             </div>
@@ -119,14 +112,14 @@ export const TestimonialCarousel: React.FC = () => {
         {/* Carousel Navigation Buttons */}
         <div className="flex items-center justify-between pt-6 mt-4">
           {/* Indicators */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {TESTIMONIALS.map((t, idx) => (
               <button
                 key={t.id}
                 type="button"
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
-                  currentIndex === idx ? 'w-8 bg-gb-red' : 'w-2 bg-white/20 hover:bg-white/40'
+                className={`h-1.5 rounded transition-all cursor-pointer ${
+                  currentIndex === idx ? 'w-6 bg-gb-red' : 'w-2 bg-white/20 hover:bg-white/40'
                 }`}
                 aria-label={`Ir para avaliação ${idx + 1}`}
               />
@@ -138,18 +131,18 @@ export const TestimonialCarousel: React.FC = () => {
             <button
               type="button"
               onClick={prev}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-gb-red text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="w-9 h-9 rounded-md bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/10"
               aria-label="Avaliação anterior"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               type="button"
               onClick={next}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-gb-red text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="w-9 h-9 rounded-md bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/10"
               aria-label="Próxima avaliação"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
