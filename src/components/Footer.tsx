@@ -5,7 +5,7 @@ import { GYM_INFO, getWhatsAppLink } from '../data/info';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#14284B] text-[#EDEBE6] border-t border-[#1F3A6B] font-inter text-xs">
+    <footer className="bg-gb-blue-dark text-slate-200 border-t border-white/10 text-xs">
       <div className="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 sm:py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
           {/* Col 1: Identification (4 cols) */}
@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
                 className="w-10 h-10 object-contain"
               />
               <div>
-                <span className="font-title text-xl text-white tracking-wider uppercase block leading-none font-semibold">
+                <span className="font-anton text-xl text-white tracking-wider uppercase block leading-none">
                   GRACIE BARRA
                 </span>
                 <span className="text-[10px] text-slate-300 uppercase tracking-widest block mt-0.5">

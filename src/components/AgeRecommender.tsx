@@ -41,15 +41,15 @@ export const AgeRecommender: React.FC<AgeRecommenderProps> = ({ currentModalityS
   const isCurrentPage = currentModalitySlug === recommendation.slug;
 
   return (
-    <div className="border border-[#D9D6CF] bg-[#F7F6F3] p-8 rounded-[2px] font-inter">
+    <div className="border border-white/10 bg-neutral-900 p-6 sm:p-8 rounded-3xl">
       <div className="mb-6">
-        <span className="text-xs text-[#5A5A57] uppercase tracking-[0.12em] block mb-1">
-          Guia de idade
+        <span className="text-xs text-gb-red font-bold uppercase tracking-widest block mb-1">
+          Guia de Idade Oficial GB
         </span>
-        <h3 className="font-title text-2xl sm:text-3xl uppercase tracking-wide text-[#111111]">
+        <h3 className="font-anton text-2xl sm:text-3xl uppercase tracking-wider text-white">
           Qual a idade do aluno?
         </h3>
-        <p className="text-xs text-[#5A5A57] mt-1">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1 font-light">
           Selecione a faixa etária para visualizar a turma pedagógica correspondente.
         </p>
       </div>
@@ -61,50 +61,50 @@ export const AgeRecommender: React.FC<AgeRecommenderProps> = ({ currentModalityS
             key={age}
             type="button"
             onClick={() => setSelectedAge(age)}
-            className={`w-9 h-9 border rounded-[2px] text-xs font-mono transition-colors cursor-pointer ${
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-xs sm:text-sm font-anton transition-all cursor-pointer flex items-center justify-center ${
               selectedAge === age
-                ? 'border-[#111111] bg-[#111111] text-white font-medium'
-                : 'border-[#D9D6CF] bg-white text-[#111111] hover:bg-[#EDEBE6]'
+                ? 'bg-gb-red text-white shadow-lg shadow-red-950/60 scale-105 border border-red-500/50'
+                : 'bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white'
             }`}
           >
             {age}
           </button>
         ))}
-        <span className="text-xs text-[#5A5A57] ml-2">anos</span>
+        <span className="text-xs text-slate-400 font-medium ml-2">anos</span>
       </div>
 
       {/* Result Card */}
-      <div className="p-5 border border-[#D9D6CF] bg-[#EDEBE6] rounded-[2px] flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-        <div className="space-y-1">
-          <span className="text-[11px] text-[#A3181A] uppercase tracking-wider font-medium">
+      <div className="p-5 sm:p-6 border border-white/10 bg-white/5 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div className="space-y-1.5">
+          <span className="text-xs text-gb-red uppercase tracking-wider font-bold">
             Turma recomendada: {recommendation.range}
           </span>
-          <h4 className="font-title text-xl text-[#111111] uppercase tracking-wide">
+          <h4 className="font-anton text-xl sm:text-2xl text-white uppercase tracking-wider">
             {recommendation.name}
           </h4>
-          <p className="text-xs text-[#5A5A57] max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-300 font-light max-w-xl leading-relaxed">
             {recommendation.description}
           </p>
-          <p className="text-xs text-[#111111] pt-1 font-mono">
-            Horários: {recommendation.days}
+          <p className="text-xs text-slate-200 pt-1 font-semibold flex items-center gap-1.5">
+            <span className="text-gb-red">•</span> Horários: {recommendation.days}
           </p>
         </div>
 
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-3 flex-shrink-0 w-full sm:w-auto justify-end">
           {!isCurrentPage && (
             <Link
               to={recommendation.slug}
-              className="text-xs text-[#111111] underline hover:text-[#A3181A] inline-flex items-center gap-1"
+              className="text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white inline-flex items-center gap-1 transition-colors whitespace-nowrap"
             >
               <span>Ver turma</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-gb-red" />
             </Link>
           )}
 
           <Button
             variant="whatsapp"
             size="sm"
-            whatsappMessage={`Olá. Gostaria de agendar uma aula experimental de ${recommendation.name} (${selectedAge} anos) na GB Centro JF.`}
+            whatsappMessage={`Olá! Gostaria de agendar uma aula experimental de ${recommendation.name} (${selectedAge} anos) na GB Centro JF.`}
           >
             Agendar aula
           </Button>

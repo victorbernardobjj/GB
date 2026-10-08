@@ -48,11 +48,11 @@ export const MapEmbed: React.FC<MapEmbedProps> = ({ className = '', showDetails 
               href={GYM_INFO.maps.directionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gb-red hover:bg-gb-red-dark text-white font-semibold text-xs uppercase tracking-wider transition-colors cursor-pointer flex-shrink-0 border border-gb-red"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gb-red hover:bg-gb-red-dark text-white font-semibold text-xs uppercase tracking-wider transition-colors cursor-pointer shrink-0 border border-gb-red whitespace-nowrap"
             >
-              <Navigation className="w-4 h-4" />
-              <span>Como chegar (GPS)</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <Navigation className="w-4 h-4 shrink-0" />
+              <span className="whitespace-nowrap">Como chegar (GPS)</span>
+              <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
             </a>
           </div>
         )}
