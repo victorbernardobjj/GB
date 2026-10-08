@@ -15,15 +15,15 @@ interface CTAFinalProps {
 
 export const CTAFinal: React.FC<CTAFinalProps> = ({
   customTitle = 'PRONTO PARA MUDAR SUA VIDA?',
-  customText = 'Sua primeira aula é por nossa conta. Venha conhecer a Gracie Barra Centro Juiz de Fora e sinta a energia do nosso tatame.',
+  customText = 'Venha conhecer a Gracie Barra Centro Juiz de Fora e sinta a energia do nosso tatame.',
   whatsappMessage,
   modalityName,
 }) => {
   const finalMessage =
     whatsappMessage ||
     (modalityName
-      ? `Olá! Gostaria de agendar minha aula experimental gratuita de ${modalityName} na GB Centro JF.`
-      : 'Olá! Gostaria de agendar minha aula experimental gratuita na Gracie Barra Centro JF.');
+      ? `Olá! Gostaria de agendar minha aula experimental de ${modalityName} na GB Centro JF.`
+      : 'Olá! Gostaria de agendar minha aula experimental na Gracie Barra Centro JF.');
 
   return (
     <section className="relative overflow-hidden bg-gb-red text-white py-20 px-4 sm:px-6 lg:px-8">
@@ -45,7 +45,7 @@ export const CTAFinal: React.FC<CTAFinalProps> = ({
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/25 backdrop-blur-sm text-xs font-bold tracking-widest uppercase border border-white/20">
               <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
-              <span>Sem custos • Sem compromisso</span>
+              <span>Tradição • Metodologia Oficial GB</span>
             </div>
 
             <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl tracking-tight uppercase leading-[0.95] text-white">
@@ -91,7 +91,7 @@ export const CTAFinal: React.FC<CTAFinalProps> = ({
                   )}?text=${encodeURIComponent(finalMessage)}`}
                   className="bg-gb-black hover:bg-neutral-900 text-white shadow-2xl relative z-10 font-anton tracking-wider text-sm sm:text-lg md:text-xl py-3.5 sm:py-5 px-5 sm:px-10 whitespace-nowrap"
                 >
-                  Agendar minha aula grátis
+                  Agendar aula experimental
                 </Button>
               </div>
 

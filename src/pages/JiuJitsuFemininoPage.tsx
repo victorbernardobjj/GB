@@ -50,7 +50,7 @@ const FEMININO_FAQS = [
   {
     id: 'ffaq-2',
     question: 'Como funciona a primeira aula experimental feminina?',
-    answer: 'A aula é 100% gratuita. Você só precisa vir com roupa de academia confortável (calça legging e camiseta). Venha conhecer as outras alunas e o ambiente!',
+    answer: 'Você só precisa agendar com nossa equipe e vir com roupa de academia confortável (calça legging e camiseta). Venha conhecer as outras alunas e o ambiente!',
   },
   {
     id: 'ffaq-3',
@@ -70,14 +70,14 @@ export const JiuJitsuFemininoPage: React.FC = () => {
         title="LUGAR DE MULHER TAMBÉM É NO TATAME"
         highlightWord="MULHER"
         subtitle="Aprenda defesa pessoal, ganhe condicionamento e treine em um ambiente seguro e acolhedor."
-        floatingBadges={['Aula experimental gratuita', 'Turmas exclusivas', 'Defesa pessoal']}
+        floatingBadges={['Turmas exclusivas', 'Defesa pessoal', 'Ambiente acolhedor']}
         actions={
           <Button
             variant="whatsapp"
             size="lg"
             whatsappMessage="Olá! Quero agendar uma aula experimental de Jiu-Jitsu Feminino na Gracie Barra Centro JF."
           >
-            Agendar aula experimental gratuita
+            Agendar aula experimental
           </Button>
         }
       />
@@ -181,8 +181,8 @@ export const JiuJitsuFemininoPage: React.FC = () => {
 
       {/* CTA */}
       <CTAFinal
-        customTitle="AGENDE SUA AULA EXPERIMENTAL GRATUITA"
-        customText="Sua primeira aula é gratuita e você será recebida com toda a atenção pelas alunas e professoras."
+        customTitle="AGENDE SUA AULA EXPERIMENTAL"
+        customText="Venha fazer sua aula experimental e seja recebida com toda a atenção pelas alunas e professoras."
         modalityName="Jiu-Jitsu Feminino"
       />
     </div>

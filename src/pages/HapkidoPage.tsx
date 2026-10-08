@@ -139,7 +139,7 @@ export const HapkidoPage: React.FC = () => {
       {/* CTA Final */}
       <CTAFinal
         customTitle="CONHEÇA O HAPKIDO NA GB CENTRO JF"
-        customText="Sua aula experimental é gratuita. Venha aprender as torções e alavancas da tradicional arte marcial coreana."
+        customText="Venha aprender as torções e alavancas da tradicional arte marcial coreana na Gracie Barra Centro Juiz de Fora."
         modalityName="Hapkido"
       />
     </div>

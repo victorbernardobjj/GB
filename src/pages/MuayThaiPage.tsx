@@ -121,8 +121,8 @@ export const MuayThaiPage: React.FC = () => {
       </section>
 
       <CTAFinal
-        customTitle="Agende uma aula de Muay Thai"
-        customText="Sessão inaugural gratuita. Recomendamos vir com roupa de treino leve e garrafa de água."
+        customTitle="Agende sua aula de Muay Thai"
+        customText="Venha conhecer o treino de Muay Thai da Team Recruta na GB Centro JF. Recomendamos vir com roupa de treino leve e garrafa de água."
         modalityName="Muay Thai"
       />
     </div>

@@ -24,7 +24,7 @@ export const BoxePage: React.FC = () => {
           <Button
             variant="whatsapp"
             size="lg"
-            whatsappMessage="Olá! Gostaria de agendar uma aula experimental gratuita de Boxe Adulto na GB Centro JF."
+            whatsappMessage="Olá! Gostaria de agendar uma aula experimental de Boxe Adulto na GB Centro JF."
           >
             Agendar aula experimental
           </Button>

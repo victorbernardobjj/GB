@@ -91,7 +91,7 @@ export const Home: React.FC = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           {/* Top Badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -106,8 +106,9 @@ export const Home: React.FC = () => {
           </motion.div>
 
           {/* H1 Main Title */}
-          <h1 className="font-anton text-[2.75rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight uppercase leading-[0.9] sm:leading-[0.92] mb-6 hero-title-skew">
-            <span className="text-white block sm:inline mr-0 sm:mr-3">JIU-JITSU PARA</span>{' '}
+          <h1 className="font-anton text-[3.75rem] xs:text-7xl sm:text-8xl md:text-9xl lg:text-[10.5rem] xl:text-[12rem] tracking-tight uppercase leading-[0.86] mb-6 hero-title-skew drop-shadow-2xl">
+            <span className="text-white block">JIU-JITSU</span>
+            <span className="text-white">PARA </span>
             <span className="text-gb-red font-anton uppercase">TODOS</span>
           </h1>
 
@@ -132,7 +133,7 @@ export const Home: React.FC = () => {
               variant="whatsapp"
               size="lg"
               className="w-full sm:w-auto"
-              whatsappMessage="Olá! Gostaria de agendar minha aula experimental gratuita na Gracie Barra Centro Juiz de Fora."
+              whatsappMessage="Olá! Gostaria de agendar minha aula experimental na Gracie Barra Centro Juiz de Fora."
             >
               Agendar aula experimental
             </Button>
@@ -151,7 +152,7 @@ export const Home: React.FC = () => {
           >
             <div className="glass-panel px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-slate-100 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-gb-red" />
-              <span>Aula experimental gratuita</span>
+              <span>Metodologia Carlos Gracie Jr.</span>
             </div>
             <div className="glass-panel px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-slate-100 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-white" />
@@ -250,7 +251,7 @@ export const Home: React.FC = () => {
                       whatsappMessage={`Olá! Quero agendar uma aula experimental de ${mod.name} na GB Centro JF.`}
                       className="text-[11px] py-2 px-3.5"
                     >
-                      Aula Grátis
+                      Agendar Aula
                     </Button>
                   </div>
                 </div>
@@ -394,10 +395,10 @@ export const Home: React.FC = () => {
 
               <div className="pt-4 md:pt-0">
                 <div className="font-anton text-4xl sm:text-5xl lg:text-6xl tracking-tight">
-                  {GYM_INFO.stats.freeTrialPercent}
+                  +1.000
                 </div>
                 <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider mt-1 opacity-90">
-                  Aulas Gratuitas
+                  Escolas no Mundo
                 </div>
               </div>
             </div>

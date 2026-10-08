@@ -247,7 +247,7 @@ export const JiuJitsuAdultoPage: React.FC = () => {
           <Button
             variant="whatsapp"
             size="md"
-            whatsappMessage="Olá! Sou iniciante no Jiu-Jitsu e gostaria de agendar uma aula experimental gratuita na GB Centro JF."
+            whatsappMessage="Olá! Sou iniciante no Jiu-Jitsu e gostaria de agendar uma aula experimental na GB Centro JF."
           >
             Começar do Zero
           </Button>
@@ -281,7 +281,7 @@ export const JiuJitsuAdultoPage: React.FC = () => {
       {/* CTA Final */}
       <CTAFinal
         customTitle="PRONTO PARA O PRIMEIRO TREINO?"
-        customText="Venha fazer sua aula experimental gratuita de Jiu-Jitsu Adulto na Gracie Barra Centro Juiz de Fora."
+        customText="Venha fazer sua aula experimental de Jiu-Jitsu Adulto na Gracie Barra Centro Juiz de Fora."
         modalityName="Jiu-Jitsu Adulto"
       />
     </div>

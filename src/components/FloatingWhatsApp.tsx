@@ -6,7 +6,7 @@ export const FloatingWhatsApp: React.FC = () => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   const defaultMsg =
-    'Olá! Estive no site da Gracie Barra Centro Juiz de Fora e quero agendar minha aula experimental gratuita!';
+    'Olá! Estive no site da Gracie Barra Centro Juiz de Fora e quero agendar minha aula experimental!';
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 floating-whatsapp">

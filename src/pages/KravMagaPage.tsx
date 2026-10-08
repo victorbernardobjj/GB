@@ -17,7 +17,7 @@ export const KravMagaPage: React.FC = () => {
         highlightWord="Maga"
         subtitle="Sistema israelense de defesa pessoal. Instrução objetiva voltada à preservação da integridade física em situações urbanas reais."
         overlayType="darker"
-        floatingBadges={['Supervisão Grão Mestre Kobi', 'Novo Horário às 18h', 'Defesa Real']}
+        floatingBadges={['Supervisão Grão Mestre Kobi', 'Defesa Real', 'Sem Regras Esportivas']}
         actions={
           <Button
             variant="whatsapp"
@@ -28,16 +28,6 @@ export const KravMagaPage: React.FC = () => {
           </Button>
         }
       />
-
-      {/* NOVO HORÁRIO FEATURED BANNER */}
-      <div className="py-4 px-4 bg-gradient-to-r from-gb-red via-neutral-900 to-gb-red text-white flex flex-col sm:flex-row items-center justify-center gap-3 text-center border-y border-red-500/30">
-        <span className="font-anton text-xs uppercase px-2.5 py-1 rounded bg-gb-red text-white tracking-wider">
-          NOVO HORÁRIO
-        </span>
-        <span className="font-anton text-base sm:text-lg tracking-wider uppercase">
-          Segunda e Quarta às 18:00 • Garanta sua vaga na nova turma!
-        </span>
-      </div>
 
       {/* Seção 01: Defesa Pessoal Real */}
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

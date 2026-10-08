@@ -55,7 +55,7 @@ export const Button: React.FC<ButtonProps> = ({
     variantClasses =
       'bg-gb-red text-white hover:bg-gb-red-dark hover:-translate-y-0.5 glow-red active:translate-y-0';
     const message =
-      whatsappMessage || 'Olá! Gostaria de agendar uma aula experimental gratuita na Gracie Barra Centro JF.';
+      whatsappMessage || 'Olá! Gostaria de agendar uma aula experimental na Gracie Barra Centro JF.';
     finalHref = getWhatsAppLink(message, GYM_INFO.phones.whatsappGB);
     isExternal = true;
   } else if (variant === 'whatsapp-tr') {

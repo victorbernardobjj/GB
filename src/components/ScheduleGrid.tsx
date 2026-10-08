@@ -10,7 +10,6 @@ import {
   ModalityCategory,
 } from '../data/schedule';
 import { getWhatsAppLink, GYM_INFO } from '../data/info';
-import { BadgeNovo } from './BadgeNovo';
 
 interface ScheduleGridProps {
   initialFilter?: string;
@@ -155,25 +154,6 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
         )}
       </div>
 
-      {/* NOTICE BANNER FOR NEW SCHEDULE (KRAV MAGA) */}
-      <div className="mb-6 p-3.5 rounded-2xl bg-gradient-to-r from-gb-red/20 via-neutral-900 to-gb-blue/20 border border-gb-red/30 flex items-center justify-between gap-3 text-xs sm:text-sm">
-        <div className="flex items-center gap-2.5">
-          <BadgeNovo text="NOVO HORÁRIO" size="sm" />
-          <span className="text-slate-200">
-            <strong>Krav Maga:</strong> Nova turma às <strong>18h</strong> nas segundas e quartas!
-          </span>
-        </div>
-        <a
-          href={getWhatsAppLink('Olá! Quero saber sobre a nova turma de Krav Maga das 18h.')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden sm:inline-flex items-center gap-1 text-gb-red font-bold hover:underline whitespace-nowrap"
-        >
-          <span>Garantir vaga</span>
-          <ChevronRight className="w-4 h-4" />
-        </a>
-      </div>
-
       {/* -------------------- MOBILE VIEW (Tabs by day) -------------------- */}
       <div className="block lg:hidden print:hidden">
         {/* Day selection tabs */}
@@ -244,7 +224,6 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
                           <Clock className="w-4 h-4 text-gb-red" />
                           {slot.time} {slot.endTime ? `às ${slot.endTime}` : ''}
                         </span>
-                        {slot.isNew && <BadgeNovo text="NOVO" size="sm" />}
                       </div>
 
                       <h4 className="font-anton text-base text-white uppercase tracking-wider">
@@ -347,11 +326,6 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
                                 <span className="font-anton tracking-wide text-xs truncate">
                                   {slot.modality}
                                 </span>
-                                {slot.isNew && (
-                                  <span className="flex-shrink-0 text-[8px] bg-white text-gb-red font-black px-1 rounded-sm">
-                                    NOVO
-                                  </span>
-                                )}
                               </div>
                               {slot.ageRange && (
                                 <span className="block text-[10px] opacity-80 leading-none mt-1">
@@ -362,7 +336,7 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
                               {/* Tooltip on hover */}
                               <div className="hidden group-hover:flex absolute left-1/2 -bottom-9 -translate-x-1/2 z-30 bg-black/95 text-white text-[10px] py-1 px-2 rounded-md shadow-xl whitespace-nowrap border border-white/20 items-center gap-1 pointer-events-none">
                                 <MessageCircle className="w-3 h-3 text-gb-red" />
-                                <span>Agendar aula grátis</span>
+                                <span>Agendar aula</span>
                               </div>
                             </motion.button>
                           );
@@ -420,9 +394,8 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs uppercase font-bold text-gb-red tracking-wider">
-                      Aula Experimental Gratuita
+                      Aula Experimental
                     </span>
-                    {selectedSlotForModal.isNew && <BadgeNovo text="NOVO" size="sm" />}
                   </div>
                   <h4 className="font-anton text-2xl tracking-wide uppercase mt-1">
                     {selectedSlotForModal.modality}
@@ -466,7 +439,7 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
               <div className="mt-6 flex flex-col gap-3">
                 <a
                   href={getWhatsAppLink(
-                    `Olá! Gostaria de agendar minha aula experimental gratuita de ${selectedSlotForModal.modality} no dia de ${selectedSlotForModal.day} às ${selectedSlotForModal.time} na GB Centro JF.`
+                    `Olá! Gostaria de agendar minha aula experimental de ${selectedSlotForModal.modality} no dia de ${selectedSlotForModal.day} às ${selectedSlotForModal.time} na GB Centro JF.`
                   )}
                   target="_blank"
                   rel="noopener noreferrer"

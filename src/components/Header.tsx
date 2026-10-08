@@ -13,7 +13,7 @@ const MODALITY_LINKS = [
   { name: 'Pequenos Campeões (3-5a)', path: '/pequenos-campeoes', tag: '3-5 anos' },
   { name: 'Muay Thai (Team Recruta)', path: '/muay-thai', tag: '8 Armas' },
   { name: 'Boxe Adulto', path: '/boxe', tag: 'Nobre Arte' },
-  { name: 'Krav Maga (Mestre Kobi)', path: '/krav-maga', tag: 'Novo Horário' },
+  { name: 'Krav Maga (Mestre Kobi)', path: '/krav-maga', tag: 'Mestre Kobi' },
   { name: 'Hapkido', path: '/hapkido', tag: 'Defesa Pessoal' },
 ];
 
@@ -251,9 +251,9 @@ export const Header: React.FC = () => {
             <Button
               variant="whatsapp"
               size="sm"
-              whatsappMessage="Olá! Quero agendar minha aula experimental gratuita na Gracie Barra Centro Juiz de Fora."
+              whatsappMessage="Olá! Quero agendar minha aula experimental na Gracie Barra Centro Juiz de Fora."
             >
-              Aula experimental grátis
+              Agendar aula
             </Button>
           </div>
 
@@ -366,7 +366,7 @@ export const Header: React.FC = () => {
                 variant="whatsapp"
                 fullWidth
                 size="md"
-                whatsappMessage="Olá! Gostaria de agendar uma aula experimental gratuita na Gracie Barra Centro Juiz de Fora."
+                whatsappMessage="Olá! Gostaria de agendar uma aula experimental na Gracie Barra Centro Juiz de Fora."
               >
                 Agendar aula experimental
               </Button>

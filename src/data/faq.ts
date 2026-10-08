@@ -13,8 +13,8 @@ export const HOME_FAQS: FAQItem[] = [
   },
   {
     id: 'faq-2',
-    question: 'Como funciona a aula experimental gratuita?',
-    answer: 'A sua primeira aula é 100% por nossa conta! Basta clicar no botão do WhatsApp, nos informar a modalidade de interesse e o melhor dia/horário. Nossa recepção reserva seu lugar no tatame e tira todas as suas dúvidas antes de você entrar.',
+    question: 'Como funciona a aula experimental?',
+    answer: 'Para agendar sua aula experimental, basta clicar no botão do WhatsApp, nos informar a modalidade de seu interesse e o melhor dia. Nossa equipe tira todas as suas dúvidas sobre valores, planos e reserva seu horário no tatame.',
   },
   {
     id: 'faq-3',
@@ -92,7 +92,7 @@ export const KRAV_MAGA_FAQS: FAQItem[] = [
   },
   {
     id: 'kmfaq-3',
-    question: 'Qual é o novo horário de Krav Maga?',
-    answer: 'Temos agora novo horário às segundas e quartas às 18h! Além das turmas tradicionais de terça e quinta (16:30 e 17:30) e sexta pela manhã (08:30 às 10:30).',
+    question: 'Quais são os horários das aulas de Krav Maga?',
+    answer: 'Temos turmas às segundas e quartas às 18h, terças e quintas às 16:30 e 17:30, e sextas-feiras pela manhã (08:30 às 10:30). Consulte nossa recepção para verificar a melhor turma para você.',
   },
 ];

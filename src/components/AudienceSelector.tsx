@@ -133,7 +133,7 @@ export const AudienceSelector: React.FC = () => {
                       whatsappMessage={`Olá! Gostaria de agendar uma aula experimental de ${mod.name} na GB Centro JF.`}
                       className="py-2.5 px-4"
                     >
-                      Aula Grátis
+                      Agendar Aula
                     </Button>
                   </div>
                 </div>
