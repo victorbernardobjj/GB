@@ -1,0 +1,40 @@
+COMO ADICIONAR AS SUAS FOTOS:
+
+Coloque os arquivos de imagem das modalidades nesta pasta (/public/images/) com os nomes abaixo:
+
+TURMAS DE JIU-JITSU GRACIE BARRA:
+1. Pequenos Campeões:
+   /public/images/pequenos-campeoes.jpg
+
+2. Jiu-Jitsu Kids:
+   /public/images/jiu-jitsu-kids.jpg
+
+3. Jiu-Jitsu Juniores:
+   /public/images/jiu-jitsu-juniores.jpg
+
+4. Jiu-Jitsu Adulto:
+   /public/images/jiu-jitsu-adulto.jpg
+
+5. Jiu-Jitsu Feminino:
+   /public/images/jiu-jitsu-feminino.jpg
+
+OUTRAS MODALIDADES & DEFESA PESSOAL:
+6. Muay Thai (Team Recruta):
+   /public/images/muay-thai.jpg
+
+7. Karatê Tradicional (Baby, Infantil e Adulto):
+   /public/images/karate.jpg
+
+8. MMA (Artes Marciais Mistas):
+   /public/images/mma.jpg
+
+9. Krav Maga (Mestre Kobi):
+   /public/images/krav-maga.jpg
+
+10. Hapkido (Defesa Pessoal):
+    /public/images/hapkido.jpg
+
+Formatos aceitos: .jpg, .jpeg, .png, .webp
+O sistema já está configurado para ler automaticamente esses arquivos locais em todos os cards, vitrines e páginas internas de cada modalidade!
+Você também pode carregar as fotos diretamente pelo botão "Fotos do Site" (Gerenciador de Fotos Oficiais) na tela do site.
+Caso o arquivo ainda não tenha sido colocado, o sistema mantém uma imagem de fallback profissional para não quebrar a exibição visual.

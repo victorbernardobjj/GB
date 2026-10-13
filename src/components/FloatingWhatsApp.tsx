@@ -27,7 +27,7 @@ export const FloatingWhatsApp: React.FC = () => {
         aria-label="Fale conosco pelo WhatsApp"
         onMouseEnter={() => setIsTooltipOpen(true)}
         onMouseLeave={() => setIsTooltipOpen(false)}
-        className="relative flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gb-red text-white border border-white/10 shadow-sm hover:bg-gb-red-dark transition-colors duration-200"
+        className="relative flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#c4161c] text-white border border-white/10 shadow-lg hover:bg-[#990e14] transition-colors duration-200"
       >
         <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7" />
         <span className="sr-only">Agendar no WhatsApp</span>

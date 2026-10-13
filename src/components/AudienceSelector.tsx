@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Baby, Users, Shield, ArrowRight, Clock, Sparkles } from 'lucide-react';
 import { MODALITIES, ModalityDetail } from '../data/modalities';
 import { Button } from './Button';
+import { useAllModalityPhotos } from '../utils/photoManager';
 
 type AudienceType = 'crianca' | 'jovem' | 'mulher' | 'adulto' | 'defesa-pessoal';
 
@@ -16,31 +17,32 @@ interface AudienceOption {
 
 const AUDIENCE_OPTIONS: AudienceOption[] = [
   { id: 'crianca', label: 'Criança (3 a 11 anos)', icon: 'Baby', subtitle: 'Pequenos Campeões e Jiu-Jitsu Kids' },
-  { id: 'jovem', label: 'Jovem (11 a 15 anos)', icon: 'Users', subtitle: 'Jiu-Jitsu Juniores e Teen' },
+  { id: 'jovem', label: 'Jovem (11 a 15 anos)', icon: 'Users', subtitle: 'Jiu-Jitsu Juniores, Muay Thai e Karatê' },
   { id: 'mulher', label: 'Mulher', icon: 'Shield', subtitle: 'Turmas femininas e defesa pessoal' },
-  { id: 'adulto', label: 'Adulto', icon: 'Users', subtitle: 'Jiu-Jitsu, Muay Thai e Boxe' },
-  { id: 'defesa-pessoal', label: 'Defesa Pessoal', icon: 'Shield', subtitle: 'Krav Maga, Hapkido e Jiu-Jitsu' },
+  { id: 'adulto', label: 'Adulto', icon: 'Users', subtitle: 'Jiu-Jitsu, Muay Thai, Karatê e MMA' },
+  { id: 'defesa-pessoal', label: 'Defesa Pessoal', icon: 'Shield', subtitle: 'Krav Maga, Hapkido, Karatê e Jiu-Jitsu' },
 ];
 
 export const AudienceSelector: React.FC = () => {
   const [selectedAudience, setSelectedAudience] = useState<AudienceType>('adulto');
+  const customPhotos = useAllModalityPhotos();
 
   // Filter recommended modalities for this audience
   const recommendedModalities = MODALITIES.filter((mod) => {
     if (selectedAudience === 'crianca') {
-      return mod.slug === '/pequenos-campeoes' || mod.slug === '/jiu-jitsu-kids';
+      return mod.slug === '/pequenos-campeoes' || mod.slug === '/jiu-jitsu-kids' || mod.slug === '/karate';
     }
     if (selectedAudience === 'jovem') {
-      return mod.slug === '/jiu-jitsu-juniores' || mod.slug === '/muay-thai';
+      return mod.slug === '/jiu-jitsu-juniores' || mod.slug === '/muay-thai' || mod.slug === '/karate';
     }
     if (selectedAudience === 'mulher') {
       return mod.slug === '/jiu-jitsu-feminino' || mod.slug === '/krav-maga' || mod.slug === '/muay-thai';
     }
     if (selectedAudience === 'adulto') {
-      return mod.slug === '/jiu-jitsu-adulto' || mod.slug === '/muay-thai' || mod.slug === '/boxe';
+      return mod.slug === '/jiu-jitsu-adulto' || mod.slug === '/muay-thai' || mod.slug === '/karate' || mod.slug === '/mma';
     }
     if (selectedAudience === 'defesa-pessoal') {
-      return mod.slug === '/krav-maga' || mod.slug === '/hapkido' || mod.slug === '/jiu-jitsu-adulto';
+      return mod.slug === '/krav-maga' || mod.slug === '/hapkido' || mod.slug === '/jiu-jitsu-adulto' || mod.slug === '/karate';
     }
     return true;
   });
@@ -85,9 +87,14 @@ export const AudienceSelector: React.FC = () => {
               {/* Image banner */}
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src={mod.cardImage}
+                  src={customPhotos[mod.slug] || mod.cardImage}
                   alt={mod.heroAlt}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    if (mod.fallbackCardImage && e.currentTarget.src !== mod.fallbackCardImage) {
+                      e.currentTarget.src = mod.fallbackCardImage;
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent" />
 

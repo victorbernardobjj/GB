@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { PhotoManagerTrigger } from './components/PhotoManagerTrigger';
 
 // Pages
 import { Home } from './pages/Home';
@@ -19,7 +20,8 @@ import { PequenosCampeoesPage } from './pages/PequenosCampeoesPage';
 import { JiuJitsuKidsPage } from './pages/JiuJitsuKidsPage';
 import { JiuJitsuJunioresPage } from './pages/JiuJitsuJunioresPage';
 import { MuayThaiPage } from './pages/MuayThaiPage';
-import { BoxePage } from './pages/BoxePage';
+import { KaratePage } from './pages/KaratePage';
+import { MmaPage } from './pages/MmaPage';
 import { KravMagaPage } from './pages/KravMagaPage';
 import { HapkidoPage } from './pages/HapkidoPage';
 import { UniformePage } from './pages/UniformePage';
@@ -122,10 +124,18 @@ function AnimatedRoutes() {
           }
         />
         <Route
-          path="/boxe"
+          path="/karate"
           element={
             <PageWrapper>
-              <BoxePage />
+              <KaratePage />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/mma"
+          element={
+            <PageWrapper>
+              <MmaPage />
             </PageWrapper>
           }
         />
@@ -185,6 +195,7 @@ export default function App() {
         </main>
         <Footer />
         <FloatingWhatsApp />
+        <PhotoManagerTrigger />
       </div>
     </BrowserRouter>
   );

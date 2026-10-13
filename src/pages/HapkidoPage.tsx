@@ -29,7 +29,9 @@ export const HapkidoPage: React.FC = () => {
     <div className="bg-gb-black text-slate-100 min-h-screen">
       {/* Hero */}
       <PageHero
-        image="https://images.unsplash.com/photo-1564415315949-7a0c4c73aab4?auto=format&fit=crop&w=1920&q=80"
+        slug="/hapkido"
+        image="/images/hapkido.jpg"
+        fallbackImage="https://images.unsplash.com/photo-1564415315949-7a0c4c73aab4?auto=format&fit=crop&w=1920&q=80"
         imageAlt="Praticante de Hapkido demonstrando torção de punho e controle articular"
         badge="ARTE MARCIAL COREANA • DEFESA PESSOAL"
         title="HAPKIDO"

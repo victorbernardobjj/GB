@@ -9,7 +9,8 @@ const MARQUEE_ITEMS = [
   'DOS 3 ANOS AO ADULTO',
   'METODOLOGIA CARLOS GRACIE JR',
   'KRAV MAGA & HAPKIDO',
-  'BOXE NOBRE ARTE',
+  'KARATÊ TRADICIONAL',
+  'MMA ARTES MARCIAIS MISTAS',
 ];
 
 export const Marquee: React.FC = () => {

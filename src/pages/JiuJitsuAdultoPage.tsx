@@ -17,6 +17,7 @@ import { CTAFinal } from '../components/CTAFinal';
 import { FAQ } from '../components/FAQ';
 import { Button } from '../components/Button';
 import { TESTIMONIALS } from '../data/testimonials';
+import { MODALITIES } from '../data/modalities';
 
 const ADULTO_BENEFITS = [
   {
@@ -78,11 +79,15 @@ const ADULTO_FAQS = [
 ];
 
 export const JiuJitsuAdultoPage: React.FC = () => {
+  const modality = MODALITIES.find((m) => m.slug === '/jiu-jitsu-adulto');
+
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       {/* Hero */}
       <PageHero
-        image="https://images.unsplash.com/photo-1564415051543-cb73a7468103?auto=format&fit=crop&w=1920&q=80"
+        slug="/jiu-jitsu-adulto"
+        image={modality?.heroImage || '/images/jiu-jitsu-adulto.jpg'}
+        fallbackImage={modality?.fallbackHeroImage}
         imageAlt="Alunos adultos praticando Jiu-Jitsu no tatame Gracie Barra"
         badge="METODOLOGIA OFICIAL GRACIE BARRA"
         title="JIU-JITSU ADULTO"

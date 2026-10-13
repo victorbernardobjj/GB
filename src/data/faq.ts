@@ -29,7 +29,7 @@ export const HOME_FAQS: FAQItem[] = [
   {
     id: 'faq-5',
     question: 'Posso treinar mais de uma modalidade na academia?',
-    answer: 'Com certeza! Muitos alunos combinam o Jiu-Jitsu com Muay Thai, Boxe ou Krav Maga para um preparo físico e técnico completo. Temos planos promocionais integrados que contemplam múltiplas artes marciais. Fale com a nossa equipe no WhatsApp!',
+    answer: 'Com certeza! Muitos alunos combinam o Jiu-Jitsu com Muay Thai, Karatê, MMA ou Krav Maga para um preparo físico e técnico completo. Temos planos integrados que contemplam múltiplas artes marciais. Fale com a nossa equipe no WhatsApp!',
   },
   {
     id: 'faq-6',
@@ -64,7 +64,7 @@ export const PARENTS_FAQS: FAQItem[] = [
 export const STRIKING_FAQS: FAQItem[] = [
   {
     id: 'sfaq-1',
-    question: 'Vou levar pancadas na cabeça nas primeiras aulas de Muay Thai ou Boxe?',
+    question: 'Vou levar pancadas na cabeça nas primeiras aulas de Muay Thai ou Striking?',
     answer: 'De forma alguma. Para iniciantes, o foco é 100% no condicionamento cardiovascular, queima de calorias, postura e bater nas manoplas/sacos com segurança. Sparring (luta) é opcional e apenas para alunos avançados autorizados.',
   },
   {
@@ -76,6 +76,52 @@ export const STRIKING_FAQS: FAQItem[] = [
     id: 'sfaq-3',
     question: 'Quem supervisiona o Muay Thai?',
     answer: 'As aulas de Muay Thai são ministradas em parceria oficial com a Team Recruta, equipe de referência em artes marciais de contato na região de Juiz de Fora.',
+  },
+];
+
+export const KARATE_FAQS: FAQItem[] = [
+  {
+    id: 'kfaq-1',
+    question: 'Preciso ter experiência prévia para treinar Karatê?',
+    answer: 'Não! Nossas aulas são desenhadas tanto para quem está dando os primeiros passos nas artes marciais japonesas quanto para praticantes que desejam retomar os treinos ou se graduar.',
+  },
+  {
+    id: 'kfaq-2',
+    question: 'Crianças e jovens podem participar?',
+    answer: 'Sim! O Karatê é amplamente recomendado para crianças a partir dos 4 anos, estimulando coordenação motora, foco nos estudos, respeito aos colegas e postura disciplinada.',
+  },
+  {
+    id: 'kfaq-3',
+    question: 'Como funciona o contato físico nas aulas de Karatê?',
+    answer: 'O contato nas aulas regulares é estritamente controlado com foco na biomecânica dos golpes, controle de distância e respeito mútuo. A integridade física é prioridade absoluta em nosso dojo.',
+  },
+  {
+    id: 'kfaq-4',
+    question: 'Como posso consultar os horários das turmas de Karatê?',
+    answer: 'Nosso quadro de horários está em atualização com novas turmas sendo disponibilizadas. Entre em contato pelo WhatsApp da recepção para consultar as opções de dias e horários para agendar sua aula experimental!',
+  },
+];
+
+export const MMA_FAQS: FAQItem[] = [
+  {
+    id: 'mmafaq-1',
+    question: 'Preciso ser atleta ou ter experiência de luta para fazer aula de MMA?',
+    answer: 'Não! Nossas turmas de MMA atendem tanto praticantes recreativos que buscam o melhor preparo físico do mundo quanto alunos interessados em aprender a transição completa de combate.',
+  },
+  {
+    id: 'mmafaq-2',
+    question: 'Quais técnicas são ensinadas no treinamento de MMA?',
+    answer: 'O programa integra trocação em pé (socos, chutes e joelhos), controle no clinch e quedas (wrestling) e jogo de solo e finalizações (Jiu-Jitsu).',
+  },
+  {
+    id: 'mmafaq-3',
+    question: 'Vou me machucar no treino de MMA?',
+    answer: 'A integridade e segurança dos alunos são protegidas por protocolos rígidos: treinos técnicos, exercícios em manoplas e parceiros conscientes, sem agressividade desnecessária.',
+  },
+  {
+    id: 'mmafaq-4',
+    question: 'Como consultar os horários de MMA?',
+    answer: 'Os horários de MMA estão sendo atualizados pela coordenação técnica. Fale com a nossa equipe pelo WhatsApp para saber os dias e horários disponíveis e garantir sua vaga.',
   },
 ];
 

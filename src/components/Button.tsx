@@ -62,8 +62,8 @@ export const Button: React.FC<ButtonProps> = ({
     variantClasses =
       'bg-gb-blue text-white hover:bg-gb-blue-dark hover:-translate-y-0.5 glow-blue active:translate-y-0';
     const message =
-      whatsappMessage || 'Olá Team Recruta! Gostaria de informações sobre as aulas de Muay Thai na GB Centro JF.';
-    finalHref = getWhatsAppLink(message, GYM_INFO.phones.whatsappTeamRecruta);
+      whatsappMessage || 'Olá! Gostaria de informações sobre as aulas de Muay Thai na GB Centro JF.';
+    finalHref = getWhatsAppLink(message, GYM_INFO.phones.whatsappGB);
     isExternal = true;
   }
 

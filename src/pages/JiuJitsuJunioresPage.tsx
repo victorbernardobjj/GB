@@ -5,6 +5,7 @@ import { AgeRecommender } from '../components/AgeRecommender';
 import { CTAFinal } from '../components/CTAFinal';
 import { FAQ } from '../components/FAQ';
 import { Button } from '../components/Button';
+import { MODALITIES } from '../data/modalities';
 
 const JUNIORES_FAQS = [
   {
@@ -25,10 +26,14 @@ const JUNIORES_FAQS = [
 ];
 
 export const JiuJitsuJunioresPage: React.FC = () => {
+  const modality = MODALITIES.find((m) => m.slug === '/jiu-jitsu-juniores');
+
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       <PageHero
-        image="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1200&q=80"
+        slug="/jiu-jitsu-juniores"
+        image={modality?.heroImage || '/images/jiu-jitsu-juniores.jpg'}
+        fallbackImage={modality?.fallbackHeroImage}
         imageAlt="Jovens treinando Jiu-Jitsu"
         badge="Programa Juvenil • 11 a 15 anos"
         title="Jiu-Jitsu Juniores"

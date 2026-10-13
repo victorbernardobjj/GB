@@ -154,6 +154,32 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
         )}
       </div>
 
+      {/* Notice if modality schedule is being updated */}
+      {filteredSlots.length === 0 && (
+        <div className="my-8 p-6 sm:p-8 rounded-3xl bg-neutral-900 border border-white/10 text-center space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-gb-red/20 text-gb-red flex items-center justify-center mx-auto glow-red">
+            <Clock className="w-6 h-6" />
+          </div>
+          <div>
+            <h4 className="font-anton text-2xl text-white uppercase tracking-wider">
+              Quadro de Horários em Atualização
+            </h4>
+            <p className="text-slate-300 text-sm max-w-lg mx-auto mt-2 font-light">
+              As novas turmas e horários de {selectedFilter === 'karate' ? 'Karatê' : selectedFilter === 'mma' ? 'MMA' : 'aulas'} estão sendo organizadas pela coordenação técnica da academia. Fale com a secretaria pelo WhatsApp para consultar as opções de dias e horários e agendar sua aula experimental!
+            </p>
+          </div>
+          <a
+            href={getWhatsAppLink(`Olá! Gostaria de consultar os horários de ${selectedFilter === 'karate' ? 'Karatê' : selectedFilter === 'mma' ? 'MMA' : 'aulas'} na Gracie Barra Centro JF.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Consultar turmas no WhatsApp
+          </a>
+        </div>
+      )}
+
       {/* -------------------- MOBILE VIEW (Tabs by day) -------------------- */}
       <div className="block lg:hidden print:hidden">
         {/* Day selection tabs */}
@@ -358,7 +384,7 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
             <span className="font-bold text-white uppercase tracking-wider">Legenda de Cores:</span>
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-3.5 rounded-full bg-gb-red shadow-sm shadow-red-900" />
-              <span>Jiu-Jitsu Gracie Barra</span>
+              <span>Jiu-Jitsu & Karatê</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-3.5 rounded-full bg-gradient-to-r from-gb-red to-pink-500" />
@@ -366,7 +392,7 @@ export const ScheduleGrid: React.FC<ScheduleGridProps> = ({
             </div>
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-3.5 rounded-full bg-gb-blue shadow-sm shadow-blue-900" />
-              <span>Muay Thai & Boxe</span>
+              <span>Muay Thai & MMA</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-3.5 rounded-full bg-neutral-900 border border-neutral-600" />

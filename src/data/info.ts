@@ -12,8 +12,6 @@ export interface GymInfo {
   phones: {
     whatsappGB: string; // E.164 format for wa.me links
     whatsappGBFormatted: string;
-    whatsappTeamRecruta: string;
-    whatsappTeamRecrutaFormatted: string;
   };
   social: {
     instagramHandle: string;
@@ -29,7 +27,7 @@ export interface GymInfo {
     studentsCount: string;
     yearsOperating: string;
     modalitiesCount: number;
-    freeTrialPercent: string;
+    schoolsWorldwide: string;
   };
 }
 
@@ -45,10 +43,8 @@ export const GYM_INFO: GymInfo = {
     full: "Av. Barão do Rio Branco, 267 – Manuel Honório, Juiz de Fora – MG",
   },
   phones: {
-    whatsappGB: "5532999998877", // [NÚMERO GB - SUBSTITUIR PELO NÚMERO OFICIAL]
-    whatsappGBFormatted: "(32) 99999-8877",
-    whatsappTeamRecruta: "5532988887766", // [NÚMERO TEAM RECRUTA - SUBSTITUIR PELO NÚMERO OFICIAL]
-    whatsappTeamRecrutaFormatted: "(32) 98888-7766",
+    whatsappGB: "5532999120606",
+    whatsappGBFormatted: "(32) 99912-0606",
   },
   social: {
     instagramHandle: "@graciebarracentrojf", // [SUBSTITUIR PELO @ REAL]
@@ -63,8 +59,8 @@ export const GYM_INFO: GymInfo = {
   stats: {
     studentsCount: "350+", // [NÚMERO DE ALUNOS]
     yearsOperating: "8+", // [NÚMERO DE ANOS DE ACADEMIA]
-    modalitiesCount: 6,
-    freeTrialPercent: "100%",
+    modalitiesCount: 8,
+    schoolsWorldwide: "+1.000",
   },
 };
 

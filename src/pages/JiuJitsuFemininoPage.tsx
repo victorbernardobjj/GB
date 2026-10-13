@@ -17,6 +17,7 @@ import { ScheduleGrid } from '../components/ScheduleGrid';
 import { CTAFinal } from '../components/CTAFinal';
 import { FAQ } from '../components/FAQ';
 import { Button } from '../components/Button';
+import { MODALITIES } from '../data/modalities';
 
 const FEMININO_BENEFITS = [
   {
@@ -60,11 +61,15 @@ const FEMININO_FAQS = [
 ];
 
 export const JiuJitsuFemininoPage: React.FC = () => {
+  const modality = MODALITIES.find((m) => m.slug === '/jiu-jitsu-feminino');
+
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       {/* Hero */}
       <PageHero
-        image="https://images.unsplash.com/photo-1549476464-37392f717541?auto=format&fit=crop&w=1920&q=80"
+        slug="/jiu-jitsu-feminino"
+        image={modality?.heroImage || '/images/jiu-jitsu-feminino.jpg'}
+        fallbackImage={modality?.fallbackHeroImage}
         imageAlt="Mulheres treinando jiu-jitsu juntas no tatame da Gracie Barra Centro JF"
         badge="PROGRAMA FEMININO GRACIE BARRA"
         title="LUGAR DE MULHER TAMBÉM É NO TATAME"

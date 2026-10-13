@@ -12,7 +12,8 @@ const MODALITY_LINKS = [
   { name: 'Jiu-Jitsu Kids (5-11a)', path: '/jiu-jitsu-kids', tag: 'Kids' },
   { name: 'Pequenos Campeões (3-5a)', path: '/pequenos-campeoes', tag: '3-5 anos' },
   { name: 'Muay Thai (Team Recruta)', path: '/muay-thai', tag: '8 Armas' },
-  { name: 'Boxe Adulto', path: '/boxe', tag: 'Nobre Arte' },
+  { name: 'Karatê Tradicional', path: '/karate', tag: 'Dojo' },
+  { name: 'MMA', path: '/mma', tag: 'Artes Mistas' },
   { name: 'Krav Maga (Mestre Kobi)', path: '/krav-maga', tag: 'Mestre Kobi' },
   { name: 'Hapkido', path: '/hapkido', tag: 'Defesa Pessoal' },
 ];

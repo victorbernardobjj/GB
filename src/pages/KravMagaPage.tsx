@@ -10,7 +10,9 @@ export const KravMagaPage: React.FC = () => {
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       <PageHero
-        image="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1920&q=80"
+        slug="/krav-maga"
+        image="/images/krav-maga.jpg"
+        fallbackImage="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1920&q=80"
         imageAlt="Prática de defesa pessoal e técnicas de Krav Maga"
         badge="Supervisão Oficial • Grão Mestre Kobi"
         title="Krav Maga"

@@ -48,7 +48,7 @@ export const CTAFinal: React.FC<CTAFinalProps> = ({
               <span>Tradição • Metodologia Oficial GB</span>
             </div>
 
-            <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl tracking-tight uppercase leading-[0.95] text-white">
+            <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl tracking-tight uppercase leading-tight sm:leading-[1.05] text-white">
               {customTitle}
             </h2>
 

@@ -11,7 +11,9 @@ export const MuayThaiPage: React.FC = () => {
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       <PageHero
-        image="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1920&q=80"
+        slug="/muay-thai"
+        image="/images/muay-thai.jpg"
+        fallbackImage="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1920&q=80"
         imageAlt="Prática de Muay Thai com aparadores e luvas"
         badge="Parceria Técnica • Team Recruta"
         title="Muay Thai"
@@ -20,24 +22,13 @@ export const MuayThaiPage: React.FC = () => {
         overlayType="darker"
         floatingBadges={['Arte das 8 Armas', 'Parceria Team Recruta', 'Alta Intensidade']}
         actions={
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-            <Button
-              variant="whatsapp"
-              size="lg"
-              className="w-full sm:w-auto"
-              whatsappMessage="Olá! Gostaria de agendar uma aula experimental de Muay Thai na GB Centro JF."
-            >
-              Secretaria GB
-            </Button>
-            <Button
-              variant="whatsapp-tr"
-              size="lg"
-              className="w-full sm:w-auto"
-              whatsappMessage="Olá Team Recruta! Gostaria de informações sobre o Muay Thai na GB Centro JF."
-            >
-              Team Recruta
-            </Button>
-          </div>
+          <Button
+            variant="whatsapp"
+            size="lg"
+            whatsappMessage="Olá! Gostaria de agendar uma aula experimental de Muay Thai na GB Centro JF."
+          >
+            Agendar aula de Muay Thai
+          </Button>
         }
       />
 
@@ -100,11 +91,11 @@ export const MuayThaiPage: React.FC = () => {
 
           <div className="md:col-span-4 flex items-center md:justify-end">
             <Button
-              variant="whatsapp-tr"
+              variant="whatsapp"
               size="md"
-              whatsappMessage="Olá Team Recruta! Gostaria de informações sobre o Muay Thai na GB Centro JF."
+              whatsappMessage="Olá! Gostaria de informações sobre o Muay Thai na GB Centro JF."
             >
-              Falar com a Team Recruta
+              Agendar no WhatsApp
             </Button>
           </div>
         </div>

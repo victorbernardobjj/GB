@@ -9,7 +9,8 @@ export type ModalityCategory =
   | 'jiu-jitsu-kids'
   | 'jiu-jitsu-juniores'
   | 'muay-thai'
-  | 'boxe'
+  | 'karate'
+  | 'mma'
   | 'krav-maga'
   | 'hapkido';
 
@@ -124,14 +125,29 @@ export const SCHEDULE_ITEMS: ScheduleItem[] = [
     color: 'blue',
   },
   {
-    id: 'boxe',
-    modality: 'Boxe Adulto',
-    slug: '/boxe',
-    category: 'boxe',
-    days: ['Seg', 'Qua', 'Sex'],
-    times: ['12:00 (Seg/Qua/Sex)', '20:00 (Seg/Qua)'],
-    ageRange: 'Adulto',
-    notes: 'Coordenação, queima calórica e alívio do estresse',
+    id: 'karate',
+    modality: 'Karatê Tradicional',
+    slug: '/karate',
+    category: 'karate',
+    days: ['Ter', 'Qua', 'Qui', 'Sex'],
+    times: [
+      '15:00 (Ter/Qui) - Adulto',
+      '16:00 (Ter/Qui) - Baby (2,5 a 5 anos)',
+      '19:00 (Qua/Sex) - Infantil (6 a 11 anos)',
+    ],
+    ageRange: 'Baby (2,5-5a), Infantil (6-11a) e Adulto',
+    notes: 'Karatê Baby (Ter/Qui 16h), Adulto (Ter/Qui 15h) e Infantil (Qua/Sex 19h)',
+    color: 'red',
+  },
+  {
+    id: 'mma',
+    modality: 'MMA (Artes Marciais Mistas)',
+    slug: '/mma',
+    category: 'mma',
+    days: ['Seg', 'Qua'],
+    times: ['19:00 (Seg/Qua)'],
+    ageRange: 'A partir de 15 anos e Adulto',
+    notes: 'Segunda e Quarta às 19:00 • Integração de trocação, quedas e chão',
     color: 'blue',
   },
   {
@@ -165,13 +181,12 @@ export const TIMETABLE_SLOTS: TimetableSlot[] = [
   { id: 'seg-0700-jj', day: 'Seg', time: '07:00', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'seg-0900-jjk', day: 'Seg', time: '09:00', modality: 'Jiu-Jitsu Kids', category: 'jiu-jitsu-kids', color: 'red', slug: '/jiu-jitsu-kids', ageRange: '5-11 anos' },
   { id: 'seg-1200-jjf', day: 'Seg', time: '12:00', modality: 'Jiu-Jitsu Feminino', category: 'jiu-jitsu-feminino', color: 'red', accentPink: true, slug: '/jiu-jitsu-feminino' },
-  { id: 'seg-1200-box', day: 'Seg', time: '12:00', modality: 'Boxe Adulto', category: 'boxe', color: 'blue', slug: '/boxe' },
   { id: 'seg-1230-jj', day: 'Seg', time: '12:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'seg-1600-jjj', day: 'Seg', time: '16:00', modality: 'Jiu-Jitsu Juniores', category: 'jiu-jitsu-juniores', color: 'red', slug: '/jiu-jitsu-juniores', ageRange: '11-15 anos' },
   { id: 'seg-1800-km', day: 'Seg', time: '18:00', modality: 'Krav Maga', category: 'krav-maga', color: 'black', slug: '/krav-maga' },
   { id: 'seg-1830-jj', day: 'Seg', time: '18:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'seg-1900-jjf', day: 'Seg', time: '19:00', modality: 'Jiu-Jitsu Feminino', category: 'jiu-jitsu-feminino', color: 'red', accentPink: true, slug: '/jiu-jitsu-feminino' },
-  { id: 'seg-2000-box', day: 'Seg', time: '20:00', modality: 'Boxe Adulto', category: 'boxe', color: 'blue', slug: '/boxe' },
+  { id: 'seg-1900-mma', day: 'Seg', time: '19:00', modality: 'MMA', category: 'mma', color: 'blue', slug: '/mma', ageRange: '15+ anos e Adulto' },
   { id: 'seg-2000-jj', day: 'Seg', time: '20:00', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'seg-2015-mt', day: 'Seg', time: '20:15', modality: 'Muay Thai (Team Recruta)', category: 'muay-thai', color: 'blue', slug: '/muay-thai' },
   { id: 'seg-2100-hap', day: 'Seg', time: '21:00', modality: 'Hapkido', category: 'hapkido', color: 'black', slug: '/hapkido' },
@@ -181,6 +196,8 @@ export const TIMETABLE_SLOTS: TimetableSlot[] = [
   { id: 'ter-0700-jjf', day: 'Ter', time: '07:00', modality: 'Jiu-Jitsu Feminino', category: 'jiu-jitsu-feminino', color: 'red', accentPink: true, slug: '/jiu-jitsu-feminino' },
   { id: 'ter-0900-jjpc', day: 'Ter', time: '09:00', modality: 'Pequenos Campeões', category: 'pequenos-campeoes', color: 'red', slug: '/pequenos-campeoes', ageRange: '3-5 anos' },
   { id: 'ter-1230-jj', day: 'Ter', time: '12:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
+  { id: 'ter-1500-karate-ad', day: 'Ter', time: '15:00', modality: 'Karatê Adulto', category: 'karate', color: 'red', slug: '/karate', ageRange: 'Adulto' },
+  { id: 'ter-1600-karate-baby', day: 'Ter', time: '16:00', modality: 'Karatê Baby', category: 'karate', color: 'red', slug: '/karate', ageRange: '2,5 a 5 anos' },
   { id: 'ter-1630-km', day: 'Ter', time: '16:30', modality: 'Krav Maga', category: 'krav-maga', color: 'black', slug: '/krav-maga' },
   { id: 'ter-1700-jjpc', day: 'Ter', time: '17:00', modality: 'Pequenos Campeões', category: 'pequenos-campeoes', color: 'red', slug: '/pequenos-campeoes', ageRange: '3-5 anos' },
   { id: 'ter-1730-km', day: 'Ter', time: '17:30', modality: 'Krav Maga', category: 'krav-maga', color: 'black', slug: '/krav-maga' },
@@ -193,13 +210,13 @@ export const TIMETABLE_SLOTS: TimetableSlot[] = [
   { id: 'qua-0700-jj', day: 'Qua', time: '07:00', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'qua-0900-jjk', day: 'Qua', time: '09:00', modality: 'Jiu-Jitsu Kids', category: 'jiu-jitsu-kids', color: 'red', slug: '/jiu-jitsu-kids', ageRange: '5-11 anos' },
   { id: 'qua-1200-jjf', day: 'Qua', time: '12:00', modality: 'Jiu-Jitsu Feminino', category: 'jiu-jitsu-feminino', color: 'red', accentPink: true, slug: '/jiu-jitsu-feminino' },
-  { id: 'qua-1200-box', day: 'Qua', time: '12:00', modality: 'Boxe Adulto', category: 'boxe', color: 'blue', slug: '/boxe' },
   { id: 'qua-1230-jj', day: 'Qua', time: '12:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'qua-1600-jjj', day: 'Qua', time: '16:00', modality: 'Jiu-Jitsu Juniores', category: 'jiu-jitsu-juniores', color: 'red', slug: '/jiu-jitsu-juniores', ageRange: '11-15 anos' },
   { id: 'qua-1800-km', day: 'Qua', time: '18:00', modality: 'Krav Maga', category: 'krav-maga', color: 'black', slug: '/krav-maga' },
   { id: 'qua-1830-jj', day: 'Qua', time: '18:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'qua-1900-jjk', day: 'Qua', time: '19:00', modality: 'Jiu-Jitsu Kids', category: 'jiu-jitsu-kids', color: 'red', slug: '/jiu-jitsu-kids', ageRange: '5-11 anos' },
-  { id: 'qua-2000-box', day: 'Qua', time: '20:00', modality: 'Boxe Adulto', category: 'boxe', color: 'blue', slug: '/boxe' },
+  { id: 'qua-1900-mma', day: 'Qua', time: '19:00', modality: 'MMA', category: 'mma', color: 'blue', slug: '/mma', ageRange: '15+ anos e Adulto' },
+  { id: 'qua-1900-karate-inf', day: 'Qua', time: '19:00', modality: 'Karatê Infantil', category: 'karate', color: 'red', slug: '/karate', ageRange: '6 a 11 anos' },
   { id: 'qua-2000-jj', day: 'Qua', time: '20:00', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'qua-2015-mt', day: 'Qua', time: '20:15', modality: 'Muay Thai (Team Recruta)', category: 'muay-thai', color: 'blue', slug: '/muay-thai' },
 
@@ -208,6 +225,8 @@ export const TIMETABLE_SLOTS: TimetableSlot[] = [
   { id: 'qui-0700-jjf', day: 'Qui', time: '07:00', modality: 'Jiu-Jitsu Feminino', category: 'jiu-jitsu-feminino', color: 'red', accentPink: true, slug: '/jiu-jitsu-feminino' },
   { id: 'qui-0900-jjpc', day: 'Qui', time: '09:00', modality: 'Pequenos Campeões', category: 'pequenos-campeoes', color: 'red', slug: '/pequenos-campeoes', ageRange: '3-5 anos' },
   { id: 'qui-1230-jj', day: 'Qui', time: '12:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
+  { id: 'qui-1500-karate-ad', day: 'Qui', time: '15:00', modality: 'Karatê Adulto', category: 'karate', color: 'red', slug: '/karate', ageRange: 'Adulto' },
+  { id: 'qui-1600-karate-baby', day: 'Qui', time: '16:00', modality: 'Karatê Baby', category: 'karate', color: 'red', slug: '/karate', ageRange: '2,5 a 5 anos' },
   { id: 'qui-1630-km', day: 'Qui', time: '16:30', modality: 'Krav Maga', category: 'krav-maga', color: 'black', slug: '/krav-maga' },
   { id: 'qui-1700-jjpc', day: 'Qui', time: '17:00', modality: 'Pequenos Campeões', category: 'pequenos-campeoes', color: 'red', slug: '/pequenos-campeoes', ageRange: '3-5 anos' },
   { id: 'qui-1730-km', day: 'Qui', time: '17:30', modality: 'Krav Maga', category: 'krav-maga', color: 'black', slug: '/krav-maga' },
@@ -221,11 +240,11 @@ export const TIMETABLE_SLOTS: TimetableSlot[] = [
   { id: 'sex-0700-jj', day: 'Sex', time: '07:00', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'sex-0830-km', day: 'Sex', time: '08:30', endTime: '10:30', modality: 'Krav Maga (Especial)', category: 'krav-maga', color: 'black', slug: '/krav-maga', notes: '08:30 às 10:30' },
   { id: 'sex-1200-jjf', day: 'Sex', time: '12:00', modality: 'Jiu-Jitsu Feminino', category: 'jiu-jitsu-feminino', color: 'red', accentPink: true, slug: '/jiu-jitsu-feminino' },
-  { id: 'sex-1200-box', day: 'Sex', time: '12:00', modality: 'Boxe Adulto', category: 'boxe', color: 'blue', slug: '/boxe' },
   { id: 'sex-1230-jj', day: 'Sex', time: '12:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'sex-1600-jjj', day: 'Sex', time: '16:00', modality: 'Jiu-Jitsu Juniores', category: 'jiu-jitsu-juniores', color: 'red', slug: '/jiu-jitsu-juniores', ageRange: '11-15 anos' },
   { id: 'sex-1830-jj', day: 'Sex', time: '18:30', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
   { id: 'sex-1900-jjk', day: 'Sex', time: '19:00', modality: 'Jiu-Jitsu Kids', category: 'jiu-jitsu-kids', color: 'red', slug: '/jiu-jitsu-kids', ageRange: '5-11 anos' },
+  { id: 'sex-1900-karate-inf', day: 'Sex', time: '19:00', modality: 'Karatê Infantil', category: 'karate', color: 'red', slug: '/karate', ageRange: '6 a 11 anos' },
   { id: 'sex-2000-jj', day: 'Sex', time: '20:00', modality: 'Jiu-Jitsu Adulto', category: 'jiu-jitsu-adulto', color: 'red', slug: '/jiu-jitsu-adulto' },
 
   // SÁBADO
@@ -244,7 +263,8 @@ export const SCHEDULE_FILTER_OPTIONS: { id: string; label: string; category?: Mo
   { id: 'jiu-jitsu-kids', label: 'Kids (5-11a)', category: 'jiu-jitsu-kids' },
   { id: 'jiu-jitsu-juniores', label: 'Juniores (11-15a)', category: 'jiu-jitsu-juniores' },
   { id: 'muay-thai', label: 'Muay Thai', category: 'muay-thai' },
-  { id: 'boxe', label: 'Boxe', category: 'boxe' },
+  { id: 'karate', label: 'Karatê', category: 'karate' },
+  { id: 'mma', label: 'MMA', category: 'mma' },
   { id: 'krav-maga', label: 'Krav Maga', category: 'krav-maga' },
   { id: 'hapkido', label: 'Hapkido', category: 'hapkido' },
 ];

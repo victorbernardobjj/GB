@@ -8,7 +8,6 @@ import {
   Flame,
   Clock,
   ArrowRight,
-  Instagram,
   HeartHandshake,
   CheckCircle2,
   ChevronDown,
@@ -26,51 +25,11 @@ import { CTAFinal } from '../components/CTAFinal';
 import { MODALITIES } from '../data/modalities';
 import { HOME_FAQS } from '../data/faq';
 import { GYM_INFO, getWhatsAppLink } from '../data/info';
-
-const INSTAGRAM_PHOTOS = [
-  {
-    url: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80',
-    alt: 'Tatame cheio na aula de Jiu-Jitsu',
-    caption: 'Família reunida no tatame!',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1549476464-37392f717541?auto=format&fit=crop&w=600&q=80',
-    alt: 'Graduação feminina de Jiu-Jitsu',
-    caption: 'Força feminina na Gracie Barra Centro JF',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80',
-    alt: 'Treino de Muay Thai Team Recruta',
-    caption: 'Energia lá em cima com a Team Recruta!',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
-    alt: 'Crianças nos Pequenos Campeões',
-    caption: 'Futuros campeões aprendendo disciplina',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1564415051543-cb73a7468103?auto=format&fit=crop&w=600&q=80',
-    alt: 'Treino adulto de Jiu-Jitsu no-gi e com kimono',
-    caption: 'Superação a cada round',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?auto=format&fit=crop&w=600&q=80',
-    alt: 'Treino de Boxe na Gracie Barra',
-    caption: 'Foco e técnica na nobre arte',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=600&q=80',
-    alt: 'Krav Maga com Mestre Kobi',
-    caption: 'Defesa pessoal para situações reais',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=600&q=80',
-    alt: 'Turma de jovens juniores',
-    caption: 'Companheirismo e foco nos estudos e tatame',
-  },
-];
+import { useAllModalityPhotos } from '../utils/photoManager';
 
 export const Home: React.FC = () => {
+  const customPhotos = useAllModalityPhotos();
+
   return (
     <div className="bg-gb-black text-slate-100 overflow-hidden">
       {/* ==================== S1. HERO (TELA CHEIA) ==================== */}
@@ -106,10 +65,11 @@ export const Home: React.FC = () => {
           </motion.div>
 
           {/* H1 Main Title */}
-          <h1 className="font-anton text-[3.75rem] xs:text-7xl sm:text-8xl md:text-9xl lg:text-[10.5rem] xl:text-[12rem] tracking-tight uppercase leading-[0.86] mb-6 hero-title-skew drop-shadow-2xl">
+          <h1 className="font-anton text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-[9.5rem] xl:text-[11.5rem] 2xl:text-[13rem] tracking-tight uppercase leading-[0.98] sm:leading-[1.02] md:leading-[1.05] mb-6 hero-title-skew drop-shadow-2xl flex flex-col items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5">
             <span className="text-white block">JIU-JITSU</span>
-            <span className="text-white">PARA </span>
-            <span className="text-gb-red font-anton uppercase">TODOS</span>
+            <span className="text-white block">
+              PARA <span className="text-gb-red font-anton uppercase">TODOS</span>
+            </span>
           </h1>
 
           {/* Subtitle */}
@@ -119,7 +79,7 @@ export const Home: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base sm:text-xl text-slate-200 max-w-2xl font-light leading-relaxed mb-8"
           >
-            Do primeiro treino à faixa preta. Aulas para crianças, mulheres e adultos, além de Muay Thai, Boxe, Krav Maga e Hapkido.
+            Do primeiro treino à faixa preta. Aulas para crianças, mulheres e adultos, além de Muay Thai, Karatê, MMA, Krav Maga e Hapkido.
           </motion.p>
 
           {/* CTAs */}
@@ -202,10 +162,15 @@ export const Home: React.FC = () => {
               {/* Card Photo with Hover Zoom */}
               <div className="relative h-56 overflow-hidden">
                 <img
-                  src={mod.cardImage}
+                  src={customPhotos[mod.slug] || mod.cardImage}
                   alt={mod.heroAlt}
                   className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500"
                   loading="lazy"
+                  onError={(e) => {
+                    if (mod.fallbackCardImage && e.currentTarget.src !== mod.fallbackCardImage) {
+                      e.currentTarget.src = mod.fallbackCardImage;
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent" />
 
@@ -448,53 +413,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ==================== S9. GALERIA / INSTAGRAM ==================== */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12">
-          <div>
-            <span className="text-xs font-bold text-gb-red uppercase tracking-widest block mb-1">
-              Dia a Dia no Tatame
-            </span>
-            <h2 className="font-anton text-3xl sm:text-5xl text-white uppercase tracking-tight">
-              {GYM_INFO.social.hashtag}
-            </h2>
-          </div>
 
-          <a
-            href={GYM_INFO.social.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:opacity-90 transition-opacity"
-          >
-            <Instagram className="w-4 h-4" />
-            <span>Seguir no Instagram</span>
-          </a>
-        </div>
-
-        {/* 8-Photo Masonry Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {INSTAGRAM_PHOTOS.map((item, index) => (
-            <a
-              key={index}
-              href={GYM_INFO.social.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative h-48 sm:h-60 rounded-2xl overflow-hidden bg-neutral-900 border border-white/10 block"
-            >
-              <img
-                src={item.url}
-                alt={item.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gb-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                <Instagram className="w-6 h-6 text-white mb-2" />
-                <p className="text-xs text-white font-medium line-clamp-2">{item.caption}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
 
       {/* ==================== S10. FAQ ==================== */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-neutral-950 border-t border-white/10">

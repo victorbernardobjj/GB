@@ -6,12 +6,17 @@ import { CTAFinal } from '../components/CTAFinal';
 import { FAQ } from '../components/FAQ';
 import { Button } from '../components/Button';
 import { PARENTS_FAQS } from '../data/faq';
+import { MODALITIES } from '../data/modalities';
 
 export const PequenosCampeoesPage: React.FC = () => {
+  const modality = MODALITIES.find((m) => m.slug === '/pequenos-campeoes');
+
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       <PageHero
-        image="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80"
+        slug="/pequenos-campeoes"
+        image={modality?.heroImage || '/images/pequenos-campeoes.jpg'}
+        fallbackImage={modality?.fallbackHeroImage}
         imageAlt="Turma infantil de Jiu-Jitsu para crianças pequenas"
         badge="Programa Infantil • 3 a 5 anos"
         title="Pequenos Campeões"

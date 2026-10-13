@@ -6,12 +6,17 @@ import { CTAFinal } from '../components/CTAFinal';
 import { FAQ } from '../components/FAQ';
 import { Button } from '../components/Button';
 import { PARENTS_FAQS } from '../data/faq';
+import { MODALITIES } from '../data/modalities';
 
 export const JiuJitsuKidsPage: React.FC = () => {
+  const modality = MODALITIES.find((m) => m.slug === '/jiu-jitsu-kids');
+
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       <PageHero
-        image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80"
+        slug="/jiu-jitsu-kids"
+        image={modality?.heroImage || '/images/jiu-jitsu-kids.jpg'}
+        fallbackImage={modality?.fallbackHeroImage}
         imageAlt="Crianças em formação no tatame da Gracie Barra"
         badge="Programa Infantil • 5 a 11 anos"
         title="Jiu-Jitsu Kids"

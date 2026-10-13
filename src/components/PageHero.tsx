@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { BrushDivider } from './BrushDivider';
+import { useModalityPhoto } from '../utils/photoManager';
 
 interface PageHeroProps {
+  slug?: string;
   image: string;
+  fallbackImage?: string;
   imageAlt: string;
   badge?: string;
   title: string;
@@ -17,7 +20,9 @@ interface PageHeroProps {
 }
 
 export const PageHero: React.FC<PageHeroProps> = ({
+  slug,
   image,
+  fallbackImage,
   imageAlt,
   badge,
   title,
@@ -29,6 +34,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   overlayType = 'hero',
   floatingBadges = [],
 }) => {
+  const resolvedImage = useModalityPhoto(slug || '', image);
   // Split title into words for stagger effect
   const words = title.split(' ');
 
@@ -37,12 +43,18 @@ export const PageHero: React.FC<PageHeroProps> = ({
       {/* Background Image with parallax feeling */}
       <div className="absolute inset-0 z-0">
         <motion.img
-          src={image}
+          key={resolvedImage}
+          src={resolvedImage}
           alt={imageAlt}
           initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
           className="w-full h-full object-cover object-center filter brightness-90"
+          onError={(e) => {
+            if (fallbackImage && e.currentTarget.src !== fallbackImage) {
+              e.currentTarget.src = fallbackImage;
+            }
+          }}
         />
 
         {/* Gradient Overlay */}
@@ -96,7 +108,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
         )}
 
         {/* H1 Title with word-by-word stagger */}
-        <h1 className="font-anton text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight uppercase leading-[0.92] mb-6 hero-title-skew">
+        <h1 className="font-anton text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight uppercase leading-[1.02] mb-6 hero-title-skew">
           {words.map((word, idx) => {
             const isHighlight =
               highlightWord && word.toLowerCase().includes(highlightWord.toLowerCase());

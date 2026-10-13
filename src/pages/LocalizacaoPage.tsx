@@ -24,7 +24,7 @@ const ESTRUTURA_ITEMS = [
   },
   {
     title: 'Equipamentos de Striking & Sacos',
-    description: 'Área dedicada com aparadores de chute, manoplas e sacos pesados para Muay Thai e Boxe.',
+    description: 'Área dedicada com aparadores de chute, manoplas e sacos pesados para Muay Thai, MMA e artes de striking.',
     image: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=800&q=80',
   },
 ];

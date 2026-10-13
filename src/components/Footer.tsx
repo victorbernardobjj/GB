@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-[#A3B2CC] leading-relaxed max-w-sm pt-2">
-              Jiu-Jitsu para todos. Aulas estruturadas para crianças, mulheres e adultos, além de Muay Thai, Boxe, Krav Maga e Hapkido.
+              Jiu-Jitsu para todos. Aulas estruturadas para crianças, mulheres e adultos, além de Muay Thai, Karatê, MMA, Krav Maga e Hapkido.
             </p>
 
             <div className="text-[11px] text-[#A3B2CC] pt-2">
@@ -72,8 +72,13 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/boxe" className="hover:text-white transition-colors">
-                  Boxe Adulto
+                <Link to="/karate" className="hover:text-white transition-colors">
+                  Karatê Tradicional
+                </Link>
+              </li>
+              <li>
+                <Link to="/mma" className="hover:text-white transition-colors">
+                  MMA (Artes Marciais Mistas)
                 </Link>
               </li>
               <li>
@@ -143,25 +148,14 @@ export const Footer: React.FC = () => {
             <div className="space-y-2 text-[#A3B2CC] leading-relaxed">
               <p>{GYM_INFO.address.full}</p>
               <div className="pt-2">
-                <span className="block text-white">WhatsApp Secretaria GB:</span>
+                <span className="block text-white font-medium">WhatsApp / Matrículas:</span>
                 <a
-                  href={getWhatsAppLink('Olá. Gostaria de informações sobre a Gracie Barra Centro JF.')}
+                  href={getWhatsAppLink('Olá! Gostaria de informações sobre a Gracie Barra Centro JF.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white underline"
+                  className="hover:text-white underline text-white font-semibold text-sm"
                 >
                   {GYM_INFO.phones.whatsappGBFormatted}
-                </a>
-              </div>
-              <div>
-                <span className="block text-white">WhatsApp Team Recruta (Muay Thai):</span>
-                <a
-                  href={getWhatsAppLink('Olá Team Recruta. Gostaria de informações sobre o Muay Thai.', GYM_INFO.phones.whatsappTeamRecruta)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white underline"
-                >
-                  {GYM_INFO.phones.whatsappTeamRecrutaFormatted}
                 </a>
               </div>
             </div>
@@ -171,7 +165,16 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright */}
         <div className="pt-12 mt-12 border-t border-[#1F3A6B] flex flex-col sm:flex-row items-center justify-between text-[#8E9FB8] gap-4">
           <p>© {new Date().getFullYear()} Gracie Barra Centro Juiz de Fora. Todos os direitos reservados.</p>
-          <p className="text-[11px]">Metodologia oficial Carlos Gracie Jr.</p>
+          <div className="flex items-center gap-4 text-[11px]">
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('gb-open-photo-manager'))}
+              className="text-[#A3B2CC] hover:text-white underline underline-offset-4 flex items-center gap-1 transition-colors"
+            >
+              <span>📸 Gerenciador de Fotos do Site</span>
+            </button>
+            <span>•</span>
+            <span>Metodologia oficial Carlos Gracie Jr.</span>
+          </div>
         </div>
       </div>
     </footer>
