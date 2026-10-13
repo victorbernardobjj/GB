@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, Menu, X, Clock, MapPin, ShieldCheck, Sparkles, Phone } from 'lucide-react';
 import { Button } from './Button';
 import { GYM_INFO, getWhatsAppLink } from '../data/info';
+import { useModalityPhoto } from '../utils/photoManager';
 
 const MODALITY_LINKS = [
   { name: 'Jiu-Jitsu Adulto', path: '/jiu-jitsu-adulto', tag: 'Misto / No-Gi' },
@@ -24,6 +25,7 @@ export const Header: React.FC = () => {
   const [isModalitiesDropdownOpen, setIsModalitiesDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const logoImg = useModalityPhoto('logo-gb', '/logo-gb.png');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,12 +80,12 @@ export const Header: React.FC = () => {
             className="flex items-center gap-2.5 group transition-transform duration-300 hover:scale-102"
             aria-label="Gracie Barra Centro Juiz de Fora - Início"
           >
-            {/* Logo image with NO wrapper border */}
-            <div className="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 flex items-center justify-center">
+            {/* Round frame for logo */}
+            <div className="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 flex items-center justify-center rounded-full overflow-hidden border border-white/20 bg-black/40 shadow-sm">
               <img
-                src="/logo-gb.png"
+                src={logoImg}
                 alt="Gracie Barra Oficial"
-                className="w-full h-full object-contain filter drop-shadow-md"
+                className="w-full h-full object-cover rounded-full filter drop-shadow-md"
               />
             </div>
 
@@ -285,11 +287,11 @@ export const Header: React.FC = () => {
             {/* Top bar inside mobile drawer */}
             <div className="flex items-center justify-between pb-6 border-b border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center">
+                <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-full overflow-hidden border border-white/20 bg-black/40 shadow-sm">
                   <img
-                    src="/logo-gb.png"
+                    src={logoImg}
                     alt="Gracie Barra Oficial"
-                    className="w-full h-full object-contain filter drop-shadow-md"
+                    className="w-full h-full object-cover rounded-full filter drop-shadow-md"
                   />
                 </div>
                 <div className="flex flex-col items-center">

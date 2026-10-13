@@ -21,8 +21,8 @@ export const PhotoManagerTrigger: React.FC = () => {
       <div className="fixed bottom-6 left-6 z-40">
         <button
           onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-2.5 bg-black/90 hover:bg-black text-white px-3.5 py-2.5 rounded-full border border-white/20 shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 text-xs font-semibold"
-          title={`Clique para adicionar ou trocar fotos das ${total} modalidades`}
+          className="group flex items-center gap-2.5 bg-black/90 hover:bg-black text-white px-3.5 py-2.5 rounded-full border border-white/20 shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 text-xs font-semibold cursor-pointer"
+          title={`Clique para trocar qualquer uma das ${total} fotos do site`}
         >
           <div className="relative">
             <Camera className="w-4 h-4 text-gb-red group-hover:rotate-12 transition-transform" />

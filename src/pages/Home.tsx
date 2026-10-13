@@ -25,10 +25,15 @@ import { CTAFinal } from '../components/CTAFinal';
 import { MODALITIES } from '../data/modalities';
 import { HOME_FAQS } from '../data/faq';
 import { GYM_INFO, getWhatsAppLink } from '../data/info';
-import { useAllModalityPhotos } from '../utils/photoManager';
+import { useAllModalityPhotos, useModalityPhoto } from '../utils/photoManager';
 
 export const Home: React.FC = () => {
   const customPhotos = useAllModalityPhotos();
+  const homeHeroImage = useModalityPhoto(
+    'home-hero',
+    'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80'
+  );
+  const logoImage = useModalityPhoto('logo-gb', '/logo-gb.png');
 
   return (
     <div className="bg-gb-black text-slate-100 overflow-hidden">
@@ -37,7 +42,8 @@ export const Home: React.FC = () => {
         {/* Background Image / Video effect */}
         <div className="absolute inset-0 z-0">
           <motion.img
-            src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80"
+            key={homeHeroImage}
+            src={homeHeroImage}
             alt="Tatame da academia Gracie Barra Centro Juiz de Fora repleto de alunos"
             initial={{ scale: 1.08 }}
             animate={{ scale: 1 }}
@@ -59,7 +65,7 @@ export const Home: React.FC = () => {
             className="mb-5"
           >
             <span className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs sm:text-sm font-anton tracking-widest uppercase bg-white/10 text-white border border-white/20 backdrop-blur-md shadow-lg">
-              <img src="/logo-gb.png" alt="Gracie Barra" className="w-5 h-5 rounded-full object-contain" />
+              <img src={logoImage} alt="Gracie Barra" className="w-5 h-5 rounded-full object-contain" />
               <span>GRACIE BARRA • JUIZ DE FORA</span>
             </span>
           </motion.div>

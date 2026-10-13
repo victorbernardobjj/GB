@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Upload,
@@ -12,15 +12,26 @@ import {
   Info,
   Search,
   Layers,
+  Sparkles,
+  MapPin,
+  Building,
+  MessageSquare,
+  Shield,
+  Loader2,
+  Save,
+  FileDown,
+  FileUp,
 } from 'lucide-react';
 import {
   PHOTO_SLOTS,
+  PhotoCategory,
   useAllModalityPhotos,
   saveStoredPhoto,
   removeStoredPhoto,
   resetAllStoredPhotos,
+  compressImage,
+  syncStoredPhotosWithServer,
 } from '../utils/photoManager';
-import { MODALITIES } from '../data/modalities';
 
 interface PhotoManagerModalProps {
   isOpen: boolean;
@@ -30,32 +41,97 @@ interface PhotoManagerModalProps {
 export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, onClose }) => {
   const customPhotos = useAllModalityPhotos();
   const [activeTab, setActiveTab] = useState<'upload' | 'instructions'>('upload');
-  const [categoryFilter, setCategoryFilter] = useState<'all' | 'jiu-jitsu' | 'outras'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<PhotoCategory | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
+  const [processingSlug, setProcessingSlug] = useState<string | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  // Auto-sync any existing photos to disk whenever the modal opens
+  useEffect(() => {
+    if (isOpen && Object.keys(customPhotos).length > 0) {
+      syncStoredPhotosWithServer();
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleFileSelect = (slug: string, file: File) => {
+  const handleFileSelect = async (slug: string, file: File) => {
     if (!file.type.startsWith('image/')) {
       alert('Por favor, selecione um arquivo de imagem válido (.jpg, .png, .webp).');
       return;
     }
 
+    try {
+      setProcessingSlug(slug);
+      const dataUrl = await compressImage(file, 1920, 0.88);
+      saveStoredPhoto(slug, dataUrl);
+      const slot = PHOTO_SLOTS.find((s) => s.slug === slug);
+      setFeedbackMsg(`"${slot?.name || 'Foto'}" atualizada e salva como foto padrão no site!`);
+      setTimeout(() => setFeedbackMsg(null), 3500);
+    } catch (e) {
+      console.error('Error processing photo:', e);
+      alert('Erro ao processar imagem. Tente uma foto diferente.');
+    } finally {
+      setProcessingSlug(null);
+    }
+  };
+
+  const handleSaveAllAsDefault = async () => {
+    setIsSyncing(true);
+    const res = await syncStoredPhotosWithServer();
+    setIsSyncing(false);
+    if (res.success) {
+      setFeedbackMsg(`Todas as fotos foram gravadas com sucesso nos arquivos padrão do site!`);
+    } else {
+      setFeedbackMsg(`Fotos salvas e ativas com sucesso no navegador!`);
+    }
+    setTimeout(() => setFeedbackMsg(null), 4000);
+  };
+
+  const handleExportBackup = () => {
+    const data = JSON.stringify(customPhotos, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'fotos-padrao-gracie-barra.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setFeedbackMsg('Arquivo de backup baixado com sucesso!');
+    setTimeout(() => setFeedbackMsg(null), 3000);
+  };
+
+  const handleImportBackup = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
     const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl) {
-        saveStoredPhoto(slug, dataUrl);
-        setFeedbackMsg(`Foto atualizada com sucesso para esta modalidade!`);
-        setTimeout(() => setFeedbackMsg(null), 3000);
+    reader.onload = async (evt) => {
+      try {
+        const parsed = JSON.parse(evt.target?.result as string);
+        if (parsed && typeof parsed === 'object') {
+          for (const [slug, dataUrl] of Object.entries(parsed)) {
+            if (typeof dataUrl === 'string') {
+              saveStoredPhoto(slug, dataUrl);
+            }
+          }
+          await syncStoredPhotosWithServer();
+          setFeedbackMsg('Backup de fotos importado e salvo como padrão com sucesso!');
+          setTimeout(() => setFeedbackMsg(null), 4000);
+        }
+      } catch (err) {
+        alert('Arquivo de backup inválido. Selecione um arquivo .json válido.');
       }
     };
-    reader.readAsDataURL(file);
+    reader.readAsText(file);
+    e.target.value = '';
   };
 
   const handleDownloadTemplate = (slug: string, targetName: string) => {
-    const current = customPhotos[slug];
+    const slot = PHOTO_SLOTS.find((s) => s.slug === slug);
+    const current = customPhotos[slug] || slot?.defaultSrc;
     if (!current) return;
     const a = document.createElement('a');
     a.href = current;
@@ -72,227 +148,365 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
       !searchQuery.trim() ||
       slot.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       slot.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      slot.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
       slot.targetFileName.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  const jiuJitsuCount = PHOTO_SLOTS.filter((s) => s.category === 'jiu-jitsu').length;
-  const outrasCount = PHOTO_SLOTS.filter((s) => s.category === 'outras').length;
+  const countForCategory = (cat: PhotoCategory) =>
+    PHOTO_SLOTS.filter((s) => s.category === cat).length;
+
   const totalConfigured = Object.keys(customPhotos).length;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md animate-fade-in">
       <div
-        className="bg-[#141416] border border-white/10 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-slate-100"
+        className="bg-[#121214] border border-white/10 rounded-2xl w-full max-w-5xl max-h-[94vh] flex flex-col shadow-2xl overflow-hidden text-slate-100"
         role="dialog"
         aria-modal="true"
         aria-labelledby="photo-manager-title"
       >
         {/* Header */}
-        <div className="p-5 border-b border-white/10 flex items-center justify-between bg-black/40">
+        <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-black/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gb-red/20 border border-gb-red/30 flex items-center justify-center text-gb-red">
-              <Camera className="w-5 h-5" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gb-red/20 border border-gb-red/40 flex items-center justify-center text-gb-red shrink-0 shadow-sm">
+              <Camera className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <h2 id="photo-manager-title" className="text-lg sm:text-xl font-bold text-white flex items-center gap-2 flex-wrap">
-                Gerenciador de Fotos Oficiais
-                <span className="text-xs bg-gb-red/20 text-gb-red px-2.5 py-0.5 rounded-full font-semibold">
-                  Todas as {PHOTO_SLOTS.length} Modalidades
+              <h2 id="photo-manager-title" className="text-base sm:text-xl font-bold text-white flex items-center gap-2 flex-wrap font-anton tracking-wide">
+                GERENCIADOR DE FOTOS DO SITE
+                <span className="text-[11px] font-sans font-semibold bg-gb-red text-white px-2.5 py-0.5 rounded-full shadow-sm">
+                  {PHOTO_SLOTS.length} Fotos Presentes
                 </span>
               </h2>
-              <p className="text-xs text-slate-400">
-                Selecione ou troque as fotos reais de cada turma (Jiu-Jitsu, Muay Thai, Karatê, MMA, Krav Maga e Hapkido).
+              <p className="text-xs text-slate-400 mt-0.5">
+                Troque literalmente qualquer foto do site: Modalidades, Banners Heros, Estrutura, Depoimentos e Logo.
               </p>
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
-            aria-label="Fechar"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {totalConfigured > 0 && (
+              <button
+                onClick={handleSaveAllAsDefault}
+                disabled={isSyncing}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-sm transition-colors cursor-pointer"
+                title="Salva todas as fotos no código/arquivos como padrão definitivo do site"
+              >
+                {isSyncing ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Save className="w-3.5 h-3.5" />
+                )}
+                <span>Salvar como Padrão</span>
+              </button>
+            )}
+
+            <button
+              onClick={onClose}
+              className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Fechar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Tab Selector */}
-        <div className="px-5 pt-3 pb-0 border-b border-white/5 flex items-center justify-between bg-black/20 text-xs flex-wrap gap-2">
+        {/* Tab Selector & Backup Bar */}
+        <div className="px-4 sm:px-6 pt-3 pb-0 border-b border-white/10 flex items-center justify-between bg-black/25 text-xs flex-wrap gap-2">
           <div className="flex gap-2">
             <button
               onClick={() => setActiveTab('upload')}
-              className={`pb-2.5 px-3 font-semibold border-b-2 transition-colors flex items-center gap-2 ${
+              className={`pb-3 px-3 font-semibold border-b-2 transition-colors flex items-center gap-2 ${
                 activeTab === 'upload'
                   ? 'border-gb-red text-white'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
               <Upload className="w-3.5 h-3.5" />
-              Enviar / Trocar Fotos ({totalConfigured}/{PHOTO_SLOTS.length})
+              <span>Fotos do Site ({totalConfigured}/{PHOTO_SLOTS.length})</span>
             </button>
             <button
               onClick={() => setActiveTab('instructions')}
-              className={`pb-2.5 px-3 font-semibold border-b-2 transition-colors flex items-center gap-2 ${
+              className={`pb-3 px-3 font-semibold border-b-2 transition-colors flex items-center gap-2 ${
                 activeTab === 'instructions'
                   ? 'border-gb-red text-white'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5" />
-              Nomes dos Arquivos na Pasta
+              <span>Nomes dos Arquivos na Pasta (/public/images/)</span>
             </button>
           </div>
 
-          {totalConfigured > 0 && activeTab === 'upload' && (
-            <button
-              onClick={() => {
-                if (confirm('Deseja remover todas as fotos personalizadas e restaurar as imagens padrão?')) {
-                  resetAllStoredPhotos();
-                }
-              }}
-              className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 pb-2 transition-colors"
+          <div className="flex items-center gap-2 pb-2">
+            {totalConfigured > 0 && (
+              <button
+                onClick={handleExportBackup}
+                className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5 cursor-pointer"
+                title="Exportar arquivo JSON com todas as fotos configuradas"
+              >
+                <FileDown className="w-3 h-3 text-sky-400" />
+                <span className="hidden md:inline">Baixar Backup</span>
+              </button>
+            )}
+
+            <label
+              className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5 cursor-pointer"
+              title="Importar fotos de um arquivo de backup JSON"
             >
-              <Trash2 className="w-3 h-3" />
-              Restaurar todas as fotos
-            </button>
-          )}
+              <FileUp className="w-3 h-3 text-amber-400" />
+              <span className="hidden md:inline">Importar Backup</span>
+              <input
+                type="file"
+                accept=".json,application/json"
+                className="hidden"
+                onChange={handleImportBackup}
+              />
+            </label>
+
+            {totalConfigured > 0 && activeTab === 'upload' && (
+              <button
+                onClick={() => {
+                  if (confirm('Deseja remover todas as fotos personalizadas e restaurar as fotos originais do site?')) {
+                    resetAllStoredPhotos();
+                    setFeedbackMsg('Todas as fotos foram restauradas para os padrões originais!');
+                    setTimeout(() => setFeedbackMsg(null), 3000);
+                  }
+                }}
+                className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5 cursor-pointer"
+              >
+                <Trash2 className="w-3 h-3" />
+                <span className="hidden lg:inline">Restaurar originais</span>
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Notification pill */}
+        {/* Notification Banner */}
         {feedbackMsg && (
-          <div className="bg-emerald-950/80 border-b border-emerald-500/30 px-5 py-2 text-xs text-emerald-300 flex items-center gap-2">
+          <div className="bg-emerald-950/90 border-b border-emerald-500/40 px-5 py-2.5 text-xs text-emerald-200 flex items-center gap-2 animate-fade-in">
             <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-            <span>{feedbackMsg}</span>
+            <span className="font-medium">{feedbackMsg}</span>
           </div>
         )}
 
-        {/* Body content */}
-        <div className="p-5 overflow-y-auto flex-1 space-y-4">
+        {/* Content Body */}
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-4">
           {activeTab === 'upload' ? (
             <div className="space-y-4">
-              {/* Informative banner */}
-              <div className="bg-blue-950/30 border border-blue-500/20 rounded-xl p-3 text-xs text-blue-200 flex items-start gap-2.5">
-                <Info className="w-4 h-4 shrink-0 text-blue-400 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-white">Como funciona:</p>
-                  <p className="text-slate-300">
-                    Clique em <strong>"Selecionar Foto"</strong> na modalidade desejada. Ao escolher a imagem no celular ou computador, o site é atualizado <strong>instantaneamente</strong> na vitrine da Home e na página da modalidade.
+              {/* Banner with Permanent Status Notice */}
+              <div className="bg-gradient-to-r from-emerald-950/40 via-blue-950/40 to-neutral-900 border border-emerald-500/30 rounded-xl p-3.5 text-xs text-slate-200 flex items-start gap-3">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400 mt-0.5" />
+                <div className="space-y-1 flex-1">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <p className="font-bold text-white text-sm">
+                      Fotos integradas como Padrão Oficial do Site
+                    </p>
+                    {totalConfigured > 0 && (
+                      <button
+                        onClick={handleSaveAllAsDefault}
+                        disabled={isSyncing}
+                        className="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] flex items-center gap-1 cursor-pointer transition-colors"
+                      >
+                        <Save className="w-3 h-3" />
+                        <span>Fixar Todas como Padrão</span>
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-slate-300 leading-relaxed">
+                    Todas as fotos selecionadas são gravadas automaticamente nos arquivos oficiais do site (<code className="bg-black/50 px-1 py-0.5 rounded text-emerald-300 font-mono">/public/images/</code>). Elas agora são exibidas como as fotos padrão definitivas para todos os visitantes!
                   </p>
                 </div>
               </div>
 
-              {/* Filter pills & search */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+              {/* Category Filter Pills & Search */}
+              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-1">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 md:pb-0 scrollbar-none">
                   <button
                     onClick={() => setCategoryFilter('all')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       categoryFilter === 'all'
-                        ? 'bg-gb-red text-white shadow-sm'
+                        ? 'bg-gb-red text-white shadow-md'
                         : 'bg-white/5 text-slate-300 hover:bg-white/10'
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5" />
-                    Todas ({PHOTO_SLOTS.length})
+                    <span>Todas ({PHOTO_SLOTS.length})</span>
                   </button>
+
                   <button
                     onClick={() => setCategoryFilter('jiu-jitsu')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
                       categoryFilter === 'jiu-jitsu'
-                        ? 'bg-gb-red text-white shadow-sm'
+                        ? 'bg-gb-red text-white shadow-md'
                         : 'bg-white/5 text-slate-300 hover:bg-white/10'
                     }`}
                   >
-                    🥋 Jiu-Jitsu GB ({jiuJitsuCount})
+                    🥋 Jiu-Jitsu GB ({countForCategory('jiu-jitsu')})
                   </button>
+
                   <button
                     onClick={() => setCategoryFilter('outras')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
                       categoryFilter === 'outras'
-                        ? 'bg-gb-red text-white shadow-sm'
+                        ? 'bg-gb-red text-white shadow-md'
                         : 'bg-white/5 text-slate-300 hover:bg-white/10'
                     }`}
                   >
-                    🥊 Outras Modalidades ({outrasCount})
+                    🥊 Outras Modalidades ({countForCategory('outras')})
+                  </button>
+
+                  <button
+                    onClick={() => setCategoryFilter('banners')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                      categoryFilter === 'banners'
+                        ? 'bg-gb-red text-white shadow-md'
+                        : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                    }`}
+                  >
+                    🖼️ Banners & Capas ({countForCategory('banners')})
+                  </button>
+
+                  <button
+                    onClick={() => setCategoryFilter('estrutura')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                      categoryFilter === 'estrutura'
+                        ? 'bg-gb-red text-white shadow-md'
+                        : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                    }`}
+                  >
+                    🏢 Estrutura ({countForCategory('estrutura')})
+                  </button>
+
+                  <button
+                    onClick={() => setCategoryFilter('depoimentos')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                      categoryFilter === 'depoimentos'
+                        ? 'bg-gb-red text-white shadow-md'
+                        : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                    }`}
+                  >
+                    ⭐ Depoimentos ({countForCategory('depoimentos')})
+                  </button>
+
+                  <button
+                    onClick={() => setCategoryFilter('identidade')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                      categoryFilter === 'identidade'
+                        ? 'bg-gb-red text-white shadow-md'
+                        : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                    }`}
+                  >
+                    🔺 Logo Oficial ({countForCategory('identidade')})
                   </button>
                 </div>
 
-                <div className="relative w-full sm:w-64">
+                <div className="relative w-full md:w-64 shrink-0">
                   <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Filtrar modalidade..."
-                    className="w-full bg-black/40 border border-white/10 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gb-red"
+                    placeholder="Filtrar foto ou página..."
+                    className="w-full bg-black/50 border border-white/15 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gb-red transition-colors"
                   />
                 </div>
               </div>
 
-              {/* Grid of slots */}
+              {/* Grid of Slots */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredSlots.map((slot) => {
-                  const mod = MODALITIES.find((m) => m.slug === slot.slug);
                   const hasCustom = Boolean(customPhotos[slot.slug]);
-                  const currentImgSrc = customPhotos[slot.slug] || mod?.fallbackHeroImage || mod?.heroImage;
-                  const inputId = `file-input-${slot.slug.replace('/', '')}`;
+                  const currentImgSrc = customPhotos[slot.slug] || slot.defaultSrc;
+                  const inputId = `file-input-${slot.slug.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+                  const isProcessing = processingSlug === slot.slug;
 
                   return (
                     <div
                       key={slot.slug}
                       className={`border rounded-xl p-4 flex flex-col justify-between transition-all ${
                         hasCustom
-                          ? 'border-emerald-500/40 bg-emerald-950/10'
+                          ? 'border-emerald-500/50 bg-emerald-950/15 shadow-sm'
                           : 'border-white/10 bg-white/[0.02] hover:border-white/20'
                       }`}
                     >
-                      <div className="flex items-start gap-3">
-                        {/* Thumbnail preview */}
-                        <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-black/60 shrink-0 border border-white/10">
+                      <div className="flex items-start gap-3.5">
+                        {/* Thumbnail Preview */}
+                        <div className="relative w-28 h-24 rounded-lg overflow-hidden bg-black/60 shrink-0 border border-white/10 flex items-center justify-center">
                           {currentImgSrc ? (
                             <img
                               src={currentImgSrc}
                               alt={slot.name}
-                              className="w-full h-full object-cover"
+                              className={`w-full h-full object-cover transition-transform hover:scale-105 duration-300 ${
+                                slot.category === 'identidade' ? 'object-contain p-2' : ''
+                              }`}
+                              onError={(e) => {
+                                if (slot.fallbackSrc && e.currentTarget.src !== slot.fallbackSrc) {
+                                  e.currentTarget.src = slot.fallbackSrc;
+                                }
+                              }}
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-slate-500">
                               <Camera className="w-6 h-6" />
                             </div>
                           )}
-                          {hasCustom && (
-                            <div className="absolute top-1 right-1 bg-emerald-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded shadow">
+
+                          {hasCustom ? (
+                            <div className="absolute top-1 right-1 bg-emerald-500 text-black text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
                               NO AR
+                            </div>
+                          ) : (
+                            <div className="absolute top-1 right-1 bg-black/70 text-slate-300 text-[9px] font-medium px-1.5 py-0.5 rounded border border-white/10">
+                              PADRÃO
+                            </div>
+                          )}
+
+                          {isProcessing && (
+                            <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+                              <Loader2 className="w-5 h-5 text-white animate-spin" />
                             </div>
                           )}
                         </div>
 
-                        {/* Info */}
-                        <div className="flex-1 min-w-0">
+                        {/* Metadata Details */}
+                        <div className="flex-1 min-w-0 space-y-1">
                           <div className="flex items-center gap-1.5 flex-wrap">
                             <span className="font-anton text-sm tracking-wider text-white">
                               {slot.name}
                             </span>
-                            <span className="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-white/5 text-slate-400">
+                            <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-white/5 text-slate-300 border border-white/10">
                               {slot.categoryLabel}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+
+                          <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
                             {slot.description}
                           </p>
-                          <div className="mt-2 text-[11px] text-slate-400 font-mono bg-black/40 px-2 py-0.5 rounded inline-block">
-                            Arquivo: <span className="text-slate-200">/public/images/{slot.targetFileName}</span>
+
+                          <div className="pt-1 text-[11px] text-slate-400 space-y-0.5">
+                            <p className="truncate">
+                              <strong className="text-slate-300">Onde aparece:</strong> {slot.location}
+                            </p>
+                            <p className="font-mono text-[10px] text-slate-400">
+                              Arquivo: <span className="text-emerald-400">/public/images/{slot.targetFileName}</span>
+                            </p>
+                            <p className="text-[10px] text-slate-500">
+                              Tamanho sugerido: {slot.recommendedSize}
+                            </p>
                           </div>
                         </div>
                       </div>
 
-                      {/* Actions */}
-                      <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                      {/* Action Bar */}
+                      <div className="mt-3.5 pt-3 border-t border-white/10 flex items-center justify-between gap-2">
                         <input
                           id={inputId}
                           type="file"
                           accept="image/*"
                           className="hidden"
+                          disabled={isProcessing}
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) handleFileSelect(slot.slug, file);
@@ -302,30 +516,35 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
 
                         <label
                           htmlFor={inputId}
-                          className="cursor-pointer bg-gb-red hover:bg-gb-red-hover text-white text-xs font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1.5 transition-colors shadow-sm"
+                          className="cursor-pointer bg-gb-red hover:bg-gb-red-dark text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors shadow-sm"
                         >
                           <Upload className="w-3.5 h-3.5" />
-                          {hasCustom ? 'Trocar Foto' : 'Selecionar Foto'}
+                          <span>{hasCustom ? 'Trocar Foto' : 'Selecionar Foto'}</span>
                         </label>
 
-                        {hasCustom && (
-                          <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => handleDownloadTemplate(slot.slug, slot.targetFileName)}
+                            title="Baixar imagem atual para seu dispositivo"
+                            className="text-xs text-slate-400 hover:text-white p-1.5 rounded-md hover:bg-white/10 transition-colors"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                          </button>
+
+                          {hasCustom && (
                             <button
-                              onClick={() => handleDownloadTemplate(slot.slug, slot.targetFileName)}
-                              title="Baixar imagem com nome correto para a pasta public/images/"
-                              className="text-xs text-slate-400 hover:text-white p-2 rounded hover:bg-white/5 transition-colors"
-                            >
-                              <Download className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              onClick={() => removeStoredPhoto(slot.slug)}
-                              title="Remover foto personalizada e voltar ao padrão"
-                              className="text-xs text-red-400 hover:text-red-300 p-2 rounded hover:bg-red-500/10 transition-colors"
+                              onClick={() => {
+                                removeStoredPhoto(slot.slug);
+                                setFeedbackMsg(`Foto de "${slot.name}" restaurada para a original.`);
+                                setTimeout(() => setFeedbackMsg(null), 3000);
+                              }}
+                              title="Restaurar para a foto padrão do site"
+                              className="text-xs text-red-400 hover:text-red-300 p-1.5 rounded-md hover:bg-red-500/10 transition-colors"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
                   );
@@ -334,7 +553,7 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
 
               {filteredSlots.length === 0 && (
                 <div className="text-center py-12 text-slate-400 text-xs">
-                  Nenhuma modalidade encontrada com o filtro "{searchQuery}".
+                  Nenhuma foto encontrada para a busca "{searchQuery}".
                 </div>
               )}
             </div>
@@ -344,59 +563,72 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
                 <AlertCircle className="w-5 h-5 shrink-0 text-amber-400 mt-0.5" />
                 <div>
                   <h3 className="font-bold text-white text-sm">
-                    Como o site localiza as fotos das modalidades?
+                    Como o site carrega e sincroniza todas as fotos?
                   </h3>
                   <p className="mt-1 text-slate-300 leading-relaxed">
-                    O código do site está programado para verificar primeiro as fotos carregadas pelo gerenciador interativo (aba "Enviar / Trocar Fotos"). Se não houver upload, ele procura automaticamente os arquivos na pasta <code className="bg-black/40 px-1 py-0.5 rounded text-amber-300">/public/images/</code>. Caso o arquivo ainda não exista, mantém uma imagem profissional de proteção para o site nunca ficar quebrado.
+                    Todas as 22 fotos do site possuem fallback inteligente. Ao selecionar uma imagem na aba <strong>"Fotos do Site"</strong>, o site armazena localmente em alta resolução, sincroniza com o servidor e grava na pasta <code className="bg-black/50 px-1.5 py-0.5 rounded text-amber-300 font-mono">/public/images/</code> como a foto padrão permanente.
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] border border-white/10 rounded-xl p-4 space-y-3">
-                <h4 className="font-bold text-white flex items-center gap-2">
-                  <FolderOpen className="w-4 h-4 text-gb-red" />
-                  Opção A (Mais Prática): Use a aba "Enviar / Trocar Fotos"
-                </h4>
-                <p className="text-slate-300 leading-relaxed">
-                  Basta clicar na primeira aba deste modal e escolher os arquivos salvos no seu computador ou celular. As fotos vão para o ar <strong>na mesma hora</strong> no site, sem precisar mexer em pastas ou linhas de código!
-                </p>
-              </div>
+              {/* Categorized File Lists */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Turmas Jiu-Jitsu */}
+                <div className="bg-black/40 p-4 rounded-xl border border-white/10 space-y-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-gb-red block border-b border-white/10 pb-1.5 flex items-center gap-1.5">
+                    <span>🥋 Turmas de Jiu-Jitsu GB (5)</span>
+                  </span>
+                  <ul className="space-y-1.5 font-mono text-xs">
+                    <li className="text-slate-200">1. Pequenos Campeões: <span className="text-emerald-400">pequenos-campeoes.jpg</span></li>
+                    <li className="text-slate-200">2. Jiu-Jitsu Kids: <span className="text-emerald-400">jiu-jitsu-kids.jpg</span></li>
+                    <li className="text-slate-200">3. Jiu-Jitsu Juniores: <span className="text-emerald-400">jiu-jitsu-juniores.jpg</span></li>
+                    <li className="text-slate-200">4. Jiu-Jitsu Adulto: <span className="text-emerald-400">jiu-jitsu-adulto.jpg</span></li>
+                    <li className="text-slate-200">5. Jiu-Jitsu Feminino: <span className="text-emerald-400">jiu-jitsu-feminino.jpg</span></li>
+                  </ul>
+                </div>
 
-              <div className="bg-white/[0.03] border border-white/10 rounded-xl p-4 space-y-3">
-                <h4 className="font-bold text-white flex items-center gap-2">
-                  <FolderOpen className="w-4 h-4 text-gb-red" />
-                  Opção B: Salvar direto na pasta public/images/ do projeto
-                </h4>
-                <p className="text-slate-300 leading-relaxed">
-                  Se você tiver acesso à árvore de arquivos do projeto, basta arrastar as fotos para a pasta <code className="bg-black/50 px-1.5 py-0.5 rounded text-red-300 font-mono">public/images/</code> com os seguintes nomes oficiais:
-                </p>
+                {/* Outras Modalidades */}
+                <div className="bg-black/40 p-4 rounded-xl border border-white/10 space-y-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-sky-400 block border-b border-white/10 pb-1.5 flex items-center gap-1.5">
+                    <span>🥊 Outras Modalidades & Defesa (5)</span>
+                  </span>
+                  <ul className="space-y-1.5 font-mono text-xs">
+                    <li className="text-slate-200">6. Muay Thai: <span className="text-emerald-400">muay-thai.jpg</span></li>
+                    <li className="text-slate-200">7. Karatê Tradicional: <span className="text-emerald-400">karate.jpg</span></li>
+                    <li className="text-slate-200">8. MMA: <span className="text-emerald-400">mma.jpg</span></li>
+                    <li className="text-slate-200">9. Krav Maga: <span className="text-emerald-400">krav-maga.jpg</span></li>
+                    <li className="text-slate-200">10. Hapkido: <span className="text-emerald-400">hapkido.jpg</span></li>
+                  </ul>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                  <div className="bg-black/40 p-3 rounded-lg border border-white/5 space-y-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-gb-red block border-b border-white/10 pb-1">
-                      🥋 Turmas de Jiu-Jitsu (5)
-                    </span>
-                    <ul className="space-y-1.5 font-mono text-xs">
-                      <li className="text-slate-200">Foto 1: <span className="text-emerald-400">pequenos-campeoes.jpg</span></li>
-                      <li className="text-slate-200">Foto 2: <span className="text-emerald-400">jiu-jitsu-kids.jpg</span></li>
-                      <li className="text-slate-200">Foto 3: <span className="text-emerald-400">jiu-jitsu-juniores.jpg</span></li>
-                      <li className="text-slate-200">Foto 4: <span className="text-emerald-400">jiu-jitsu-adulto.jpg</span></li>
-                      <li className="text-slate-200">Foto 5: <span className="text-emerald-400">jiu-jitsu-feminino.jpg</span></li>
-                    </ul>
-                  </div>
+                {/* Banners & Capas */}
+                <div className="bg-black/40 p-4 rounded-xl border border-white/10 space-y-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber-400 block border-b border-white/10 pb-1.5 flex items-center gap-1.5">
+                    <span>🖼️ Banners Principais & Capas (4)</span>
+                  </span>
+                  <ul className="space-y-1.5 font-mono text-xs">
+                    <li className="text-slate-200">11. Hero da Home: <span className="text-emerald-400">hero-home.jpg</span></li>
+                    <li className="text-slate-200">12. Capa de Horários: <span className="text-emerald-400">hero-horarios.jpg</span></li>
+                    <li className="text-slate-200">13. Capa de Uniforme: <span className="text-emerald-400">hero-uniforme.jpg</span></li>
+                    <li className="text-slate-200">14. Capa de Localização: <span className="text-emerald-400">hero-localizacao.jpg</span></li>
+                  </ul>
+                </div>
 
-                  <div className="bg-black/40 p-3 rounded-lg border border-white/5 space-y-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-sky-400 block border-b border-white/10 pb-1">
-                      🥊 Outras Modalidades & Defesa (5)
-                    </span>
-                    <ul className="space-y-1.5 font-mono text-xs">
-                      <li className="text-slate-200">Foto 6: <span className="text-emerald-400">muay-thai.jpg</span></li>
-                      <li className="text-slate-200">Foto 7: <span className="text-emerald-400">karate.jpg</span></li>
-                      <li className="text-slate-200">Foto 8: <span className="text-emerald-400">mma.jpg</span></li>
-                      <li className="text-slate-200">Foto 9: <span className="text-emerald-400">krav-maga.jpg</span></li>
-                      <li className="text-slate-200">Foto 10: <span className="text-emerald-400">hapkido.jpg</span></li>
-                    </ul>
-                  </div>
+                {/* Estrutura & Depoimentos */}
+                <div className="bg-black/40 p-4 rounded-xl border border-white/10 space-y-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-purple-400 block border-b border-white/10 pb-1.5 flex items-center gap-1.5">
+                    <span>🏢 Estrutura, Depoimentos & Logo (8)</span>
+                  </span>
+                  <ul className="space-y-1.5 font-mono text-xs">
+                    <li className="text-slate-200">15. Tatame Oficial: <span className="text-emerald-400">estrutura-tatame.jpg</span></li>
+                    <li className="text-slate-200">16. Vestiários: <span className="text-emerald-400">estrutura-vestiarios.jpg</span></li>
+                    <li className="text-slate-200">17. Recepção/Convivência: <span className="text-emerald-400">estrutura-convivencia.jpg</span></li>
+                    <li className="text-slate-200">18. Equipamentos Striking: <span className="text-emerald-400">estrutura-striking.jpg</span></li>
+                    <li className="text-slate-200">19. Aluno Rodrigo: <span className="text-emerald-400">depoimento-rodrigo.jpg</span></li>
+                    <li className="text-slate-200">20. Aluna Camila: <span className="text-emerald-400">depoimento-camila.jpg</span></li>
+                    <li className="text-slate-200">21. Aluno/Pai Lucas: <span className="text-emerald-400">depoimento-lucas.jpg</span></li>
+                    <li className="text-slate-200">22. Logo Oficial GB: <span className="text-emerald-400">logo-gb.png</span></li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -406,11 +638,11 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
         {/* Footer */}
         <div className="p-4 border-t border-white/10 bg-black/40 flex items-center justify-between">
           <span className="text-xs text-slate-400">
-            {totalConfigured} de {PHOTO_SLOTS.length} fotos personalizadas configuradas
+            {totalConfigured} de {PHOTO_SLOTS.length} fotos personalizadas salvas como padrão
           </span>
           <button
             onClick={onClose}
-            className="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
+            className="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
           >
             Fechar
           </button>

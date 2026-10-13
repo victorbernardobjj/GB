@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { GYM_INFO, getWhatsAppLink } from '../data/info';
+import { useModalityPhoto } from '../utils/photoManager';
 
 export const Footer: React.FC = () => {
+  const logoImg = useModalityPhoto('logo-gb', '/logo-gb.png');
+
   return (
     <footer className="bg-gb-blue-dark text-slate-200 border-t border-white/10 text-xs">
       <div className="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 sm:py-20">
@@ -12,7 +15,7 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/logo-gb.png"
+                src={logoImg}
                 alt="Gracie Barra"
                 className="w-10 h-10 object-contain"
               />

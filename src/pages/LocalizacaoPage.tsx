@@ -5,24 +5,29 @@ import { CTAFinal } from '../components/CTAFinal';
 import { Button } from '../components/Button';
 import { MapPin, Navigation, Clock, ShieldCheck, Phone, CheckCircle2 } from 'lucide-react';
 import { GYM_INFO, getWhatsAppLink } from '../data/info';
+import { useAllModalityPhotos } from '../utils/photoManager';
 
 const ESTRUTURA_ITEMS = [
   {
+    slug: 'estrutura-tatame',
     title: 'Tatame Olímpico Oficial GB',
     description: 'Tatame de alta densidade revestido e higienizado diariamente para treinos seguros com amortecimento de quedas.',
     image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80',
   },
   {
+    slug: 'estrutura-vestiarios',
     title: 'Vestiários Completos',
     description: 'Estrutura masculina e feminina com duchas aquecidas, armários e ventilação adequada.',
     image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80',
   },
   {
+    slug: 'estrutura-convivencia',
     title: 'Área de Convivência & Recepção',
     description: 'Ambiente climatizado para pais assistirem aos treinos dos filhos e confraternização entre alunos.',
     image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80',
   },
   {
+    slug: 'estrutura-striking',
     title: 'Equipamentos de Striking & Sacos',
     description: 'Área dedicada com aparadores de chute, manoplas e sacos pesados para Muay Thai, MMA e artes de striking.',
     image: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=800&q=80',
@@ -30,10 +35,13 @@ const ESTRUTURA_ITEMS = [
 ];
 
 export const LocalizacaoPage: React.FC = () => {
+  const customPhotos = useAllModalityPhotos();
+
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       {/* Hero */}
       <PageHero
+        slug="localizacao-hero"
         image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80"
         imageAlt="Fachada e estrutura da Gracie Barra Centro Juiz de Fora"
         badge="LOCALIZAÇÃO PRIVILEGIADA"
@@ -132,7 +140,7 @@ export const LocalizacaoPage: React.FC = () => {
               >
                 <div className="h-48 overflow-hidden relative">
                   <img
-                    src={item.image}
+                    src={customPhotos[item.slug] || item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"

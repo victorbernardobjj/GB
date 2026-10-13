@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Star, ChevronLeft, ChevronRight, Quote, ExternalLink } from 'lucide-react';
 import { TESTIMONIALS, Testimonial } from '../data/testimonials';
 import { GYM_INFO } from '../data/info';
+import { useAllModalityPhotos } from '../utils/photoManager';
 
 export const TestimonialCarousel: React.FC = () => {
+  const customPhotos = useAllModalityPhotos();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -87,9 +89,9 @@ export const TestimonialCarousel: React.FC = () => {
             {/* Author info */}
             <div className="flex items-center justify-between pt-4 border-t border-white/10">
               <div className="flex items-center gap-3">
-                {current.avatarUrl && (
+                {(customPhotos[`depoimento-${current.id}`] || current.avatarUrl) && (
                   <img
-                    src={current.avatarUrl}
+                    src={customPhotos[`depoimento-${current.id}`] || customPhotos[current.id] || current.avatarUrl}
                     alt={current.author}
                     className="w-11 h-11 rounded-full object-cover border border-white/20"
                   />

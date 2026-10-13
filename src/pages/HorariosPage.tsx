@@ -10,6 +10,7 @@ export const HorariosPage: React.FC = () => {
   return (
     <div className="bg-gb-black text-slate-100 min-h-screen">
       <PageHero
+        slug="horarios-hero"
         image="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80"
         imageAlt="Tatame durante treino de fundamentos da Gracie Barra Centro JF"
         badge="Planejamento Semanal"
