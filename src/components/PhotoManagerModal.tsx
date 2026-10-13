@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   X,
   Upload,
@@ -18,9 +18,6 @@ import {
   MessageSquare,
   Shield,
   Loader2,
-  Save,
-  FileDown,
-  FileUp,
 } from 'lucide-react';
 import {
   PHOTO_SLOTS,
@@ -30,7 +27,6 @@ import {
   removeStoredPhoto,
   resetAllStoredPhotos,
   compressImage,
-  syncStoredPhotosWithServer,
 } from '../utils/photoManager';
 
 interface PhotoManagerModalProps {
@@ -45,14 +41,6 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
   const [searchQuery, setSearchQuery] = useState('');
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
   const [processingSlug, setProcessingSlug] = useState<string | null>(null);
-  const [isSyncing, setIsSyncing] = useState(false);
-
-  // Auto-sync any existing photos to disk whenever the modal opens
-  useEffect(() => {
-    if (isOpen && Object.keys(customPhotos).length > 0) {
-      syncStoredPhotosWithServer();
-    }
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -64,10 +52,11 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
 
     try {
       setProcessingSlug(slug);
+      // Automatically compress and resize to optimal web format
       const dataUrl = await compressImage(file, 1920, 0.88);
       saveStoredPhoto(slug, dataUrl);
       const slot = PHOTO_SLOTS.find((s) => s.slug === slug);
-      setFeedbackMsg(`"${slot?.name || 'Foto'}" atualizada e salva como foto padrão no site!`);
+      setFeedbackMsg(`"${slot?.name || 'Foto'}" atualizada com sucesso no site!`);
       setTimeout(() => setFeedbackMsg(null), 3500);
     } catch (e) {
       console.error('Error processing photo:', e);
@@ -75,58 +64,6 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
     } finally {
       setProcessingSlug(null);
     }
-  };
-
-  const handleSaveAllAsDefault = async () => {
-    setIsSyncing(true);
-    const res = await syncStoredPhotosWithServer();
-    setIsSyncing(false);
-    if (res.success) {
-      setFeedbackMsg(`Todas as fotos foram gravadas com sucesso nos arquivos padrão do site!`);
-    } else {
-      setFeedbackMsg(`Fotos salvas e ativas com sucesso no navegador!`);
-    }
-    setTimeout(() => setFeedbackMsg(null), 4000);
-  };
-
-  const handleExportBackup = () => {
-    const data = JSON.stringify(customPhotos, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'fotos-padrao-gracie-barra.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    setFeedbackMsg('Arquivo de backup baixado com sucesso!');
-    setTimeout(() => setFeedbackMsg(null), 3000);
-  };
-
-  const handleImportBackup = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = async (evt) => {
-      try {
-        const parsed = JSON.parse(evt.target?.result as string);
-        if (parsed && typeof parsed === 'object') {
-          for (const [slug, dataUrl] of Object.entries(parsed)) {
-            if (typeof dataUrl === 'string') {
-              saveStoredPhoto(slug, dataUrl);
-            }
-          }
-          await syncStoredPhotosWithServer();
-          setFeedbackMsg('Backup de fotos importado e salvo como padrão com sucesso!');
-          setTimeout(() => setFeedbackMsg(null), 4000);
-        }
-      } catch (err) {
-        alert('Arquivo de backup inválido. Selecione um arquivo .json válido.');
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
   };
 
   const handleDownloadTemplate = (slug: string, targetName: string) => {
@@ -185,34 +122,16 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {totalConfigured > 0 && (
-              <button
-                onClick={handleSaveAllAsDefault}
-                disabled={isSyncing}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-sm transition-colors cursor-pointer"
-                title="Salva todas as fotos no código/arquivos como padrão definitivo do site"
-              >
-                {isSyncing ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                ) : (
-                  <Save className="w-3.5 h-3.5" />
-                )}
-                <span>Salvar como Padrão</span>
-              </button>
-            )}
-
-            <button
-              onClick={onClose}
-              className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
-              aria-label="Fechar"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+            aria-label="Fechar"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        {/* Tab Selector & Backup Bar */}
+        {/* Tab Selector */}
         <div className="px-4 sm:px-6 pt-3 pb-0 border-b border-white/10 flex items-center justify-between bg-black/25 text-xs flex-wrap gap-2">
           <div className="flex gap-2">
             <button
@@ -224,7 +143,7 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
               }`}
             >
               <Upload className="w-3.5 h-3.5" />
-              <span>Fotos do Site ({totalConfigured}/{PHOTO_SLOTS.length})</span>
+              <span>Trocar Fotos Online ({totalConfigured}/{PHOTO_SLOTS.length})</span>
             </button>
             <button
               onClick={() => setActiveTab('instructions')}
@@ -239,48 +158,21 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
             </button>
           </div>
 
-          <div className="flex items-center gap-2 pb-2">
-            {totalConfigured > 0 && (
-              <button
-                onClick={handleExportBackup}
-                className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5 cursor-pointer"
-                title="Exportar arquivo JSON com todas as fotos configuradas"
-              >
-                <FileDown className="w-3 h-3 text-sky-400" />
-                <span className="hidden md:inline">Baixar Backup</span>
-              </button>
-            )}
-
-            <label
-              className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5 cursor-pointer"
-              title="Importar fotos de um arquivo de backup JSON"
+          {totalConfigured > 0 && activeTab === 'upload' && (
+            <button
+              onClick={() => {
+                if (confirm('Deseja remover todas as fotos personalizadas e restaurar as fotos originais do site?')) {
+                  resetAllStoredPhotos();
+                  setFeedbackMsg('Todas as fotos foram restauradas para os padrões originais!');
+                  setTimeout(() => setFeedbackMsg(null), 3000);
+                }
+              }}
+              className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1.5 pb-2 transition-colors cursor-pointer"
             >
-              <FileUp className="w-3 h-3 text-amber-400" />
-              <span className="hidden md:inline">Importar Backup</span>
-              <input
-                type="file"
-                accept=".json,application/json"
-                className="hidden"
-                onChange={handleImportBackup}
-              />
-            </label>
-
-            {totalConfigured > 0 && activeTab === 'upload' && (
-              <button
-                onClick={() => {
-                  if (confirm('Deseja remover todas as fotos personalizadas e restaurar as fotos originais do site?')) {
-                    resetAllStoredPhotos();
-                    setFeedbackMsg('Todas as fotos foram restauradas para os padrões originais!');
-                    setTimeout(() => setFeedbackMsg(null), 3000);
-                  }
-                }}
-                className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1 transition-colors px-2 py-1 rounded hover:bg-white/5 cursor-pointer"
-              >
-                <Trash2 className="w-3 h-3" />
-                <span className="hidden lg:inline">Restaurar originais</span>
-              </button>
-            )}
-          </div>
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Restaurar todas as fotos padrão</span>
+            </button>
+          )}
         </div>
 
         {/* Notification Banner */}
@@ -295,27 +187,15 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
         <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-4">
           {activeTab === 'upload' ? (
             <div className="space-y-4">
-              {/* Banner with Permanent Status Notice */}
-              <div className="bg-gradient-to-r from-emerald-950/40 via-blue-950/40 to-neutral-900 border border-emerald-500/30 rounded-xl p-3.5 text-xs text-slate-200 flex items-start gap-3">
-                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400 mt-0.5" />
-                <div className="space-y-1 flex-1">
-                  <div className="flex items-center justify-between flex-wrap gap-2">
-                    <p className="font-bold text-white text-sm">
-                      Fotos integradas como Padrão Oficial do Site
-                    </p>
-                    {totalConfigured > 0 && (
-                      <button
-                        onClick={handleSaveAllAsDefault}
-                        disabled={isSyncing}
-                        className="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] flex items-center gap-1 cursor-pointer transition-colors"
-                      >
-                        <Save className="w-3 h-3" />
-                        <span>Fixar Todas como Padrão</span>
-                      </button>
-                    )}
-                  </div>
+              {/* Informative Instructions Alert */}
+              <div className="bg-gradient-to-r from-blue-950/40 to-neutral-900 border border-blue-500/20 rounded-xl p-3.5 text-xs text-blue-200 flex items-start gap-3">
+                <Info className="w-4 h-4 shrink-0 text-blue-400 mt-0.5" />
+                <div className="space-y-1">
+                  <p className="font-semibold text-white">
+                    Como trocar qualquer foto em segundos:
+                  </p>
                   <p className="text-slate-300 leading-relaxed">
-                    Todas as fotos selecionadas são gravadas automaticamente nos arquivos oficiais do site (<code className="bg-black/50 px-1 py-0.5 rounded text-emerald-300 font-mono">/public/images/</code>). Elas agora são exibidas como as fotos padrão definitivas para todos os visitantes!
+                    Localize a foto desejada abaixo e clique em <strong>"Selecionar Foto"</strong>. O site redimensiona e otimiza a imagem automaticamente, atualizando o site na mesma hora tanto no celular quanto no computador!
                   </p>
                 </div>
               </div>
@@ -441,11 +321,6 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
                               className={`w-full h-full object-cover transition-transform hover:scale-105 duration-300 ${
                                 slot.category === 'identidade' ? 'object-contain p-2' : ''
                               }`}
-                              onError={(e) => {
-                                if (slot.fallbackSrc && e.currentTarget.src !== slot.fallbackSrc) {
-                                  e.currentTarget.src = slot.fallbackSrc;
-                                }
-                              }}
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-slate-500">
@@ -566,7 +441,7 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
                     Como o site carrega e sincroniza todas as fotos?
                   </h3>
                   <p className="mt-1 text-slate-300 leading-relaxed">
-                    Todas as 22 fotos do site possuem fallback inteligente. Ao selecionar uma imagem na aba <strong>"Fotos do Site"</strong>, o site armazena localmente em alta resolução, sincroniza com o servidor e grava na pasta <code className="bg-black/50 px-1.5 py-0.5 rounded text-amber-300 font-mono">/public/images/</code> como a foto padrão permanente.
+                    Todas as 22 fotos do site possuem fallback inteligente. Ao selecionar uma imagem na aba <strong>"Trocar Fotos Online"</strong>, o site armazena localmente em alta resolução e exibe instantaneamente. Se preferir salvar os arquivos estáticos no repositório, basta colocar os arquivos na pasta <code className="bg-black/50 px-1.5 py-0.5 rounded text-amber-300 font-mono">/public/images/</code> com os nomes listados abaixo.
                   </p>
                 </div>
               </div>
@@ -638,7 +513,7 @@ export const PhotoManagerModal: React.FC<PhotoManagerModalProps> = ({ isOpen, on
         {/* Footer */}
         <div className="p-4 border-t border-white/10 bg-black/40 flex items-center justify-between">
           <span className="text-xs text-slate-400">
-            {totalConfigured} de {PHOTO_SLOTS.length} fotos personalizadas salvas como padrão
+            {totalConfigured} de {PHOTO_SLOTS.length} fotos personalizadas no ar
           </span>
           <button
             onClick={onClose}

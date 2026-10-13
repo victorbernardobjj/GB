@@ -10,7 +10,6 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { PhotoManagerTrigger } from './components/PhotoManagerTrigger';
-import { syncStoredPhotosWithServer } from './utils/photoManager';
 
 // Pages
 import { Home } from './pages/Home';
@@ -186,10 +185,6 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
-  useEffect(() => {
-    syncStoredPhotosWithServer();
-  }, []);
-
   return (
     <BrowserRouter>
       <ScrollToTop />
